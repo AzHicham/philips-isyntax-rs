@@ -1,6 +1,6 @@
 .PHONY: install-deps
 
-install-deps-apt:
+install-deps:
 	export DEBIAN_FRONTEND=noninteractive && \
 	sudo apt-get update -qq && \
 	sudo apt-get install -y --no-install-recommends unzip binutils build-essential && \

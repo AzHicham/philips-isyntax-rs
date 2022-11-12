@@ -23,7 +23,7 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
       - name: Install dependencies
-        run: make install-deps-apt
+        run: make install-deps
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable

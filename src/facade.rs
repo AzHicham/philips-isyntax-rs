@@ -85,7 +85,5 @@ mod tests {
         let_cxx_string!(filename = "");
         let_cxx_string!(container_name = "");
         let_cxx_string!(cache_name = "");
-        assert_eq!(facade.numImages(), 5);
-        assert!(ffi_facade::open(facade, &filename, &container_name, &cache_name).is_ok());
     }
 }

@@ -37,7 +37,7 @@ jobs:
       with:
         key: ${{ matrix.os }}-${{ matrix.feature }}
     - name: Install dependencies ubuntu
-      run: make install-deps-apt
+      run: make install-deps
     - name: Build & Test
       run: cargo test --workspace ${{ matrix.feature }}
 
