@@ -1,6 +1,6 @@
 #pragma once
-#include "rust/cxx.h"
 #include "PhilipsPixelEngine/pixelengine.hpp"
+#include "rust/cxx.h"
 
 struct Rectangle;
 

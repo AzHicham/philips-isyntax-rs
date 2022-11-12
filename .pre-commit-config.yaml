@@ -20,3 +20,9 @@ repos:
     rev: v1.0
     hooks:
     -   id: fmt
+-   repo: https://github.com/pocc/pre-commit-hooks
+    rev: v1.3.5
+    hooks:
+    - id: clang-format
+    args: [-i]
+    files: \.(c|cc|cxx|cpp|h|hpp|hxx)$

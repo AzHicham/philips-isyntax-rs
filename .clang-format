@@ -1,0 +1,9 @@
+---
+Language: Cpp
+BasedOnStyle: LLVM
+ColumnLimit: 120
+IndentWidth: 4
+AlignConsecutiveMacros: true
+DerivePointerAlignment: false
+PointerAlignment: Left
+...

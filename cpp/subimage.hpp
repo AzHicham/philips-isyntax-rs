@@ -1,8 +1,8 @@
 #pragma once
 #include <memory>
 
-#include "rust/cxx.h"
 #include "PhilipsPixelEngine/pixelengine.hpp"
+#include "rust/cxx.h"
 
 using SubImage = PixelEngine::SubImage;
 using SourceView = PixelEngine::SourceView;
