@@ -5,7 +5,7 @@ install-deps-apt:
 	sudo apt-get update -qq && \
 	sudo apt-get install -y --no-install-recommends unzip binutils build-essential && \
 	gsutil cp gs://az-philips/sdk.zip . && \
-	unzip sdkp.zip -d . && \
+	unzip sdk.zip -d . && \
 	cd sdk && \
 	chmod +x InstallPathologySDK.sh && \
     sudo ./InstallPathologySDK.sh -y
