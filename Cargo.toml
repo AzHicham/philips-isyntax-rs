@@ -1,0 +1,19 @@
+[package]
+name = "philips-sys"
+edition = "2021"
+version = "0.1.0"
+authors = ["AzHicham <hicham.azimani1@gmail.com>"]
+description = "Rust bindings of Philips Open Pathology C++ library"
+readme = "README.md"
+keywords = ["philips", "isyntax", "histopathology", "microscopy"]
+categories = ["science"]
+license = "MIT/Apache-2.0"
+
+[dependencies]
+autocxx = "0.23.1"
+cxx = "1.0"
+
+[build-dependencies]
+cxx-build = "1.0"
+autocxx-build = "0.23.1"
+miette = { version = "5", features = ["fancy"] } # optional but gives nicer error messages!

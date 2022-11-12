@@ -1,0 +1,53 @@
+name: Build and test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+        fail-fast: false
+        matrix:
+          os: [ "ubuntu-20.04" ]
+          feature: [ "--no-default-features" ]
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+    - uses: Swatinem/rust-cache@v2
+      with:
+        key: ${{ matrix.os }}-${{ matrix.feature }}
+    - name: Install dependencies ubuntu
+      run: make install-deps-apt
+    - name: Build & Test
+      run: cargo test --workspace ${{ matrix.feature }}
+
+  pre-commit:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+        components: clippy, rustfmt
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    - name: Install pre-commit
+      run: pip install pre-commit
+    - name: Pre-commit
+      run: |
+        pre-commit install --install-hooks
+        pre-commit run --all --show-diff-on-failure
