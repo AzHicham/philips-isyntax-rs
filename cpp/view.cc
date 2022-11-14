@@ -19,7 +19,8 @@ void truncation(SourceView& view, bool enabled, bool rounding) {
     view.truncation(enabled, rounding, truncationLevel);
 }
 
-std::shared_ptr<Region> request_region_blocking(PixelEngine& pixel_engine, View& view, const Rectangle& range, uint32_t level) {
+std::shared_ptr<Region> request_region_blocking(PixelEngine& pixel_engine, View& view, const Rectangle& range,
+                                                uint32_t level) {
     const std::vector<std::vector<std::size_t>> view_range{{range.x_min, range.x_max, range.y_min, range.y_max, level}};
 
     auto _ = view.requestRegions(view_range, false, {254, 254, 254});
