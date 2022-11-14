@@ -1,6 +1,5 @@
 #[cxx::bridge]
 pub(crate) mod ffi {
-
     #[derive(Debug, Clone, PartialEq, Eq)]
     pub struct DimensionsRange {
         pub start_x: u32,
@@ -20,20 +19,19 @@ pub(crate) mod ffi {
         pub type UserView;
         pub type Region;
         type Rectangle = crate::dataenvelopes::ffi::Rectangle;
+        type PixelEngine = crate::pixelengine::ffi::PixelEngine;
 
         fn source_view_as_view(source_view: Pin<&mut SourceView>) -> Pin<&mut View>;
         fn display_view_as_view(source_view: Pin<&mut DisplayView>) -> Pin<&mut View>;
         fn user_view_as_view(source_view: Pin<&mut UserView>) -> Pin<&mut View>;
 
-        fn addChainedView(self: Pin<&mut View>) -> Pin<&mut UserView>;
-
-        fn request_region(
+        fn request_region_blocking(
+            pixel_engine: Pin<&mut PixelEngine>,
             view: Pin<&mut View>,
             ranges: &Rectangle,
-            async_: bool,
-            bg_color: &[usize; 3],
+            level: u32,
         ) -> SharedPtr<Region>;
-
+        fn addChainedView(self: Pin<&mut View>) -> Pin<&mut UserView>;
         fn dimension_ranges(view: &View, level: u32) -> DimensionsRange;
         fn dimensionNames(self: &View) -> &CxxVector<CxxString>;
         fn dimensionUnits(self: &View) -> &CxxVector<CxxString>;
@@ -48,11 +46,9 @@ pub(crate) mod ffi {
         fn samplesPerPixel(self: &View) -> u16;
         fn id(self: &View) -> usize;
         fn numDerivedLevels(self: &View) -> usize;
-
         fn loadDefaultParameters(self: Pin<&mut SourceView>);
         // !todo:  Understand & Fix truncationLevel
         fn truncation(view: Pin<&mut SourceView>, enabled: bool, rounding: bool);
-
         fn sharpness(self: &DisplayView) -> f64;
         fn contrastClipLimit(self: &DisplayView) -> f64;
         fn colorCorrectionGamma(self: &DisplayView) -> f64;
@@ -62,9 +58,32 @@ pub(crate) mod ffi {
     }
 }
 
-use crate::{DisplayView, SourceView, UserView, View};
+use crate::{
+    DimensionsRange, DisplayView, PixelEngine, Rectangle, Region, SourceView, UserView, View,
+};
 
 impl<'a> View<'a> {
+    pub fn request_region_blocking(
+        &mut self,
+        pixel_engine: &mut PixelEngine,
+        ranges: &Rectangle,
+        level: u32,
+    ) -> Region {
+        Region(ffi::request_region_blocking(
+            pixel_engine.pe.pin_mut(),
+            self.0.as_mut(),
+            ranges,
+            level,
+        ))
+    }
+
+    pub fn add_chained_view(&mut self) -> UserView {
+        UserView(self.0.as_mut().addChainedView())
+    }
+
+    pub fn dimension_ranges(&self, level: u32) -> DimensionsRange {
+        ffi::dimension_ranges(&self.0, level)
+    }
     pub fn dimension_names(&self) -> impl Iterator<Item = &str> {
         self.0
             .dimensionNames()

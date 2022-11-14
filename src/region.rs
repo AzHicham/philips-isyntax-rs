@@ -37,4 +37,9 @@ impl Region {
             Err(PhilipsSlideError::NullPtrError)
         }
     }
+
+    pub fn fill_buffer(&self, buffer: &mut Vec<u8>) -> Result<()> {
+        ffi::fill_buffer(self.0.clone(), buffer);
+        Ok(())
+    }
 }

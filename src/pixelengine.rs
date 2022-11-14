@@ -30,11 +30,6 @@ pub(crate) mod ffi {
         fn colorspaceTransforms(self: &PixelEngine) -> &CxxVector<CxxString>;
         fn qualityPresets(self: &PixelEngine) -> &CxxVector<CxxString>;
         fn supportedFilters(self: &PixelEngine) -> &CxxVector<CxxString>;
-        /* pub(crate) fn waitAll(
-            pixel_engine: Pin<&mut PixelEngine>,
-            regions: &CxxVector<SharedPtrRegion>,
-        );*/
-        fn clearRenderTarget(self: Pin<&mut PixelEngine>, color: &CxxVector<usize>, target: usize);
         fn clearRenderCache(self: Pin<&mut PixelEngine>);
         fn clearRenderBuffers(self: Pin<&mut PixelEngine>);
     }
@@ -45,12 +40,12 @@ use cxx::let_cxx_string;
 
 impl PixelEngine {
     pub fn new() -> Self {
-        let render_context = ffi::make_render_context();
-        let render_backend = ffi::make_render_backend();
+        let _render_context = ffi::make_render_context();
+        let _render_backend = ffi::make_render_backend();
         PixelEngine {
-            pe: ffi::make_pixel_engine(&render_context, &render_backend),
-            render_context,
-            render_backend,
+            pe: ffi::make_pixel_engine(&_render_context, &_render_backend),
+            _render_context,
+            _render_backend,
         }
     }
 

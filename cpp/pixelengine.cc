@@ -19,9 +19,3 @@ std::unique_ptr<RenderBackend> make_render_backend() { return std::make_unique<S
 std::unique_ptr<std::string> pe_version() { return std::make_unique<std::string>(PixelEngine::version()); }
 
 Facade& facade(PixelEngine& pixel_engine, std::string const& name) { return pixel_engine[name]; }
-
-/*
-void waitAll(PixelEngine& pixel_engine, std::vector<SharedPtrRegion> const& regions) {
-    std::list<std::shared_ptr<Region>> _regions(regions.begin(), regions.end());
-    pixel_engine.waitAll(_regions);
-}*/

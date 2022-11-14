@@ -8,6 +8,9 @@ mod region;
 mod subimage;
 mod view;
 
+pub type Rectangle = dataenvelopes::ffi::Rectangle;
+pub type DimensionsRange = view::ffi::DimensionsRange;
+
 /// The corresponding result type used by the crate.
 pub type Result<T, E = errors::PhilipsSlideError> = std::result::Result<T, E>;
 
@@ -16,8 +19,8 @@ use std::pin::Pin;
 
 pub struct PixelEngine {
     pe: UniquePtr<pixelengine::ffi::PixelEngine>,
-    render_context: UniquePtr<pixelengine::ffi::RenderContext>,
-    render_backend: UniquePtr<pixelengine::ffi::RenderBackend>,
+    _render_context: UniquePtr<pixelengine::ffi::RenderContext>,
+    _render_backend: UniquePtr<pixelengine::ffi::RenderBackend>,
 }
 
 pub struct DataEnvelopes<'a>(&'a dataenvelopes::ffi::DataEnvelopes);

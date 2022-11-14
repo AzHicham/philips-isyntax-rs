@@ -50,7 +50,7 @@ use crate::{Facade, ImageType, Result, SubImage};
 use cxx::let_cxx_string;
 
 impl<'a> Facade<'a> {
-    fn open(&mut self, url: &str, container_name: &str, cache_name: &str) -> Result<()> {
+    pub fn open(&mut self, url: &str, container_name: &str, cache_name: &str) -> Result<()> {
         let_cxx_string!(url = url);
         let_cxx_string!(container_name = container_name);
         let_cxx_string!(cache_name = cache_name);

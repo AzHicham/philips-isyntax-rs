@@ -18,12 +18,11 @@ void truncation(SourceView& view, bool enabled, bool rounding) {
     view.truncation(enabled, rounding, truncationLevel);
 }
 
-std::shared_ptr<Region> request_region(View& view, const Rectangle& range, bool async_,
-                                       const std::array<size_t, 3>& bg_color) {
-    const std::vector<std::vector<std::size_t>> view_range{{range.x_min, range.x_max, range.y_min, range.y_max}};
-    const std::vector<std::size_t> background_color = {bg_color[0], bg_color[1], bg_color[2]};
+std::shared_ptr<Region> request_region_blocking(PixelEngine& pixel_engine, View& view, const Rectangle& range, uint32_t level) {
+    const std::vector<std::vector<std::size_t>> view_range{{range.x_min, range.x_max, range.y_min, range.y_max, level}};
 
-    auto regions = view.requestRegions(view_range, async_, background_color);
+    auto _ = view.requestRegions(view_range, false, {254, 254, 254});
+    auto regions = pixel_engine.waitAny();
 
     // We have request only one region
     return regions.front();
