@@ -1,6 +1,6 @@
 #pragma once
-#include "philips-sys/src/dataenvelopes.rs.h"
 #include "PhilipsPixelEngine/pixelengine.hpp"
+#include "philips-sys/src/dataenvelopes.rs.h"
 #include "rust/cxx.h"
 
 struct Rectangle;
@@ -23,6 +23,7 @@ DimensionsRange dimension_ranges(const View& view, uint32_t level);
 
 void truncation(SourceView& view, bool enabled, bool rounding);
 
-std::shared_ptr<Region> request_region(View& view, const Rectangle &range, bool async_, const std::array<size_t, 3>& backgroundColor);
+std::shared_ptr<Region> request_region(View& view, const Rectangle& range, bool async_,
+                                       const std::array<size_t, 3>& backgroundColor);
 
 void fill_buffer(std::shared_ptr<Region> region, rust::Vec<uint8_t>& buffer);
