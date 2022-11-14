@@ -9,4 +9,4 @@ using SubImage = PixelEngine::SubImage;
 
 void open(Facade& facade, std::string const& url, std::string const& containerName, std::string const& cacheName);
 
-SubImage const& sub_image(const Facade& facade, std::string const& image_type);
+SubImage& sub_image(Facade& facade, std::string const& image_type);

@@ -1,89 +1,164 @@
 #[cxx::bridge]
-pub mod ffi {
+pub(crate) mod ffi {
     unsafe extern "C++" {
         include!("philips-sys/cpp/facade.hpp");
 
         pub type Facade;
         type SubImage = crate::subimage::ffi::SubImage;
 
-        pub(crate) fn open(
+        fn open(
             facade: Pin<&mut Facade>,
             url: &CxxString,
             container_name: &CxxString,
             cache_name: &CxxString,
         ) -> Result<()>;
-        pub(crate) fn close(self: Pin<&mut Facade>) -> usize;
-        pub(crate) fn abort(self: Pin<&mut Facade>);
-        pub(crate) fn remainingPixelsToEncode(self: &Facade) -> usize;
+        fn close(self: Pin<&mut Facade>) -> usize;
+        fn abort(self: Pin<&mut Facade>);
+        fn remainingPixelsToEncode(self: &Facade) -> usize;
 
-        pub(crate) fn numImages(self: &Facade) -> usize;
-        pub(crate) fn sub_image<'a, 'b>(
-            facade: &'a Facade,
+        fn numImages(self: &Facade) -> usize;
+        fn sub_image<'a, 'b>(
+            facade: Pin<&mut Facade>,
             image_type: &'b CxxString,
-        ) -> &'a SubImage;
+        ) -> Pin<&'a mut SubImage>;
 
-        pub(crate) fn iSyntaxFileVersion(self: &Facade) -> &CxxString;
-        pub(crate) fn id(self: &Facade) -> &CxxString;
-        pub(crate) fn barcode(self: &Facade) -> &CxxString;
-        pub(crate) fn scannerCalibrationStatus(self: &Facade) -> &CxxString;
-        pub(crate) fn softwareVersions(self: &Facade) -> &CxxVector<CxxString>;
-        pub(crate) fn derivationDescription(self: &Facade) -> &CxxString;
-        pub(crate) fn acquisitionDateTime(self: &Facade) -> &CxxString;
-        pub(crate) fn manufacturer(self: &Facade) -> &CxxString;
-        pub(crate) fn modelName(self: &Facade) -> &CxxString;
-        pub(crate) fn deviceSerialNumber(self: &Facade) -> &CxxString;
-        pub(crate) fn scannerRackNumber(self: &Facade) -> u16;
-        pub(crate) fn scannerSlotNumber(self: &Facade) -> u16;
-        pub(crate) fn scannerOperatorId(self: &Facade) -> &CxxString;
-        pub(crate) fn scannerRackPriority(self: &Facade) -> u16;
-        pub(crate) fn dateOfLastCalibration(self: &Facade) -> &CxxVector<CxxString>;
-        pub(crate) fn timeOfLastCalibration(self: &Facade) -> &CxxVector<CxxString>;
-
-        pub(crate) fn isPhilips(self: &Facade) -> bool;
-        pub(crate) fn isHamamatsu(self: &Facade) -> bool;
-        pub(crate) fn isUFS(self: &Facade) -> bool;
-        pub(crate) fn isUFSb(self: &Facade) -> bool;
-        pub(crate) fn isUVS(self: &Facade) -> bool;
+        fn iSyntaxFileVersion(self: &Facade) -> &CxxString;
+        fn id(self: &Facade) -> &CxxString;
+        fn barcode(self: &Facade) -> &CxxString;
+        fn scannerCalibrationStatus(self: &Facade) -> &CxxString;
+        fn softwareVersions(self: &Facade) -> &CxxVector<CxxString>;
+        fn derivationDescription(self: &Facade) -> &CxxString;
+        fn acquisitionDateTime(self: &Facade) -> &CxxString;
+        fn manufacturer(self: &Facade) -> &CxxString;
+        fn modelName(self: &Facade) -> &CxxString;
+        fn deviceSerialNumber(self: &Facade) -> &CxxString;
+        fn scannerRackNumber(self: &Facade) -> u16;
+        fn scannerSlotNumber(self: &Facade) -> u16;
+        fn scannerOperatorId(self: &Facade) -> &CxxString;
+        fn scannerRackPriority(self: &Facade) -> u16;
+        fn dateOfLastCalibration(self: &Facade) -> &CxxVector<CxxString>;
+        fn timeOfLastCalibration(self: &Facade) -> &CxxVector<CxxString>;
+        fn isPhilips(self: &Facade) -> bool;
+        fn isHamamatsu(self: &Facade) -> bool;
+        fn isUFS(self: &Facade) -> bool;
+        fn isUFSb(self: &Facade) -> bool;
+        fn isUVS(self: &Facade) -> bool;
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use crate::facade::ffi as ffi_facade;
-    use crate::pixelengine::ffi;
-    use core::ops::DerefMut;
-    use cxx::let_cxx_string;
-    use std::pin::Pin;
+use crate::{Facade, ImageType, Result, SubImage};
+use cxx::let_cxx_string;
 
-    #[test]
-    fn it_workss() {
-        let render_context = ffi::make_render_context();
-        let render_backend = ffi::make_render_backend();
-        let mut pixel_engine = ffi::make_pixel_engine(&render_context, &render_backend);
-        assert_eq!(ffi::pe_version().to_str().unwrap(), "5.1.0");
-        let containers = pixel_engine.containers();
-        assert_eq!(
-            containers
-                .iter()
-                .map(|cxx_str| cxx_str.to_str().unwrap())
-                .collect::<Vec<&str>>(),
-            vec!["ficom", "dicom", "caching-ficom", "s3", "legacy"]
-        );
-        let_cxx_string!(container = "ficom");
-        assert_eq!(
-            pixel_engine
-                .containerVersion(&container)
-                .unwrap()
-                .to_str()
-                .unwrap(),
-            "100.5"
-        );
-        let facade_name = "in";
-        let_cxx_string!(facade_name = facade_name);
-        let facade = ffi::facade(pixel_engine.pin_mut(), &facade_name);
+impl<'a> Facade<'a> {
+    fn open(&mut self, url: &str, container_name: &str, cache_name: &str) -> Result<()> {
+        let_cxx_string!(url = url);
+        let_cxx_string!(container_name = container_name);
+        let_cxx_string!(cache_name = cache_name);
+        Ok(ffi::open(
+            self.0.as_mut(),
+            &url,
+            &container_name,
+            &cache_name,
+        )?)
+    }
+    pub fn close(&mut self) -> usize {
+        self.0.as_mut().close()
+    }
+    pub fn abort(&mut self) {
+        self.0.as_mut().abort()
+    }
+    pub fn remaining_pixels_to_encode(&self) -> usize {
+        self.0.remainingPixelsToEncode()
+    }
+    pub fn num_images(&self) -> usize {
+        self.0.numImages()
+    }
+    pub fn sub_image(&mut self, image_type: ImageType) -> SubImage {
+        let image_type = image_type.as_str();
+        let_cxx_string!(image_type = image_type);
+        SubImage(ffi::sub_image(self.0.as_mut(), &image_type))
+    }
 
-        let_cxx_string!(filename = "");
-        let_cxx_string!(container_name = "");
-        let_cxx_string!(cache_name = "");
+    pub fn isyntax_file_version(&self) -> Result<&str> {
+        Ok(self.0.iSyntaxFileVersion().to_str()?)
+    }
+    pub fn id(&self) -> Result<&str> {
+        Ok(self.0.id().to_str()?)
+    }
+    pub fn barcode(&self) -> Result<&str> {
+        Ok(self.0.barcode().to_str()?)
+    }
+    pub fn scanner_calibration_status(&self) -> Result<&str> {
+        Ok(self.0.scannerCalibrationStatus().to_str()?)
+    }
+    pub fn software_versions(&self) -> impl Iterator<Item = &str> {
+        self.0
+            .softwareVersions()
+            .iter()
+            .filter_map(|cxx_str| cxx_str.to_str().ok())
+    }
+    pub fn derivation_description(&self) -> Result<&str> {
+        Ok(self.0.derivationDescription().to_str()?)
+    }
+    pub fn acquisition_date_time(&self) -> Result<&str> {
+        Ok(self.0.acquisitionDateTime().to_str()?)
+    }
+    pub fn manufacturer(&self) -> Result<&str> {
+        Ok(self.0.manufacturer().to_str()?)
+    }
+    pub fn model_name(&self) -> Result<&str> {
+        Ok(self.0.modelName().to_str()?)
+    }
+    pub fn device_serial_number(&self) -> Result<&str> {
+        Ok(self.0.deviceSerialNumber().to_str()?)
+    }
+    pub fn scanner_rack_number(&self) -> u16 {
+        self.0.scannerRackNumber()
+    }
+    pub fn scanner_slot_number(&self) -> u16 {
+        self.0.scannerSlotNumber()
+    }
+    pub fn scanner_operator_id(&self) -> Result<&str> {
+        Ok(self.0.scannerOperatorId().to_str()?)
+    }
+    pub fn scanner_rack_priority(&self) -> u16 {
+        self.0.scannerRackPriority()
+    }
+    pub fn date_of_last_calibration(&self) -> impl Iterator<Item = &str> {
+        self.0
+            .dateOfLastCalibration()
+            .iter()
+            .filter_map(|cxx_str| cxx_str.to_str().ok())
+    }
+    pub fn time_of_last_calibration(&self) -> impl Iterator<Item = &str> {
+        self.0
+            .timeOfLastCalibration()
+            .iter()
+            .filter_map(|cxx_str| cxx_str.to_str().ok())
+    }
+    pub fn is_philips(&self) -> bool {
+        self.0.isPhilips()
+    }
+    pub fn is_hamamatsu(&self) -> bool {
+        self.0.isHamamatsu()
+    }
+    pub fn is_ufs(&self) -> bool {
+        self.0.isUFS()
+    }
+    pub fn is_ufsb(&self) -> bool {
+        self.0.isUFSb()
+    }
+    pub fn is_uvs(&self) -> bool {
+        self.0.isUVS()
+    }
+}
+
+impl ImageType {
+    pub fn as_str(&self) -> &str {
+        match &self {
+            Self::WSI => "WSI",
+            Self::MacroImage => "MACROIMAGE",
+            Self::LabelImage => "LABELIMAGE",
+        }
     }
 }

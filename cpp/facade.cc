@@ -4,4 +4,4 @@ void open(Facade& facade, std::string const& url, std::string const& containerNa
     facade.open(url, containerName, std::ios::in | std::ios::binary, cacheName);
 }
 
-SubImage const& sub_image(const Facade& facade, std::string const& image_type) { return facade[image_type]; }
+SubImage& sub_image(Facade& facade, std::string const& image_type) { return facade[image_type]; }

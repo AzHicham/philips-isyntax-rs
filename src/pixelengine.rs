@@ -1,5 +1,5 @@
 #[cxx::bridge]
-pub mod ffi {
+pub(crate) mod ffi {
     unsafe extern "C++" {
         include!("philips-sys/cpp/pixelengine.hpp");
 
@@ -8,89 +8,114 @@ pub mod ffi {
         pub type RenderBackend;
         pub type RenderBackendInstance;
         type Facade = crate::facade::ffi::Facade;
-        type Region = crate::region::ffi::Region;
-        type RegionWrapper = crate::region::ffi::RegionWrapper;
 
-        pub(crate) fn make_pixel_engine(
+        fn make_pixel_engine(
             render_context: &UniquePtr<RenderContext>,
             render_backend: &UniquePtr<RenderBackend>,
         ) -> UniquePtr<PixelEngine>;
-        pub(crate) fn make_render_context() -> UniquePtr<RenderContext>;
-        pub(crate) fn make_render_backend() -> UniquePtr<RenderBackend>;
-
-        pub(crate) fn pe_version() -> UniquePtr<CxxString>;
-
-        pub(crate) fn facade<'a, 'b>(
+        fn make_render_context() -> UniquePtr<RenderContext>;
+        fn make_render_backend() -> UniquePtr<RenderBackend>;
+        fn pe_version() -> UniquePtr<CxxString>;
+        fn facade<'a, 'b>(
             pixel_engine: Pin<&'a mut PixelEngine>,
             name: &'b CxxString,
         ) -> Pin<&'a mut Facade>;
-
-        pub(crate) fn containers(self: &PixelEngine) -> &CxxVector<CxxString>;
-        pub(crate) fn containerVersion<'a, 'b>(
+        fn containers(self: &PixelEngine) -> &CxxVector<CxxString>;
+        fn containerVersion<'a, 'b>(
             self: &PixelEngine,
             container: &'a CxxString,
         ) -> Result<&'b CxxString>;
-        pub(crate) fn compressors(self: &PixelEngine) -> &CxxVector<CxxString>;
-        pub(crate) fn pixelTransforms(self: &PixelEngine) -> &CxxVector<CxxString>;
-        /* pub(crate) fn blockSizes<'a>(
-                    self: &PixelEngine,
-                    container: &'a CxxString,
-                ) -> UniquePtr<CxxVector<CxxString>>;
-        */
-        pub(crate) fn colorspaceTransforms(self: &PixelEngine) -> &CxxVector<CxxString>;
-        pub(crate) fn qualityPresets(self: &PixelEngine) -> &CxxVector<CxxString>;
-        pub(crate) fn supportedFilters(self: &PixelEngine) -> &CxxVector<CxxString>;
-
-        pub(crate) fn waitAll(
+        fn compressors(self: &PixelEngine) -> &CxxVector<CxxString>;
+        fn pixelTransforms(self: &PixelEngine) -> &CxxVector<CxxString>;
+        fn colorspaceTransforms(self: &PixelEngine) -> &CxxVector<CxxString>;
+        fn qualityPresets(self: &PixelEngine) -> &CxxVector<CxxString>;
+        fn supportedFilters(self: &PixelEngine) -> &CxxVector<CxxString>;
+        /* pub(crate) fn waitAll(
             pixel_engine: Pin<&mut PixelEngine>,
-            regions: &CxxVector<RegionWrapper>,
-        );
-
-        pub(crate) fn clearRenderTarget(
-            self: Pin<&mut PixelEngine>,
-            color: &CxxVector<usize>,
-            target: usize,
-        );
-        pub(crate) fn clearRenderCache(self: Pin<&mut PixelEngine>);
-        pub(crate) fn clearRenderBuffers(self: Pin<&mut PixelEngine>);
-
-        pub(crate) fn renderBackendInstance(self: &PixelEngine)
-            -> SharedPtr<RenderBackendInstance>;
+            regions: &CxxVector<SharedPtrRegion>,
+        );*/
+        fn clearRenderTarget(self: Pin<&mut PixelEngine>, color: &CxxVector<usize>, target: usize);
+        fn clearRenderCache(self: Pin<&mut PixelEngine>);
+        fn clearRenderBuffers(self: Pin<&mut PixelEngine>);
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use crate::pixelengine::ffi;
-    use core::ops::DerefMut;
-    use cxx::let_cxx_string;
-    use std::pin::Pin;
+use crate::{Facade, PixelEngine, Result};
+use cxx::let_cxx_string;
 
-    #[test]
-    fn it_works() {
+impl PixelEngine {
+    pub fn new() -> Self {
         let render_context = ffi::make_render_context();
         let render_backend = ffi::make_render_backend();
-        let mut pixel_engine = ffi::make_pixel_engine(&render_context, &render_backend);
-        assert_eq!(ffi::pe_version().to_str().unwrap(), "5.1.0");
-        let containers = pixel_engine.containers();
-        assert_eq!(
-            containers
-                .iter()
-                .map(|cxx_str| cxx_str.to_str().unwrap())
-                .collect::<Vec<&str>>(),
-            vec!["ficom", "dicom", "caching-ficom", "s3", "legacy"]
-        );
-        let_cxx_string!(container = "ficom");
-        assert_eq!(
-            pixel_engine
-                .containerVersion(&container)
-                .unwrap()
-                .to_str()
-                .unwrap(),
-            "100.5"
-        );
-        let facade_name = "in";
-        let_cxx_string!(facade_name = facade_name);
-        let facade = ffi::facade(pixel_engine.pin_mut(), &facade_name);
+        PixelEngine {
+            pe: ffi::make_pixel_engine(&render_context, &render_backend),
+            render_context,
+            render_backend,
+        }
+    }
+
+    pub fn pixel_engine_version() -> Result<String> {
+        let version = ffi::pe_version();
+        Ok(version.to_str()?.to_string())
+    }
+
+    pub fn facade(&mut self, name: &str) -> Facade {
+        let_cxx_string!(name = name);
+        Facade(ffi::facade(self.pe.pin_mut(), &name))
+    }
+
+    pub fn containers(&self) -> impl Iterator<Item = &str> {
+        self.pe
+            .containers()
+            .iter()
+            .filter_map(|cxx_str| cxx_str.to_str().ok())
+    }
+
+    pub fn container_version(&self, container: &str) -> Result<&str> {
+        let_cxx_string!(container = container);
+        Ok(self.pe.containerVersion(&container)?.to_str()?)
+    }
+
+    pub fn compressors(&self) -> impl Iterator<Item = &str> {
+        self.pe
+            .compressors()
+            .iter()
+            .filter_map(|cxx_str| cxx_str.to_str().ok())
+    }
+
+    pub fn pixel_transforms(&self) -> impl Iterator<Item = &str> {
+        self.pe
+            .pixelTransforms()
+            .iter()
+            .filter_map(|cxx_str| cxx_str.to_str().ok())
+    }
+
+    pub fn colorspace_transforms(&self) -> impl Iterator<Item = &str> {
+        self.pe
+            .colorspaceTransforms()
+            .iter()
+            .filter_map(|cxx_str| cxx_str.to_str().ok())
+    }
+
+    pub fn quality_presets(&self) -> impl Iterator<Item = &str> {
+        self.pe
+            .qualityPresets()
+            .iter()
+            .filter_map(|cxx_str| cxx_str.to_str().ok())
+    }
+
+    pub fn supported_filters(&self) -> impl Iterator<Item = &str> {
+        self.pe
+            .supportedFilters()
+            .iter()
+            .filter_map(|cxx_str| cxx_str.to_str().ok())
+    }
+
+    pub fn clear_render_cache(&mut self) {
+        self.pe.pin_mut().clearRenderCache()
+    }
+
+    pub fn clear_render_buffers(&mut self) {
+        self.pe.pin_mut().clearRenderBuffers()
     }
 }

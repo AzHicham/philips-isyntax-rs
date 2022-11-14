@@ -1,12 +1,12 @@
 #[cxx::bridge]
-pub mod ffi {
+pub(crate) mod ffi {
 
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct Rectangle {
-        pub xmin: u32,
-        pub xmax: u32,
-        pub ymin: u32,
-        pub ymax: u32,
+        pub x_min: u32,
+        pub x_max: u32,
+        pub y_min: u32,
+        pub y_max: u32,
     }
 
     unsafe extern "C++" {
@@ -14,6 +14,14 @@ pub mod ffi {
 
         pub type DataEnvelopes;
 
-        pub(crate) fn asRectangles(data_envelopes: &DataEnvelopes) -> Vec<Rectangle>;
+        fn as_rectangles(data_envelopes: &DataEnvelopes) -> Vec<Rectangle>;
+    }
+}
+
+use crate::DataEnvelopes;
+
+impl<'a> DataEnvelopes<'a> {
+    pub fn as_rectangles(&self) -> Vec<ffi::Rectangle> {
+        ffi::as_rectangles(self.0)
     }
 }

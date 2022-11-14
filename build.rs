@@ -14,25 +14,19 @@ fn main() -> miette::Result<()> {
         .flag_if_supported("-std=c++17")
         .compile("philips-facade-sys");
 
-    cxx_build::bridge("src/region.rs")
-        .file("cpp/region.cc")
-        .flag_if_supported("-std=c++17")
-        .compile("philips-region-sys");
-
     cxx_build::bridge("src/subimage.rs")
         .file("cpp/subimage.cc")
         .flag_if_supported("-std=c++17")
-        .compile("philips-region-sys");
+        .compile("philips-subimage-sys");
 
     cxx_build::bridge("src/dataenvelopes.rs")
         .file("cpp/dataenvelopes.cc")
         .flag_if_supported("-std=c++17")
-        .compile("philips-region-sys");
+        .compile("philips-dataenvelopes-sys");
 
     println!("cargo:rerun-if-changed=src/pixel_engine.rs");
     println!("cargo:rerun-if-changed=src/view.rs");
     println!("cargo:rerun-if-changed=src/facade.rs");
-    println!("cargo:rerun-if-changed=src/region.rs");
     println!("cargo:rerun-if-changed=src/subimage.rs");
     println!("cargo:rerun-if-changed=src/dataenvelopes.rs");
 
@@ -42,8 +36,6 @@ fn main() -> miette::Result<()> {
     println!("cargo:rerun-if-changed=cpp/view.hpp");
     println!("cargo:rerun-if-changed=cpp/facade.cc");
     println!("cargo:rerun-if-changed=cpp/facade.hpp");
-    println!("cargo:rerun-if-changed=cpp/region.cc");
-    println!("cargo:rerun-if-changed=cpp/region.hpp");
     println!("cargo:rerun-if-changed=cpp/subimage.cc");
     println!("cargo:rerun-if-changed=cpp/subimage.hpp");
 

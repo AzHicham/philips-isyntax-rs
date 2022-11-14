@@ -6,4 +6,4 @@ struct Rectangle;
 
 using DataEnvelopes = PixelEngine::DataEnvelopes;
 
-rust::Vec<Rectangle> asRectangles(const DataEnvelopes& data_envelopes);
+rust::Vec<Rectangle> as_rectangles(const DataEnvelopes& data_envelopes);
