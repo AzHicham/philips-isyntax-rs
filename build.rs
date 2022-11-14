@@ -4,6 +4,11 @@ fn main() -> miette::Result<()> {
         .flag_if_supported("-std=c++17")
         .compile("philips-pe-sys");
 
+    cxx_build::bridge("src/dataenvelopes.rs")
+        .file("cpp/dataenvelopes.cc")
+        .flag_if_supported("-std=c++17")
+        .compile("philips-dataenvelopes-sys");
+
     cxx_build::bridge("src/view.rs")
         .file("cpp/view.cc")
         .flag_if_supported("-std=c++17")
@@ -18,11 +23,6 @@ fn main() -> miette::Result<()> {
         .file("cpp/subimage.cc")
         .flag_if_supported("-std=c++17")
         .compile("philips-subimage-sys");
-
-    cxx_build::bridge("src/dataenvelopes.rs")
-        .file("cpp/dataenvelopes.cc")
-        .flag_if_supported("-std=c++17")
-        .compile("philips-dataenvelopes-sys");
 
     println!("cargo:rerun-if-changed=src/pixel_engine.rs");
     println!("cargo:rerun-if-changed=src/view.rs");

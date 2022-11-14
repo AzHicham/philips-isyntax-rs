@@ -16,6 +16,6 @@ std::unique_ptr<RenderContext> make_render_context();
 
 std::unique_ptr<RenderBackend> make_render_backend();
 
-std::unique_ptr<std::string> pe_version();
+std::unique_ptr<std::string> version();
 
 Facade& facade(PixelEngine& pixel_engine, std::string const& name);

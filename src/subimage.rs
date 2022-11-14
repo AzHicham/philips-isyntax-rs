@@ -1,7 +1,7 @@
 #[cxx::bridge]
 pub(crate) mod ffi {
     unsafe extern "C++" {
-        include!("philips-sys/cpp/subimage.hpp");
+        include!("philips-isyntax-rs/cpp/subimage.hpp");
 
         pub type SubImage;
         type SourceView = crate::view::ffi::SourceView;

@@ -11,7 +11,7 @@ pub(crate) mod ffi {
     }
 
     unsafe extern "C++" {
-        include!("philips-sys/cpp/view.hpp");
+        include!("philips-isyntax-rs/cpp/view.hpp");
 
         pub type View;
         pub type SourceView;
@@ -66,13 +66,13 @@ impl<'a> View<'a> {
     pub fn request_region_blocking(
         &mut self,
         pixel_engine: &mut PixelEngine,
-        ranges: &Rectangle,
+        range: &Rectangle,
         level: u32,
     ) -> Region {
         Region(ffi::request_region_blocking(
             pixel_engine.pe.pin_mut(),
             self.0.as_mut(),
-            ranges,
+            range,
             level,
         ))
     }
@@ -84,6 +84,7 @@ impl<'a> View<'a> {
     pub fn dimension_ranges(&self, level: u32) -> DimensionsRange {
         ffi::dimension_ranges(&self.0, level)
     }
+
     pub fn dimension_names(&self) -> impl Iterator<Item = &str> {
         self.0
             .dimensionNames()
@@ -150,6 +151,7 @@ impl<'a> SourceView<'a> {
     pub fn load_default_parameters(&mut self) {
         self.0.as_mut().loadDefaultParameters()
     }
+
     pub fn truncation(&mut self, enabled: bool, rounding: bool) {
         ffi::truncation(self.0.as_mut(), enabled, rounding)
     }
@@ -159,18 +161,23 @@ impl<'a> DisplayView<'a> {
     pub fn sharpness(&self) -> f64 {
         self.0.sharpness()
     }
+
     pub fn contrast_clip_limit(&self) -> f64 {
         self.0.contrastClipLimit()
     }
+
     pub fn color_correction_gamma(&self) -> f64 {
         self.0.colorCorrectionGamma()
     }
+
     pub fn color_correction_black_point(&self) -> f64 {
         self.0.colorCorrectionBlackPoint()
     }
+
     pub fn color_correction_white_point(&self) -> f64 {
         self.0.colorCorrectionWhitePoint()
     }
+
     pub fn color_gain(&self) -> f64 {
         self.0.colorGain()
     }

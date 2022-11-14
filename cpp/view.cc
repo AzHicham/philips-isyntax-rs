@@ -1,5 +1,6 @@
 #include "view.hpp"
-#include "philips-sys/src/view.rs.h"
+#include "philips-isyntax-rs/src/view.rs.h"
+#include "philips-isyntax-rs/src/dataenvelopes.rs.h"
 
 View& source_view_as_view(SourceView& source_view) { return source_view; }
 

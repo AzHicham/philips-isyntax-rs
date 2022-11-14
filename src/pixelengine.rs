@@ -1,7 +1,7 @@
 #[cxx::bridge]
 pub(crate) mod ffi {
     unsafe extern "C++" {
-        include!("philips-sys/cpp/pixelengine.hpp");
+        include!("philips-isyntax-rs/cpp/pixelengine.hpp");
 
         pub type PixelEngine;
         pub type RenderContext;
@@ -15,7 +15,7 @@ pub(crate) mod ffi {
         ) -> UniquePtr<PixelEngine>;
         fn make_render_context() -> UniquePtr<RenderContext>;
         fn make_render_backend() -> UniquePtr<RenderBackend>;
-        fn pe_version() -> UniquePtr<CxxString>;
+        fn version() -> UniquePtr<CxxString>;
         fn facade<'a, 'b>(
             pixel_engine: Pin<&'a mut PixelEngine>,
             name: &'b CxxString,
@@ -49,8 +49,8 @@ impl PixelEngine {
         }
     }
 
-    pub fn pixel_engine_version() -> Result<String> {
-        let version = ffi::pe_version();
+    pub fn version() -> Result<String> {
+        let version = ffi::version();
         Ok(version.to_str()?.to_string())
     }
 

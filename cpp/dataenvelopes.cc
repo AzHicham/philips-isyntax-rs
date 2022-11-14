@@ -1,5 +1,5 @@
 #include "dataenvelopes.hpp"
-#include "philips-sys/src/dataenvelopes.rs.h"
+#include "philips-isyntax-rs/src/dataenvelopes.rs.h"
 
 rust::Vec<Rectangle> as_rectangles(const DataEnvelopes& data_envelopes) {
     auto rectangles = data_envelopes.asRectangles();

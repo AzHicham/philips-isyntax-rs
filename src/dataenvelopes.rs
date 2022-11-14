@@ -10,7 +10,7 @@ pub(crate) mod ffi {
     }
 
     unsafe extern "C++" {
-        include!("philips-sys/cpp/dataenvelopes.hpp");
+        include!("philips-isyntax-rs/cpp/dataenvelopes.hpp");
 
         pub type DataEnvelopes;
 

@@ -1,7 +1,7 @@
 #[cxx::bridge]
 pub(crate) mod ffi {
     unsafe extern "C++" {
-        include!("philips-sys/cpp/view.hpp");
+        include!("philips-isyntax-rs/cpp/view.hpp");
 
         type Region = crate::view::ffi::Region;
 

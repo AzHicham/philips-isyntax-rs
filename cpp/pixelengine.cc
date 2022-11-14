@@ -16,6 +16,6 @@ std::unique_ptr<RenderContext> make_render_context() { return std::make_unique<S
 
 std::unique_ptr<RenderBackend> make_render_backend() { return std::make_unique<SoftwareRenderBackend>(); }
 
-std::unique_ptr<std::string> pe_version() { return std::make_unique<std::string>(PixelEngine::version()); }
+std::unique_ptr<std::string> version() { return std::make_unique<std::string>(PixelEngine::version()); }
 
 Facade& facade(PixelEngine& pixel_engine, std::string const& name) { return pixel_engine[name]; }
