@@ -96,7 +96,11 @@ pub(crate) mod ffi {
         fn dimensionTypes<'a>(&self, sub_image: &CxxString) -> &'a CxxVector<CxxString>;
         fn scale<'a>(&self, sub_image: &CxxString) -> &'a CxxVector<f64>;
         fn origin<'a>(&self, sub_image: &CxxString) -> &'a CxxVector<f64>;
-        fn envelopesAsRectangles(&self, sub_image: &CxxString, level: u32) -> Result<Vec<Rectangle>>;
+        fn envelopesAsRectangles(
+            &self,
+            sub_image: &CxxString,
+            level: u32,
+        ) -> Result<Vec<Rectangle>>;
         fn bitsAllocated(&self, sub_image: &CxxString) -> u16;
         fn bitsStored(&self, sub_image: &CxxString) -> u16;
         fn highBit(&self, sub_image: &CxxString) -> u16;
@@ -116,6 +120,7 @@ pub(crate) mod ffi {
     }
 }
 
+use crate::philips_slide::ffi::Rectangle;
 use crate::{
     errors::PhilipsSlideError,
     philips_slide::ffi::{DimensionsRange, Size},
@@ -123,7 +128,6 @@ use crate::{
 };
 use cxx::let_cxx_string;
 use image::RgbImage;
-use crate::philips_slide::ffi::Rectangle;
 
 impl PhilipsSlide {
     pub fn new(filename: &str) -> Result<Self> {
@@ -386,7 +390,11 @@ impl PhilipsSlide {
         self.inner.origin(&image_type).as_slice()
     }
 
-    pub fn envelopes_as_rectangles(&self, image_type: ImageType, level: u32) -> Result<Vec<Rectangle>> {
+    pub fn envelopes_as_rectangles(
+        &self,
+        image_type: ImageType,
+        level: u32,
+    ) -> Result<Vec<Rectangle>> {
         let_cxx_string!(image_type = image_type);
         Ok(self.inner.envelopesAsRectangles(&image_type, level)?)
     }

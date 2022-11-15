@@ -1,9 +1,9 @@
 #pragma once
-#include <memory>
 #include "PhilipsPixelEngine/pixelengine.hpp"
 #include "PhilipsPixelEngine/softwarerenderbackend.hpp"
 #include "PhilipsPixelEngine/softwarerendercontext.hpp"
 #include "rust/cxx.h"
+#include <memory>
 
 struct Size;
 struct Rectangle;
@@ -16,7 +16,7 @@ using SourceView = PixelEngine::SourceView;
 using BufferType = PixelEngine::BufferType;
 
 class PhilipsSlide {
-public:
+  public:
     PhilipsSlide(std::string const& url);
 
     // PixelEngine functions
@@ -89,12 +89,12 @@ public:
 
     void read_region(const RegionRequest& request, rust::Vec<uint8_t>& buffer, Size& image_size) const;
 
-private:
-    std::unique_ptr<RenderContext>       _render_context;
-    std::unique_ptr<RenderBackend>       _render_backend;
-    std::unique_ptr<PixelEngine>         _pixel_engine;
-    ISyntaxFacade&                       _facade;
-    std::map<std::string, SourceView&>   _views;
+  private:
+    std::unique_ptr<RenderContext> _render_context;
+    std::unique_ptr<RenderBackend> _render_backend;
+    std::unique_ptr<PixelEngine> _pixel_engine;
+    ISyntaxFacade& _facade;
+    std::map<std::string, SourceView&> _views;
 
     static const std::string _version; // PixelEngine version
 };
