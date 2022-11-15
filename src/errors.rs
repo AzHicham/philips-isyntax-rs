@@ -17,6 +17,9 @@ pub enum PhilipsSlideError {
     /// NullPtr Error
     #[error("Null pointer error")]
     NullPtrError,
+    /// Error while creating Image from vector
+    #[error("{0}")]
+    ImageError(String),
 }
 
 impl From<Exception> for PhilipsSlideError {

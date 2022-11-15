@@ -8,6 +8,12 @@
 # Development files
 *.log
 
+# Development files
+*.isyntax
+
+# Development files
+*.i2syntax
+
 .idea/
 
 .DS_Store
