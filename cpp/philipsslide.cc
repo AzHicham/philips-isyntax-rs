@@ -12,12 +12,34 @@ PhilipsSlide::PhilipsSlide(rust::Str url)
       _facade(_pixel_engine->operator[]("in")) {
     std::string url_(url);
     _facade.open(url_);
+    initViews();
+}
+
+void PhilipsSlide::initViews() {
     // init views
     const auto numImages = _facade.numImages();
     for (size_t idx(0); idx < numImages; ++idx) {
         auto& subImage = _facade[idx];
         // eg WSI, MACROIMAGE, LABELIMAGE
-        _views.insert(std::pair<std::string, SourceView&>(subImage.imageType(), subImage.sourceView()));
+        const auto type = subImage.imageType();
+        auto& source_view = subImage.sourceView();
+        const auto bitsStored = source_view.bitsStored();
+        View* view = &source_view;
+
+        if (type == "WSI" && bitsStored > 8) {
+            const std::map<std::size_t, std::vector<std::size_t>> truncationLevel{{0, {0, 0, 0}}};
+            source_view.truncation(false, false, truncationLevel);
+
+            if (bitsStored > 8) {
+                PixelEngine::UserView& user_view = source_view.addChainedView();
+                user_view.addFilter("Linear16ToSRGB8"); // This Filter converts 9-bit image to 8-bit image.
+                view = &user_view;
+            } else {
+                view = &source_view;
+            }
+        }
+
+        _views.insert(std::pair<std::string, View*>(type, view));
     }
 }
 
@@ -142,33 +164,33 @@ std::string const& PhilipsSlide::colorLinearity(std::string const& subImage) con
 
 // View (over images) functions
 DimensionsRange PhilipsSlide::dimensionRanges(std::string const& subImage, uint32_t level) const {
-    const auto ranges = _views.at(subImage).dimensionRanges(level);
+    const auto ranges = _views.at(subImage)->dimensionRanges(level);
     return DimensionsRange{ranges.at(0).at(0), ranges.at(0).at(1), ranges.at(0).at(2),
                            ranges.at(1).at(0), ranges.at(1).at(1), ranges.at(1).at(2)};
 }
 
 std::vector<std::string> const& PhilipsSlide::dimensionNames(std::string const& subImage) const {
-    return _views.at(subImage).dimensionNames();
+    return _views.at(subImage)->dimensionNames();
 }
 
 std::vector<std::string> const& PhilipsSlide::dimensionUnits(std::string const& subImage) const {
-    return _views.at(subImage).dimensionUnits();
+    return _views.at(subImage)->dimensionUnits();
 }
 
 std::vector<std::string> const& PhilipsSlide::dimensionTypes(std::string const& subImage) const {
-    return _views.at(subImage).dimensionTypes();
+    return _views.at(subImage)->dimensionTypes();
 }
 
 std::vector<double> const& PhilipsSlide::scale(std::string const& subImage) const {
-    return _views.at(subImage).scale();
+    return _views.at(subImage)->scale();
 }
 
 std::vector<double> const& PhilipsSlide::origin(std::string const& subImage) const {
-    return _views.at(subImage).origin();
+    return _views.at(subImage)->origin();
 }
 
 rust::Vec<Rectangle> PhilipsSlide::envelopesAsRectangles(std::string const& subImage, uint32_t level) const {
-    auto envelopes_range = _views.at(subImage).dataEnvelopes(level).asRectangles();
+    auto envelopes_range = _views.at(subImage)->dataEnvelopes(level).asRectangles();
 
     auto res = rust::Vec<Rectangle>();
     res.reserve(envelopes_range.size());
@@ -179,40 +201,40 @@ rust::Vec<Rectangle> PhilipsSlide::envelopesAsRectangles(std::string const& subI
     return res;
 }
 
-uint16_t PhilipsSlide::bitsAllocated(std::string const& subImage) const { return _views.at(subImage).bitsAllocated(); }
+uint16_t PhilipsSlide::bitsAllocated(std::string const& subImage) const { return _views.at(subImage)->bitsAllocated(); }
 
-uint16_t PhilipsSlide::bitsStored(std::string const& subImage) const { return _views.at(subImage).bitsStored(); }
+uint16_t PhilipsSlide::bitsStored(std::string const& subImage) const { return _views.at(subImage)->bitsStored(); }
 
-uint16_t PhilipsSlide::highBit(std::string const& subImage) const { return _views.at(subImage).highBit(); }
+uint16_t PhilipsSlide::highBit(std::string const& subImage) const { return _views.at(subImage)->highBit(); }
 
 uint16_t PhilipsSlide::pixelRepresentation(std::string const& subImage) const {
-    return _views.at(subImage).pixelRepresentation();
+    return _views.at(subImage)->pixelRepresentation();
 }
 
 uint16_t PhilipsSlide::planarConfiguration(std::string const& subImage) const {
-    return _views.at(subImage).planarConfiguration();
+    return _views.at(subImage)->planarConfiguration();
 }
 
 uint16_t PhilipsSlide::samplesPerPixel(std::string const& subImage) const {
-    return _views.at(subImage).samplesPerPixel();
+    return _views.at(subImage)->samplesPerPixel();
 }
 
 uint32_t PhilipsSlide::numDerivedLevels(std::string const& subImage) const {
-    return _views.at(subImage).numDerivedLevels();
+    return _views.at(subImage)->numDerivedLevels();
 }
 
 std::vector<size_t> PhilipsSlide::pixelSize(std::string const& subImage) const {
-    return _views.at(subImage).pixelSize();
+    return _views.at(subImage)->pixelSize();
 }
 
 void PhilipsSlide::read_region(const RegionRequest& request, rust::Vec<uint8_t>& buffer, Size& image_size) const {
-    auto& view = _views.at("WSI");
+    auto* view = _views.at("WSI");
 
     const std::vector<std::vector<std::size_t>> view_range{
         {request.roi.start_x, request.roi.end_x, request.roi.start_y, request.roi.end_y, request.level}};
-    auto const& envelopes = view.dataEnvelopes(request.level);
+    auto const& envelopes = view->dataEnvelopes(request.level);
 
-    auto _ = view.requestRegions(view_range, envelopes, false, {254, 254, 254}, BufferType::RGB);
+    auto _ = view->requestRegions(view_range, envelopes, false, {254, 254, 254}, BufferType::RGB);
     auto regions = _pixel_engine->waitAny();
     auto region = regions.front();
 
