@@ -14,6 +14,9 @@
 # Development files
 *.i2syntax
 
+# Cred
+gha-creds-*.json
+
 .idea/
 
 .DS_Store
