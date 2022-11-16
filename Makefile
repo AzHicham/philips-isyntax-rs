@@ -8,7 +8,9 @@ install-deps:
 	unzip sdk.zip -d . && \
 	cd sdk && \
 	chmod +x InstallPathologySDK.sh && \
-    sudo ./InstallPathologySDK.sh -y
+    sudo ./InstallPathologySDK.sh -y && \
+    sudo rm -rf sdk && \
+    sudo rm -f sdk.sip
 
 dl-test-images:
 	gsutil cp gs://az-philips/sample.isyntax ./tests/data/sample.isyntax
