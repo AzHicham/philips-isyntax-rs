@@ -28,6 +28,16 @@ jobs:
         with:
           toolchain: stable
           override: true
+      - name: Google Storage authentication
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+          export_environment_variables: true
+          create_credentials_file: true
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+      - name: Install dependencies ubuntu
+        run: make install-deps
       - uses: katyo/publish-crates@v1
         with:
           dry-run: ${{ github.event_name != 'release' }}
