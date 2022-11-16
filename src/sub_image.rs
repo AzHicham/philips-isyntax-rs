@@ -1,13 +1,16 @@
 //! This module contains all functions related to Philips SubImages
 //!
 
-use crate::{errors::PhilipsSlideError, ImageType, PhilipsSlide, Result};
+use crate::{ImageType, PhilipsSlide, Result};
 use cxx::let_cxx_string;
-use std::io::Cursor;
 
 #[cfg(feature = "image")]
-use image::{
-    codecs::jpeg::JpegDecoder, ColorType, DynamicImage, ImageDecoder, RgbImage, RgbaImage,
+use {
+    crate::errors::PhilipsSlideError,
+    image::{
+        codecs::jpeg::JpegDecoder, ColorType, DynamicImage, ImageDecoder, RgbImage, RgbaImage,
+    },
+    std::io::Cursor,
 };
 
 impl PhilipsSlide {

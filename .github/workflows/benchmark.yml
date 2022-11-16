@@ -22,6 +22,15 @@ jobs:
         create_credentials_file: true
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v0
+    - name: Cache sample slide
+      id: cache-slide
+      uses: actions/cache@v3
+      with:
+        path: tests/data/
+        key: slides-test
+    - name: Download sample tests data
+      if: steps.cache-slide.outputs.cache-hit != 'true'
+      run: make dl-test-images
     - name: Install dependencies
       run: make install-deps
     - uses: actions-rs/toolchain@v1

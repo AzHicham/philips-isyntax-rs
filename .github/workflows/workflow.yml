@@ -17,7 +17,7 @@ jobs:
         fail-fast: false
         matrix:
           os: [ "ubuntu-20.04" ]
-          feature: [ "--no-default-features" ]
+          feature: [ "--no-default-features", "" ]
 
     steps:
     - uses: actions/checkout@v3
@@ -33,6 +33,15 @@ jobs:
       with:
         toolchain: stable
         override: true
+    - name: Cache sample slide
+      id: cache-slide
+      uses: actions/cache@v3
+      with:
+        path: tests/data/
+        key: slides-test
+    - name: Download sample tests data
+      if: steps.cache-slide.outputs.cache-hit != 'true'
+      run: make dl-test-images
     - uses: Swatinem/rust-cache@v2
       with:
         key: ${{ matrix.os }}-${{ matrix.feature }}

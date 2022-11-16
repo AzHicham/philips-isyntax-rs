@@ -1,14 +1,11 @@
 //! This module contains all functions related to Philips Views
 //!
 
-use crate::{
-    errors::PhilipsSlideError, DimensionsRange, ImageType, PhilipsSlide, Rectangle, RegionRequest,
-    Result, Size,
-};
+use crate::{DimensionsRange, ImageType, PhilipsSlide, Rectangle, RegionRequest, Result, Size};
 use cxx::let_cxx_string;
 
 #[cfg(feature = "image")]
-use image::RgbImage;
+use {crate::errors::PhilipsSlideError, image::RgbImage};
 
 impl PhilipsSlide {
     /// Returns the dimension ranges of the SubImage for a certain level

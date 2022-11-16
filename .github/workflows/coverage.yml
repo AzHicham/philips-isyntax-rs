@@ -20,6 +20,15 @@ jobs:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
           export_environment_variables: true
           create_credentials_file: true
+      - name: Cache sample slide
+        id: cache-slide
+        uses: actions/cache@v3
+        with:
+          path: tests/data/
+          key: slides-test
+      - name: Download sample tests data
+        if: steps.cache-slide.outputs.cache-hit != 'true'
+        run: make dl-test-images
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
       - name: Install dependencies

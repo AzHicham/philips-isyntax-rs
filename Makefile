@@ -1,4 +1,4 @@
-.PHONY: install-deps
+.PHONY: install-deps dl-test-images
 
 install-deps:
 	export DEBIAN_FRONTEND=noninteractive && \
@@ -9,3 +9,6 @@ install-deps:
 	cd sdk && \
 	chmod +x InstallPathologySDK.sh && \
     sudo ./InstallPathologySDK.sh -y
+
+dl-test-images:
+	gsutil cp gs://az-philips/sample.isyntax tests/data/
