@@ -11,4 +11,4 @@ install-deps:
     sudo ./InstallPathologySDK.sh -y
 
 dl-test-images:
-	gsutil cp gs://az-philips/sample.isyntax tests/data/
+	gsutil cp gs://az-philips/sample.isyntax ./tests/data/sample.isyntax
