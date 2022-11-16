@@ -1,5 +1,5 @@
 #include "philipsslide.hpp"
-#include "philips-isyntax-rs/src/philips_slide.rs.h"
+#include "philips-isyntax-rs/src/bindings.rs.h"
 
 const std::string PhilipsSlide::_version = PixelEngine::version();
 
@@ -208,7 +208,7 @@ void PhilipsSlide::read_region(const RegionRequest& request, rust::Vec<uint8_t>&
     auto& view = _views.at("WSI");
 
     const std::vector<std::vector<std::size_t>> view_range{
-        {request.start_x, request.end_x, request.start_y, request.end_y, request.level}};
+        {request.roi.start_x, request.roi.end_x, request.roi.start_y, request.roi.end_y, request.level}};
     auto const& envelopes = view.dataEnvelopes(request.level);
 
     auto _ = view.requestRegions(view_range, envelopes, false, {254, 254, 254}, BufferType::RGB);

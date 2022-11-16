@@ -27,3 +27,9 @@ impl From<Exception> for PhilipsSlideError {
         PhilipsSlideError::CoreError(error.to_string())
     }
 }
+
+impl From<image::ImageError> for PhilipsSlideError {
+    fn from(error: image::ImageError) -> Self {
+        PhilipsSlideError::ImageError(error.to_string())
+    }
+}

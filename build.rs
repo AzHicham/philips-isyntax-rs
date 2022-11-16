@@ -1,10 +1,10 @@
 fn main() -> miette::Result<()> {
-    cxx_build::bridge("src/philips_slide.rs")
+    cxx_build::bridge("src/bindings.rs")
         .file("cpp/philipsslide.cc")
         .flag_if_supported("-std=c++17")
-        .compile("philips-slide");
+        .compile("philips-bindings");
 
-    println!("cargo:rerun-if-changed=src/philips_slide.rs");
+    println!("cargo:rerun-if-changed=src/bindings.rs");
     println!("cargo:rerun-if-changed=cpp/philipsslide.cc");
     println!("cargo:rerun-if-changed=cpp/philipsslide.hpp");
 

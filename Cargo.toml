@@ -3,7 +3,9 @@ name = "philips-isyntax-rs"
 edition = "2021"
 version = "0.1.0"
 authors = ["AzHicham <hicham.azimani1@gmail.com>"]
-description = "Rust bindings of Philips Open Pathology C++ library"
+description = "Rust bindings to the Philips Open Pathology C++ library"
+repository = "https://github.com/AzHicham/philips-isyntax-rs"
+homepage = "https://github.com/AzHicham/philips-isyntax-rs"
 readme = "README.md"
 keywords = ["philips", "isyntax", "histopathology", "microscopy"]
 categories = ["science"]
@@ -16,11 +18,11 @@ image = ["dep:image"]
 [dependencies]
 thiserror = "1.0"
 cxx = "1.0"
-image = { version = "0.24", optional = true, default-features = false}
+image = { version = "0.24", optional = true, default-features = false, features = ["jpeg"] }
 
 [build-dependencies]
 cxx-build = "1.0"
-miette = { version = "5", features = ["fancy"] } # optional but gives nicer error messages!
+miette = { version = "5", features = ["fancy"] }
 
 [dev-dependencies]
 rstest = "0.15"

@@ -3,7 +3,7 @@ mod fixture;
 use fixture::sample;
 use std::path::Path;
 
-use philips_isyntax_rs::{PhilipsSlide, RegionRequest};
+use philips_isyntax_rs::{PhilipsSlide, Rectangle, RegionRequest};
 use rstest::rstest;
 
 #[rstest]
@@ -12,10 +12,12 @@ fn test_read_region_wsi(#[case] filename: &Path) {
     let slide = PhilipsSlide::new(filename.to_str().unwrap()).unwrap();
 
     let req = RegionRequest {
-        start_x: 0,
-        start_y: 0,
-        end_x: 199,
-        end_y: 99,
+        roi: Rectangle {
+            start_x: 0,
+            start_y: 0,
+            end_x: 199,
+            end_y: 99,
+        },
         level: 0,
     };
 
@@ -31,10 +33,12 @@ fn test_read_image_wsi(#[case] filename: &Path) {
     let slide = PhilipsSlide::new(filename.to_str().unwrap()).unwrap();
 
     let req = RegionRequest {
-        start_x: 0,
-        start_y: 0,
-        end_x: 99,
-        end_y: 199,
+        roi: Rectangle {
+            start_x: 0,
+            start_y: 0,
+            end_x: 99,
+            end_y: 199,
+        },
         level: 0,
     };
 

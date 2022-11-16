@@ -178,37 +178,37 @@ fn test_envelopes(#[case] filename: &Path) {
     assert_eq!(
         envelopes_range_0[0],
         Rectangle {
-            x_min: 0,
-            y_min: 42499,
-            x_max: 45570,
-            y_max: 69122
+            start_x: 0,
+            end_x: 45570,
+            start_y: 42499,
+            end_y: 69122
         }
     );
     assert_eq!(
         envelopes_range_0[4],
         Rectangle {
-            x_min: 112131,
-            y_min: 41475,
-            x_max: 158725,
-            y_max: 62978
+            start_x: 112131,
+            end_x: 158725,
+            start_y: 41475,
+            end_y: 62978
         }
     );
     assert_eq!(
         envelopes_range_9[0],
         Rectangle {
-            x_min: 1024,
-            y_min: 44032,
-            x_max: 44544,
-            y_max: 68096
+            start_x: 1024,
+            end_x: 44544,
+            start_y: 44032,
+            end_y: 68096
         }
     );
     assert_eq!(
         envelopes_range_9[4],
         Rectangle {
-            x_min: 113664,
-            y_min: 43008,
-            x_max: 157696,
-            y_max: 61952
+            start_x: 113664,
+            end_x: 157696,
+            start_y: 43008,
+            end_y: 61952
         }
     );
 }

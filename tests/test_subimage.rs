@@ -35,6 +35,12 @@ fn test_sub_image_slide(#[case] filename: &Path) {
         ]
     );
     assert_eq!(
+        slide
+            .lossy_image_compression(ImageType::WSI)
+            .unwrap(),
+        "01"
+    );
+    assert_eq!(
         slide.lossy_image_compression_ratio(ImageType::WSI).unwrap(),
         7.5
     );
@@ -72,6 +78,12 @@ fn test_sub_image_macro(#[case] filename: &Path) {
     );
     assert_eq!(
         slide
+            .lossy_image_compression(ImageType::MacroImage)
+            .unwrap(),
+        "01"
+    );
+    assert_eq!(
+        slide
             .lossy_image_compression_ratio(ImageType::MacroImage)
             .unwrap(),
         26.0
@@ -80,6 +92,16 @@ fn test_sub_image_macro(#[case] filename: &Path) {
         slide.image_data(ImageType::MacroImage).unwrap().len(),
         75580
     );
+
+    let macro_image = slide.get_image(ImageType::MacroImage).unwrap();
+    image::save_buffer(
+        Path::new("macro_image.jpeg"),
+        macro_image.as_bytes(),
+        macro_image.width(),
+        macro_image.height(),
+        macro_image.color(),
+    )
+    .unwrap();
 }
 
 #[rstest]
@@ -98,6 +120,12 @@ fn test_sub_image_label(#[case] filename: &Path) {
     assert!(slide.icc_matrix(ImageType::LabelImage).is_err());
     assert_eq!(
         slide
+            .lossy_image_compression(ImageType::LabelImage)
+            .unwrap(),
+        "01"
+    );
+    assert_eq!(
+        slide
             .lossy_image_compression_ratio(ImageType::LabelImage)
             .unwrap(),
         26.0
@@ -106,4 +134,14 @@ fn test_sub_image_label(#[case] filename: &Path) {
         slide.image_data(ImageType::LabelImage).unwrap().len(),
         52734
     );
+
+    let label_image = slide.get_image(ImageType::LabelImage).unwrap();
+    image::save_buffer(
+        Path::new("label_image.jpeg"),
+        label_image.as_bytes(),
+        label_image.width(),
+        label_image.height(),
+        label_image.color(),
+    )
+    .unwrap();
 }

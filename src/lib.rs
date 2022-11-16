@@ -1,19 +1,22 @@
-extern crate core;
-
-use cxx::UniquePtr;
-
+mod bindings;
 pub mod errors;
-mod philips_slide;
+mod facade;
+mod pixel_engine;
+mod sub_image;
+mod view;
 
-pub type Rectangle = philips_slide::ffi::Rectangle;
-pub type RegionRequest = philips_slide::ffi::RegionRequest;
-pub type DimensionsRange = philips_slide::ffi::DimensionsRange;
+pub type Size = bindings::ffi::Size;
+pub type Rectangle = bindings::ffi::Rectangle;
+pub type RegionRequest = bindings::ffi::RegionRequest;
+pub type DimensionsRange = bindings::ffi::DimensionsRange;
 
 /// The corresponding result type used by the crate.
 pub type Result<T, E = errors::PhilipsSlideError> = std::result::Result<T, E>;
 
+use cxx::UniquePtr;
+
 pub struct PhilipsSlide {
-    inner: UniquePtr<philips_slide::ffi::PhilipsSlide>,
+    inner: UniquePtr<bindings::ffi::PhilipsSlide>,
 }
 
 pub enum ImageType {
