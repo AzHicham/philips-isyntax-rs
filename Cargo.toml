@@ -27,3 +27,7 @@ miette = { version = "5", features = ["fancy"] }
 [dev-dependencies]
 rstest = "0.15"
 bencher = "0.1"
+
+[[bench]]
+name = "bench_read"
+harness = false

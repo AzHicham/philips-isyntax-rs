@@ -3,14 +3,15 @@
 
 const std::string PhilipsSlide::_version = PixelEngine::version();
 
-std::unique_ptr<PhilipsSlide> new_(std::string const& url) { return std::make_unique<PhilipsSlide>(url); }
+std::unique_ptr<PhilipsSlide> new_(rust::Str url) { return std::make_unique<PhilipsSlide>(url); }
 
-PhilipsSlide::PhilipsSlide(std::string const& url)
+PhilipsSlide::PhilipsSlide(rust::Str url)
     : _render_context(std::make_unique<SoftwareRenderContext>()),
       _render_backend(std::make_unique<SoftwareRenderBackend>()),
       _pixel_engine(std::make_unique<PixelEngine>(*_render_backend, *_render_context)),
       _facade(_pixel_engine->operator[]("in")) {
-    _facade.open(url);
+    std::string url_(url);
+    _facade.open(url_);
     // init views
     const auto numImages = _facade.numImages();
     for (size_t idx(0); idx < numImages; ++idx) {
@@ -196,7 +197,7 @@ uint16_t PhilipsSlide::samplesPerPixel(std::string const& subImage) const {
     return _views.at(subImage).samplesPerPixel();
 }
 
-size_t PhilipsSlide::numDerivedLevels(std::string const& subImage) const {
+uint32_t PhilipsSlide::numDerivedLevels(std::string const& subImage) const {
     return _views.at(subImage).numDerivedLevels();
 }
 

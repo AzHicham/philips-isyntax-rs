@@ -39,7 +39,7 @@ pub(crate) mod ffi {
 
         pub type PhilipsSlide;
 
-        fn new_(url: &CxxString) -> Result<UniquePtr<PhilipsSlide>>;
+        fn new_(url: &str) -> Result<UniquePtr<PhilipsSlide>>;
 
         // SDK properties
         fn containers(&self) -> &CxxVector<CxxString>;
@@ -107,7 +107,7 @@ pub(crate) mod ffi {
         fn pixelRepresentation(&self, sub_image: &CxxString) -> Result<u16>;
         fn planarConfiguration(&self, sub_image: &CxxString) -> Result<u16>;
         fn samplesPerPixel(&self, sub_image: &CxxString) -> Result<u16>;
-        fn numDerivedLevels(&self, sub_image: &CxxString) -> usize;
+        fn numDerivedLevels(&self, sub_image: &CxxString) -> u32;
 
         // read WSI tile
         pub(crate) fn read_region(
@@ -119,3 +119,5 @@ pub(crate) mod ffi {
 
     }
 }
+
+unsafe impl Send for ffi::PhilipsSlide {}

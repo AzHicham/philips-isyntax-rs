@@ -4,12 +4,13 @@
 
 use crate::{bindings::ffi, ImageType, PhilipsSlide, Result};
 use cxx::let_cxx_string;
+use std::path::Path;
 
 impl PhilipsSlide {
     /// Create a new instance of PhilipsSlide
     /// May fail if the SDK cannot read the file
-    pub fn new(filename: &str) -> Result<Self> {
-        let_cxx_string!(filename = filename);
+    pub fn new<P: AsRef<Path>>(path: P) -> Result<Self> {
+        let filename = path.as_ref().display().to_string();
         Ok(PhilipsSlide {
             inner: ffi::new_(&filename)?,
         })

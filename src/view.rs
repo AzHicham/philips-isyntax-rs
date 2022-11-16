@@ -102,7 +102,7 @@ impl PhilipsSlide {
     }
 
     /// Returns the number of level available for a SubImage
-    pub fn num_derived_levels(&self, image_type: ImageType) -> usize {
+    pub fn num_derived_levels(&self, image_type: ImageType) -> u32 {
         let_cxx_string!(image_type = image_type);
         self.inner.numDerivedLevels(&image_type)
     }

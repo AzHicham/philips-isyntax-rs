@@ -17,7 +17,7 @@ using BufferType = PixelEngine::BufferType;
 
 class PhilipsSlide {
   public:
-    PhilipsSlide(std::string const& url);
+    PhilipsSlide(rust::Str url);
 
     // PixelEngine functions
     std::string const& sdkVersion() const;
@@ -84,7 +84,7 @@ class PhilipsSlide {
     uint16_t pixelRepresentation(std::string const& subImage) const;
     uint16_t planarConfiguration(std::string const& subImage) const;
     uint16_t samplesPerPixel(std::string const& subImage) const;
-    size_t numDerivedLevels(std::string const& subImage) const;
+    uint32_t numDerivedLevels(std::string const& subImage) const;
     std::vector<size_t> pixelSize(std::string const& subImage) const;
 
     void read_region(const RegionRequest& request, rust::Vec<uint8_t>& buffer, Size& image_size) const;
@@ -99,4 +99,4 @@ class PhilipsSlide {
     static const std::string _version; // PixelEngine version
 };
 
-std::unique_ptr<PhilipsSlide> new_(std::string const& url);
+std::unique_ptr<PhilipsSlide> new_(rust::Str url);

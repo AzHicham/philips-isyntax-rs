@@ -20,6 +20,9 @@ pub enum PhilipsSlideError {
     /// Error while creating Image from vector
     #[error("{0}")]
     ImageError(String),
+    /// Level out of range
+    #[error("Level {0} is out of range")]
+    InvalidLevel(u32),
 }
 
 impl From<Exception> for PhilipsSlideError {

@@ -34,12 +34,7 @@ fn test_sub_image_slide(#[case] filename: &Path) {
             1.5236921332915387
         ]
     );
-    assert_eq!(
-        slide
-            .lossy_image_compression(ImageType::WSI)
-            .unwrap(),
-        "01"
-    );
+    assert_eq!(slide.lossy_image_compression(ImageType::WSI).unwrap(), "01");
     assert_eq!(
         slide.lossy_image_compression_ratio(ImageType::WSI).unwrap(),
         7.5
