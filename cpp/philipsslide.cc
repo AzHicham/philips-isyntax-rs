@@ -27,17 +27,14 @@ void PhilipsSlide::initViews() {
         View* view = &source_view;
 
         if (type == "WSI" && bitsStored > 8) {
-             const std::map<std::size_t, std::vector<std::size_t>> truncationLevel{
-                {0, { 0, 0, 0 }}
-             };
-             source_view.truncation(false, false, truncationLevel);
+            const std::map<std::size_t, std::vector<std::size_t>> truncationLevel{{0, {0, 0, 0}}};
+            source_view.truncation(false, false, truncationLevel);
 
             if (bitsStored > 8) {
                 PixelEngine::UserView& user_view = source_view.addChainedView();
-                user_view.addFilter("Linear16ToSRGB8"); //This Filter converts 9-bit image to 8-bit image.
+                user_view.addFilter("Linear16ToSRGB8"); // This Filter converts 9-bit image to 8-bit image.
                 view = &user_view;
-            }
-            else {
+            } else {
                 view = &source_view;
             }
         }
