@@ -15,11 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Google Storage authentication
-        uses: google-github-actions/auth@v0
+        uses: google-github-actions/auth@v1
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
           export_environment_variables: true
           create_credentials_file: true
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
       - name: Cache sample slide
         id: cache-slide
         uses: actions/cache@v3
@@ -29,8 +31,6 @@ jobs:
       - name: Download sample tests data
         if: steps.cache-slide.outputs.cache-hit != 'true'
         run: make dl-test-images
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0
       - name: Install dependencies
         run: make install-deps
       - uses: actions-rs/toolchain@v1

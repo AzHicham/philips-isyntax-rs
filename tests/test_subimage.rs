@@ -8,6 +8,7 @@ use rstest::rstest;
 
 #[rstest]
 #[case(sample())]
+#[cfg(feature = "image")]
 fn test_sub_image_slide(#[case] filename: &Path) {
     let slide = PhilipsSlide::new(filename.to_str().unwrap()).unwrap();
 
@@ -46,6 +47,7 @@ fn test_sub_image_slide(#[case] filename: &Path) {
 
 #[rstest]
 #[case(sample())]
+#[cfg(feature = "image")]
 fn test_sub_image_macro(#[case] filename: &Path) {
     let slide = PhilipsSlide::new(filename.to_str().unwrap()).unwrap();
 
@@ -101,6 +103,7 @@ fn test_sub_image_macro(#[case] filename: &Path) {
 
 #[rstest]
 #[case(sample())]
+#[cfg(feature = "image")]
 fn test_sub_image_label(#[case] filename: &Path) {
     let slide = PhilipsSlide::new(filename.to_str().unwrap()).unwrap();
 
