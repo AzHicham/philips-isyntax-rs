@@ -19,6 +19,8 @@ class PhilipsSlide {
   public:
     PhilipsSlide(rust::Str url);
 
+    void initViews();
+
     // PixelEngine functions
     std::string const& sdkVersion() const;
     std::vector<std::string> const& containers() const;
@@ -94,7 +96,7 @@ class PhilipsSlide {
     std::unique_ptr<RenderBackend> _render_backend;
     std::unique_ptr<PixelEngine> _pixel_engine;
     ISyntaxFacade& _facade;
-    std::map<std::string, SourceView&> _views;
+    std::map<std::string, View*> _views;
 
     static const std::string _version; // PixelEngine version
 };
