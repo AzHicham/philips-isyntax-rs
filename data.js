@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1668618456532,
+  "lastUpdate": 1668621198489,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
@@ -277,6 +277,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 9801064,
             "range": "± 1800068",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hicham.azimani@owkin.com",
+            "name": "HichamAz",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "51ef4cf576fac1803d32b4c4319d1e5b4af6a882",
+          "message": "Merge pull request #5 from AzHicham/fix_quality\n\nfeature: Add support for 9 bits images",
+          "timestamp": "2022-11-16T18:47:42+01:00",
+          "tree_id": "19c2e06de2331e7b9425b6c33013d39bda26e9d4",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/51ef4cf576fac1803d32b4c4319d1e5b4af6a882"
+        },
+        "date": 1668621197678,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1446844,
+            "range": "± 262013",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 3491353,
+            "range": "± 928462",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 8624384,
+            "range": "± 1247363",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 8077781,
+            "range": "± 892490",
             "unit": "ns/iter"
           }
         ]
