@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1668675268177,
+  "lastUpdate": 1668675799663,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
@@ -597,6 +597,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 4946295,
             "range": "± 814725",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hicham.azimani1@gmail.com",
+            "name": "HichamAz",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "60eb9d3456a86376b186e3765cbac4bcd8fd4cb0",
+          "message": "Merge pull request #8 from AzHicham/AzHicham-patch-1",
+          "timestamp": "2022-11-17T10:00:27+01:00",
+          "tree_id": "f93e8b3dd602c2e1989757efaca833969c1c0e7a",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/60eb9d3456a86376b186e3765cbac4bcd8fd4cb0"
+        },
+        "date": 1668675798955,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1131337,
+            "range": "± 343001",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 2490055,
+            "range": "± 322873",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 5585737,
+            "range": "± 453545",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 4821624,
+            "range": "± 646432",
             "unit": "ns/iter"
           }
         ]
