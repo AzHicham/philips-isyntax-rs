@@ -26,7 +26,7 @@ void PhilipsSlide::initViews() {
         const auto bitsStored = source_view.bitsStored();
         View* view = &source_view;
 
-        if (type == "WSI" && bitsStored > 8) {
+        if (type == "WSI") {
             const std::map<std::size_t, std::vector<std::size_t>> truncationLevel{{0, {0, 0, 0}}};
             source_view.truncation(false, false, truncationLevel);
 
