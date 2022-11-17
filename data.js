@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1668671395552,
+  "lastUpdate": 1668671649718,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
@@ -413,6 +413,50 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 7621052,
             "range": "± 839582",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "AzHicham",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "name": "AzHicham",
+            "username": "AzHicham"
+          },
+          "id": "7d463b2131dc90d409e2a1af8d5bd90ec70b0aa0",
+          "message": "fix: build doc on docs.rs",
+          "timestamp": "2022-11-12T15:05:14Z",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/7/commits/7d463b2131dc90d409e2a1af8d5bd90ec70b0aa0"
+        },
+        "date": 1668671649309,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1421960,
+            "range": "± 322856",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 3489751,
+            "range": "± 952160",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 8631695,
+            "range": "± 1233450",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 7925914,
+            "range": "± 874470",
             "unit": "ns/iter"
           }
         ]
