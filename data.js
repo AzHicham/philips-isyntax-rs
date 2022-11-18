@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1668792856178,
+  "lastUpdate": 1668792868440,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
@@ -739,6 +739,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 5668949,
             "range": "± 882132",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hicham.azimani1@gmail.com",
+            "name": "HichamAz",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fc70be8cc217c2c9b1b960fe89e3af3ff370e48b",
+          "message": "Merge pull request #10 from AzHicham/dependabot/cargo/cxx-1.0.82\n\nBump cxx from 1.0.81 to 1.0.82",
+          "timestamp": "2022-11-18T18:30:50+01:00",
+          "tree_id": "1fab5ed5790a1b98efea9002c60d5cf3df53fa2d",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/fc70be8cc217c2c9b1b960fe89e3af3ff370e48b"
+        },
+        "date": 1668792867661,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1727591,
+            "range": "± 744702",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 3573473,
+            "range": "± 1387767",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 8593847,
+            "range": "± 2590895",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 7311935,
+            "range": "± 2339883",
             "unit": "ns/iter"
           }
         ]
