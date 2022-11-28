@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1669645285329,
+  "lastUpdate": 1669649440304,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
@@ -835,6 +835,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 5711313,
             "range": "± 884242",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hicham.azimani1@gmail.com",
+            "name": "HichamAz",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dab36f3b2ed0a3315d5761cb8288d653444b2b93",
+          "message": "Merge pull request #11 from AzHicham/dependabot/cargo/miette-5.5.0\n\nBump miette from 5.4.1 to 5.5.0",
+          "timestamp": "2022-11-28T16:28:18+01:00",
+          "tree_id": "544a8b1110b8389bf549e96d9cd8e0e69a52a99a",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/dab36f3b2ed0a3315d5761cb8288d653444b2b93"
+        },
+        "date": 1669649439793,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1246424,
+            "range": "± 887820",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 2556241,
+            "range": "± 874242",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 5705545,
+            "range": "± 830610",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 4952271,
+            "range": "± 919266",
             "unit": "ns/iter"
           }
         ]
