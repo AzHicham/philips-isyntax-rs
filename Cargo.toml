@@ -25,7 +25,7 @@ cxx-build = "1.0"
 miette = { version = "5", features = ["fancy"] }
 
 [dev-dependencies]
-rstest = "0.15"
+rstest = "0.16"
 bencher = "0.1"
 
 [[bench]]
