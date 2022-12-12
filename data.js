@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1669890460765,
+  "lastUpdate": 1670837569293,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
@@ -931,6 +931,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 5565444,
             "range": "± 764487",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hicham.azimani1@gmail.com",
+            "name": "HichamAz",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "067a8139736e19d8431f41c4343de08ab9315700",
+          "message": "Merge pull request #14 from AzHicham/dependabot/cargo/cxx-build-1.0.83\n\nBump cxx-build from 1.0.82 to 1.0.83",
+          "timestamp": "2022-12-12T10:29:08+01:00",
+          "tree_id": "6e9c76f4f8428cb1bd03a05cb737707190000048",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/067a8139736e19d8431f41c4343de08ab9315700"
+        },
+        "date": 1670837568591,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1172932,
+            "range": "± 315934",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 2589461,
+            "range": "± 1776124",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 5902483,
+            "range": "± 765985",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 5051425,
+            "range": "± 926292",
             "unit": "ns/iter"
           }
         ]
