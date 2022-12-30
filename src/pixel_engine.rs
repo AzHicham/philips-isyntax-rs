@@ -2,7 +2,7 @@
 //! Results of theses functions should only depend on the SDK and not ISyntax file
 //!
 
-use crate::{bindings::ffi, ImageType, PhilipsSlide, Result};
+use crate::{bindings::ffi, Facade, ImageType, PhilipsSlide, Result};
 use cxx::let_cxx_string;
 use std::path::Path;
 
@@ -13,6 +13,14 @@ impl PhilipsSlide {
         let filename = path.as_ref().display().to_string();
         Ok(PhilipsSlide {
             inner: ffi::new_(&filename)?,
+        })
+    }
+
+    pub fn facade(&self, input: &str) -> Result<Facade> {
+        let_cxx_string!(input = input);
+        Ok(Facade {
+            inner: self.inner.facade(&input)?,
+            _lifetime: Default::default(),
         })
     }
 

@@ -9,11 +9,14 @@ struct Size;
 struct Rectangle;
 struct DimensionsRange;
 struct RegionRequest;
+class Facade;
+class Image;
 
 using ISyntaxFacade = PixelEngine::ISyntaxFacade;
 using View = PixelEngine::View;
 using SourceView = PixelEngine::SourceView;
 using BufferType = PixelEngine::BufferType;
+using SubImage = PixelEngine::SubImage;
 
 class PhilipsSlide {
   public:
@@ -32,6 +35,7 @@ class PhilipsSlide {
     std::vector<std::string> const& supportedFilters() const;
     void clientCertificates(std::string const& cert, std::string const& key, std::string const& password);
     void certificates(std::string const& path);
+    std::unique_ptr<Facade> facade(std::string const& input) const;
 
     // file properties
     size_t numImages() const;
@@ -99,6 +103,62 @@ class PhilipsSlide {
     std::map<std::string, View*> _views;
 
     static const std::string _version; // PixelEngine version
+};
+
+class Facade {
+  public:
+    Facade(ISyntaxFacade& facade);
+
+    void open(rust::Str url) const;
+    size_t numImages() const;
+    std::string const& iSyntaxFileVersion() const;
+    std::string const& id() const;
+    std::string const& barcode() const;
+    std::string const& scannerCalibrationStatus() const;
+    std::vector<std::string> const& softwareVersions() const;
+    std::string const& derivationDescription() const;
+    std::string const& acquisitionDateTime() const;
+    std::string const& manufacturer() const;
+    std::string const& modelName() const;
+    std::string const& deviceSerialNumber() const;
+    uint16_t scannerRackNumber() const;
+    uint16_t scannerSlotNumber() const;
+    std::string const& scannerOperatorId() const;
+    uint16_t scannerRackPriority() const;
+    std::vector<std::string> const& dateOfLastCalibration() const;
+    std::vector<std::string> const& timeOfLastCalibration() const;
+    bool isPhilips() const;
+    bool isHamamatsu() const;
+    bool isUFS() const;
+    bool isUFSb() const;
+    bool isUVS() const;
+
+    std::unique_ptr<Image> sub_image(std::string const& image_type) const;
+
+  private:
+    ISyntaxFacade& _facade;
+};
+
+class Image {
+  public:
+    Image(SubImage& sub_image);
+
+    std::string const& pixelTransform() const;
+    std::string const& qualityPreset() const;
+    size_t quality() const;
+    std::string const& compressor() const;
+    std::string const& colorspaceTransform() const;
+    size_t numTiles() const;
+    std::string const& iccProfile() const;
+    std::array<double, 9> iccMatrix() const;
+    std::vector<uint8_t> const& imageData() const;
+    std::string const& lossyImageCompression() const;
+    double lossyImageCompressionRatio() const;
+    std::string const& lossyImageCompressionMethod() const;
+    std::string const& colorLinearity() const;
+
+  private:
+    SubImage& _sub_image;
 };
 
 std::unique_ptr<PhilipsSlide> new_(rust::Str url);
