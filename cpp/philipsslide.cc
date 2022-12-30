@@ -69,6 +69,10 @@ void PhilipsSlide::clientCertificates(std::string const& cert, std::string const
 
 void PhilipsSlide::certificates(std::string const& path) { _pixel_engine->certificates(path); }
 
+std::unique_ptr<Facade> PhilipsSlide::facade(std::string const& input) const {
+    return std::make_unique<Facade>(_pixel_engine->operator[](input));
+}
+
 // File properties
 size_t PhilipsSlide::numImages() const { return _facade.numImages(); }
 
@@ -248,3 +252,92 @@ void PhilipsSlide::read_region(const RegionRequest& request, rust::Vec<uint8_t>&
     buffer.reserve(nb_sub_pixels); // RGB pixel
     region->get(buffer.data(), nb_sub_pixels);
 }
+
+// ------------------------------------
+
+// File properties
+Facade::Facade(ISyntaxFacade& facade) : _facade(facade) {}
+
+void Facade::open(rust::Str url) const {
+    std::string _url(url);
+    _facade.open(_url);
+}
+
+size_t Facade::numImages() const { return _facade.numImages(); }
+
+std::string const& Facade::iSyntaxFileVersion() const { return _facade.iSyntaxFileVersion(); }
+
+std::string const& Facade::id() const { return _facade.id(); }
+
+std::string const& Facade::barcode() const { return _facade.barcode(); }
+
+std::string const& Facade::scannerCalibrationStatus() const { return _facade.scannerCalibrationStatus(); }
+
+std::vector<std::string> const& Facade::softwareVersions() const { return _facade.softwareVersions(); }
+
+std::string const& Facade::derivationDescription() const { return _facade.derivationDescription(); }
+
+std::string const& Facade::acquisitionDateTime() const { return _facade.acquisitionDateTime(); }
+
+std::string const& Facade::manufacturer() const { return _facade.manufacturer(); }
+
+std::string const& Facade::modelName() const { return _facade.modelName(); }
+
+std::string const& Facade::deviceSerialNumber() const { return _facade.deviceSerialNumber(); }
+
+uint16_t Facade::scannerRackNumber() const { return _facade.scannerRackNumber(); }
+
+uint16_t Facade::scannerSlotNumber() const { return _facade.scannerSlotNumber(); }
+
+std::string const& Facade::scannerOperatorId() const { return _facade.scannerOperatorId(); }
+
+uint16_t Facade::scannerRackPriority() const { return _facade.scannerRackPriority(); }
+
+std::vector<std::string> const& Facade::dateOfLastCalibration() const { return _facade.dateOfLastCalibration(); }
+
+std::vector<std::string> const& Facade::timeOfLastCalibration() const { return _facade.timeOfLastCalibration(); }
+
+bool Facade::isPhilips() const { return _facade.isPhilips(); }
+
+bool Facade::isHamamatsu() const { return _facade.isHamamatsu(); }
+
+bool Facade::isUFS() const { return _facade.isUFS(); }
+
+bool Facade::isUFSb() const { return _facade.isUFSb(); }
+
+bool Facade::isUVS() const { return _facade.isUVS(); }
+
+std::unique_ptr<Image> Facade::sub_image(std::string const& image_type) const {
+    return std::make_unique<Image>(_facade[image_type]);
+}
+
+// ------------------------------------
+
+// Image properties
+Image::Image(SubImage& sub_image) : _sub_image(sub_image) {}
+
+std::string const& Image::pixelTransform() const { return _sub_image.pixelTransform(); }
+
+std::string const& Image::qualityPreset() const { return _sub_image.qualityPreset(); }
+
+size_t Image::quality() const { return _sub_image.quality(); }
+
+std::string const& Image::compressor() const { return _sub_image.compressor(); }
+
+std::string const& Image::colorspaceTransform() const { return _sub_image.colorspaceTransform(); }
+
+size_t Image::numTiles() const { return _sub_image.numTiles(); }
+
+std::string const& Image::iccProfile() const { return _sub_image.iccProfile(); }
+
+std::array<double, 9> Image::iccMatrix() const { return _sub_image.iccMatrix(); }
+
+std::vector<uint8_t> const& Image::imageData() const { return _sub_image.imageData(); }
+
+std::string const& Image::lossyImageCompression() const { return _sub_image.lossyImageCompression(); }
+
+double Image::lossyImageCompressionRatio() const { return _sub_image.lossyImageCompressionRatio(); }
+
+std::string const& Image::lossyImageCompressionMethod() const { return _sub_image.lossyImageCompressionMethod(); }
+
+std::string const& Image::colorLinearity() const { return _sub_image.colorLinearity(); }
