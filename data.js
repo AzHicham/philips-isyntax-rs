@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1673526434339,
+  "lastUpdate": 1673526702588,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
@@ -1259,6 +1259,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 6688738,
             "range": "± 1734167",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hicham.azimani1@gmail.com",
+            "name": "Hicham Azimani",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d2c0639854a5db03ff7ec3e7934651186445241b",
+          "message": "Merge pull request #22 from AzHicham/dependabot/github_actions/MeilCli/regex-match-1.5.20\n\nBump MeilCli/regex-match from 1.5.18 to 1.5.20",
+          "timestamp": "2023-01-12T13:28:59+01:00",
+          "tree_id": "445268005d8ed9cc5348043e93df356906d3fcbe",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/d2c0639854a5db03ff7ec3e7934651186445241b"
+        },
+        "date": 1673526701782,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1300976,
+            "range": "± 497474",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 2564273,
+            "range": "± 595212",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 5751024,
+            "range": "± 1050660",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 5201806,
+            "range": "± 672788",
             "unit": "ns/iter"
           }
         ]
