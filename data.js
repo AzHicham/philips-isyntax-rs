@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1672414778297,
+  "lastUpdate": 1673526359487,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
@@ -1163,6 +1163,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 6768073,
             "range": "± 1106310",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hicham.azimani1@gmail.com",
+            "name": "Hicham Azimani",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "19ef55f2ef2c23ba38e1f58d48e4e29dd65be6dd",
+          "message": "Merge pull request #24 from AzHicham/dependabot/cargo/cxx-build-1.0.86\n\nBump cxx-build from 1.0.83 to 1.0.86",
+          "timestamp": "2023-01-12T13:21:55+01:00",
+          "tree_id": "5a70d97ddb23b7a983bcc53c8631e78c9cde2edd",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/19ef55f2ef2c23ba38e1f58d48e4e29dd65be6dd"
+        },
+        "date": 1673526358829,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1390936,
+            "range": "± 1945236",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 2775939,
+            "range": "± 756063",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 6431614,
+            "range": "± 1815643",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 5893805,
+            "range": "± 1791814",
             "unit": "ns/iter"
           }
         ]
