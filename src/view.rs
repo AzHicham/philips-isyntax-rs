@@ -1,11 +1,10 @@
 //! This module contains all functions related to Philips Views
 //!
 
-use crate::{
-    errors::PhilipsSlideError, DimensionsRange, PhilipsEngine, Rectangle, RegionRequest, Result,
-    Size, View,
-};
-use image::RgbImage;
+use crate::{DimensionsRange, PhilipsEngine, Rectangle, RegionRequest, Result, Size, View};
+
+#[cfg(feature = "image")]
+use {crate::errors::PhilipsSlideError, image::RgbImage};
 
 //#[cfg(feature = "image")]
 //use {crate::errors::PhilipsSlideError, image::RgbImage};

@@ -1,10 +1,12 @@
 mod fixture;
 
-use fixture::sample;
-use std::path::Path;
-
-use philips_isyntax_rs::{ImageType, PhilipsEngine};
-use rstest::rstest;
+#[cfg(feature = "image")]
+use {
+    fixture::sample,
+    philips_isyntax_rs::{ImageType, PhilipsEngine},
+    rstest::rstest,
+    std::path::Path,
+};
 
 #[rstest]
 #[case(sample())]
