@@ -32,7 +32,7 @@ pub struct Image<'a> {
 
 pub struct View<'a> {
     inner: UniquePtr<bindings::ffi::ImageView>,
-    _lifetime: PhantomData<&'a ()>, // Note: Represent Facade Lifetime
+    _lifetime: PhantomData<&'a ()>, // Note: Represent Image Lifetime
 }
 
 pub enum ImageType {

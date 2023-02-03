@@ -8,10 +8,8 @@ use cxx::let_cxx_string;
 impl PhilipsEngine {
     /// Create a new instance of PhilipsSlide
     /// May fail if the SDK cannot read the file
-    pub fn new() -> Result<Self> {
-        Ok(PhilipsEngine {
-            inner: ffi::new_()?,
-        })
+    pub fn new() -> Self {
+        PhilipsEngine { inner: ffi::new_() }
     }
 
     pub fn facade(&self, input: &str) -> Result<Facade> {

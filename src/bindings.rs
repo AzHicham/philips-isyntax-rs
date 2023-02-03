@@ -43,7 +43,7 @@ pub(crate) mod ffi {
         pub type ImageView;
 
         // Pixel Engine
-        fn new_() -> Result<UniquePtr<PhilipsEngine>>;
+        fn new_() -> UniquePtr<PhilipsEngine>;
         fn containers(self: &PhilipsEngine) -> &CxxVector<CxxString>;
         fn sdkVersion(self: &PhilipsEngine) -> &CxxString;
         fn containerVersion(self: &PhilipsEngine, container: &CxxString) -> Result<&CxxString>;
@@ -120,3 +120,8 @@ pub(crate) mod ffi {
         ) -> Result<()>;
     }
 }
+
+unsafe impl Send for ffi::PhilipsEngine {}
+unsafe impl Send for ffi::Facade {}
+unsafe impl Send for ffi::Image {}
+unsafe impl Send for ffi::ImageView {}
