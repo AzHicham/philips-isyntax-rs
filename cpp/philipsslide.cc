@@ -46,9 +46,10 @@ std::unique_ptr<Facade> PhilipsEngine::facade(std::string const& input) const {
 // File properties
 Facade::Facade(ISyntaxFacade& facade) : _facade(facade) {}
 
-void Facade::open(rust::Str url) const {
+void Facade::open(rust::Str url, rust::Str container) const {
     std::string _url(url);
-    _facade.open(_url);
+    std::string _container(container);
+    _facade.open(_url, _container);
 }
 
 void Facade::close() const { _facade.close(); }
@@ -180,7 +181,7 @@ rust::Vec<Rectangle> ImageView::envelopesAsRects(uint32_t level) const {
     res.reserve(envelopes_range.size());
 
     for (auto& range : envelopes_range) {
-        res.push_back(Rectangle{range[0], range[1], range[2], range[3]});
+        res.push_back(Rectangle{range.at(0), range.at(1), range.at(2), range.at(3)});
     }
     return res;
 }
@@ -221,3 +222,4 @@ void ImageView::read_region(const std::unique_ptr<PhilipsEngine>& engine, const 
     buffer.reserve(nb_sub_pixels); // RGB pixel
     region->get(buffer.data(), nb_sub_pixels);
 }
+// ------------------------------------

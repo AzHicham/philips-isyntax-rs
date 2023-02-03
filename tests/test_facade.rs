@@ -3,7 +3,7 @@ mod fixture;
 use fixture::{missing_file, sample, unsupported_file};
 use std::path::Path;
 
-use philips_isyntax_rs::PhilipsEngine;
+use philips_isyntax_rs::{ContainerName, PhilipsEngine};
 use rstest::rstest;
 
 #[rstest]
@@ -14,7 +14,7 @@ use rstest::rstest;
 fn test_error_missing_file(#[case] filename: &Path) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name").unwrap();
-    facade.open(filename).unwrap()
+    facade.open(filename, &ContainerName::CachingFicom).unwrap()
 }
 
 // Error message too long ..
@@ -23,7 +23,7 @@ fn test_error_missing_file(#[case] filename: &Path) {
 fn test_error_unsupported_file(#[case] filename: &Path) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name").unwrap();
-    assert!(facade.open(filename).is_err());
+    assert!(facade.open(filename, &ContainerName::CachingFicom).is_err());
 }
 
 #[rstest]
@@ -31,7 +31,7 @@ fn test_error_unsupported_file(#[case] filename: &Path) {
 fn test_properties(#[case] filename: &Path) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name").unwrap();
-    facade.open(filename).unwrap();
+    facade.open(filename, &ContainerName::CachingFicom).unwrap();
 
     assert_eq!(facade.isyntax_file_version().unwrap(), "100.5");
     assert_eq!(facade.num_images().unwrap(), 3);
@@ -84,7 +84,7 @@ fn test_properties(#[case] filename: &Path) {
 fn test_properties_new(#[case] filename: &Path) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name2").unwrap();
-    facade.open(filename).unwrap();
+    facade.open(filename, &ContainerName::CachingFicom).unwrap();
 
     assert_eq!(facade.isyntax_file_version().unwrap(), "100.5");
     assert_eq!(facade.num_images().unwrap(), 3);

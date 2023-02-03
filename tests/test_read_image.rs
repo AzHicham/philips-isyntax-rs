@@ -3,7 +3,7 @@ mod fixture;
 use fixture::sample;
 use std::path::Path;
 
-use philips_isyntax_rs::{ImageType, PhilipsEngine, Rectangle, RegionRequest};
+use philips_isyntax_rs::{ContainerName, ImageType, PhilipsEngine, Rectangle, RegionRequest};
 use rstest::rstest;
 
 #[rstest]
@@ -11,7 +11,7 @@ use rstest::rstest;
 fn test_read_region_wsi(#[case] filename: &Path) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name2").unwrap();
-    facade.open(filename).unwrap();
+    facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();
     let view = image.view().unwrap();
 
@@ -37,7 +37,7 @@ fn test_read_region_wsi(#[case] filename: &Path) {
 fn test_read_image_wsi(#[case] filename: &Path) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name2").unwrap();
-    facade.open(filename).unwrap();
+    facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();
     let view = image.view().unwrap();
 

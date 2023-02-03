@@ -40,3 +40,12 @@ pub enum ImageType {
     MacroImage,
     LabelImage,
 }
+
+pub enum ContainerName {
+    Default,
+    Ficom,
+    Dicom,
+    CachingFicom,
+    S3,
+    Legacy,
+}

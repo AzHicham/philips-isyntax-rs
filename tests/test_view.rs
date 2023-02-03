@@ -3,7 +3,7 @@ mod fixture;
 use fixture::sample;
 use std::path::Path;
 
-use philips_isyntax_rs::{DimensionsRange, ImageType, PhilipsEngine, Rectangle};
+use philips_isyntax_rs::{ContainerName, DimensionsRange, ImageType, PhilipsEngine, Rectangle};
 use rstest::rstest;
 
 #[rstest]
@@ -11,7 +11,7 @@ use rstest::rstest;
 fn test_view_wsi(#[case] filename: &Path) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name2").unwrap();
-    facade.open(filename).unwrap();
+    facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();
     let view = image.view().unwrap();
 
@@ -78,7 +78,7 @@ fn test_view_wsi(#[case] filename: &Path) {
 fn test_view_macro(#[case] filename: &Path) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name2").unwrap();
-    facade.open(filename).unwrap();
+    facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::MacroImage).unwrap();
     let view = image.view().unwrap();
 
@@ -122,7 +122,7 @@ fn test_view_macro(#[case] filename: &Path) {
 fn test_view_label(#[case] filename: &Path) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name2").unwrap();
-    facade.open(filename).unwrap();
+    facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::LabelImage).unwrap();
     let view = image.view().unwrap();
 
@@ -165,7 +165,7 @@ fn test_view_label(#[case] filename: &Path) {
 fn test_envelopes(#[case] filename: &Path) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name2").unwrap();
-    facade.open(filename).unwrap();
+    facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();
     let view = image.view().unwrap();
 

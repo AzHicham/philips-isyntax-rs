@@ -48,7 +48,7 @@ class Facade {
   public:
     Facade(ISyntaxFacade& facade);
 
-    void open(rust::Str url) const;
+    void open(rust::Str url, rust::Str container) const;
     void close() const;
     size_t numImages() const;
     std::string const& iSyntaxFileVersion() const;

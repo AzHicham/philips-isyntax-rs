@@ -1,5 +1,5 @@
 use bencher::{benchmark_group, benchmark_main, Bencher};
-use philips_isyntax_rs::{ImageType, PhilipsEngine, Rectangle, RegionRequest};
+use philips_isyntax_rs::{ContainerName, ImageType, PhilipsEngine, Rectangle, RegionRequest};
 use std::path::Path;
 
 fn simple_isyntax() -> &'static Path {
@@ -21,7 +21,9 @@ fn make_request(row: u32, col: u32, width: u32, height: u32, level: u32) -> Regi
 fn philips_read_region_256_lvl_0(bench: &mut Bencher) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name").unwrap();
-    facade.open(simple_isyntax()).unwrap();
+    facade
+        .open(simple_isyntax(), &ContainerName::CachingFicom)
+        .unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();
     let view = image.view().unwrap();
 
@@ -31,7 +33,9 @@ fn philips_read_region_256_lvl_0(bench: &mut Bencher) {
 fn philips_read_region_512_lvl_0(bench: &mut Bencher) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name").unwrap();
-    facade.open(simple_isyntax()).unwrap();
+    facade
+        .open(simple_isyntax(), &ContainerName::CachingFicom)
+        .unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();
     let view = image.view().unwrap();
 
@@ -41,7 +45,9 @@ fn philips_read_region_512_lvl_0(bench: &mut Bencher) {
 fn philips_read_region_256_lvl_1(bench: &mut Bencher) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name").unwrap();
-    facade.open(simple_isyntax()).unwrap();
+    facade
+        .open(simple_isyntax(), &ContainerName::CachingFicom)
+        .unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();
     let view = image.view().unwrap();
 
@@ -54,7 +60,9 @@ fn philips_read_region_256_lvl_1(bench: &mut Bencher) {
 fn philips_read_region_512_lvl_1(bench: &mut Bencher) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name").unwrap();
-    facade.open(simple_isyntax()).unwrap();
+    facade
+        .open(simple_isyntax(), &ContainerName::CachingFicom)
+        .unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();
     let view = image.view().unwrap();
 

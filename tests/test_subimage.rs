@@ -1,5 +1,6 @@
 mod fixture;
 
+use philips_isyntax_rs::ContainerName;
 #[cfg(feature = "image")]
 use {
     fixture::sample,
@@ -14,7 +15,7 @@ use {
 fn test_sub_image_slide(#[case] filename: &Path) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name2").unwrap();
-    facade.open(filename).unwrap();
+    facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();
 
     assert_eq!(image.pixel_transform().unwrap(), "legall53");
@@ -50,7 +51,7 @@ fn test_sub_image_slide(#[case] filename: &Path) {
 fn test_sub_image_macro(#[case] filename: &Path) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name2").unwrap();
-    facade.open(filename).unwrap();
+    facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::MacroImage).unwrap();
 
     // Some function are only available with ImageType::WSI
@@ -96,7 +97,7 @@ fn test_sub_image_macro(#[case] filename: &Path) {
 fn test_sub_image_label(#[case] filename: &Path) {
     let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name2").unwrap();
-    facade.open(filename).unwrap();
+    facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::LabelImage).unwrap();
 
     // Some function are only available with ImageType::slide

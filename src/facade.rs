@@ -1,15 +1,15 @@
 //! This module contains all functions related to Philips ISyntaxFacade
 //!
 
-use crate::{Facade, Image, ImageType, Result};
+use crate::{ContainerName, Facade, Image, ImageType, Result};
 use cxx::let_cxx_string;
 use std::path::Path;
 
 impl<'a> Facade<'a> {
     /// Open an ISyntax file
-    pub fn open<P: AsRef<Path>>(&self, filename: P) -> Result<()> {
+    pub fn open<P: AsRef<Path>>(&self, filename: P, container: &ContainerName) -> Result<()> {
         let filename = filename.as_ref().display().to_string();
-        Ok(self.inner.open(&filename)?)
+        Ok(self.inner.open(&filename, container.as_str())?)
     }
 
     pub fn close(&self) -> Result<()> {
@@ -140,5 +140,24 @@ impl<'a> Facade<'a> {
             inner: self.inner.image(&image_type)?,
             _lifetime: Default::default(),
         })
+    }
+}
+
+impl ContainerName {
+    pub fn as_str(&self) -> &str {
+        match &self {
+            Self::Default => "",
+            Self::Ficom => "ficom",
+            Self::Dicom => "dicom",
+            Self::CachingFicom => "caching-ficom",
+            Self::S3 => "s3",
+            Self::Legacy => "legacy",
+        }
+    }
+}
+
+impl AsRef<[u8]> for ContainerName {
+    fn as_ref(&self) -> &[u8] {
+        self.as_str().as_bytes()
     }
 }
