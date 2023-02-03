@@ -51,6 +51,8 @@ void Facade::open(rust::Str url) const {
     _facade.open(_url);
 }
 
+void Facade::close() const { _facade.close(); }
+
 size_t Facade::numImages() const { return _facade.numImages(); }
 
 std::string const& Facade::iSyntaxFileVersion() const { return _facade.iSyntaxFileVersion(); }
@@ -130,7 +132,25 @@ std::string const& Image::lossyImageCompressionMethod() const { return _image.lo
 
 std::string const& Image::colorLinearity() const { return _image.colorLinearity(); }
 
-std::unique_ptr<ImageView> Image::view() const { return std::make_unique<ImageView>(_image.sourceView()); }
+std::unique_ptr<ImageView> Image::view() const {
+    const auto type = _image.imageType();
+    auto& source_view = _image.sourceView();
+    View& view = static_cast<View&>(source_view); // Should be safe because View is the base class of SourceView
+
+    if (type == "WSI") {
+        const auto bitsStored = view.bitsStored();
+        // Enable best quality
+        const std::map<std::size_t, std::vector<std::size_t>> truncationLevel{{0, {0, 0, 0}}};
+        source_view.truncation(false, false, truncationLevel);
+
+        if (bitsStored > 8) {
+            PixelEngine::UserView& user_view = source_view.addChainedView();
+            user_view.addFilter("Linear16ToSRGB8"); // This Filter converts 9-bit image to 8-bit image.
+            view = static_cast<View&>(user_view);   // Should be safe because View is the base class of UserView
+        }
+    }
+    return std::make_unique<ImageView>(view);
+}
 
 // ------------------------------------
 

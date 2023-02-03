@@ -56,6 +56,7 @@ pub(crate) mod ffi {
 
         // Facade properties
         fn open(self: &Facade, url: &str) -> Result<()>;
+        fn close(self: &Facade) -> Result<()>;
         fn numImages(self: &Facade) -> Result<usize>;
         fn iSyntaxFileVersion(self: &Facade) -> Result<&CxxString>;
         fn id(self: &Facade) -> Result<&CxxString>;
@@ -120,5 +121,3 @@ pub(crate) mod ffi {
 
     }
 }
-
-unsafe impl Send for ffi::PhilipsEngine {}

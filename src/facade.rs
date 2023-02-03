@@ -12,6 +12,10 @@ impl<'a> Facade<'a> {
         Ok(self.inner.open(&filename)?)
     }
 
+    pub fn close(&self) -> Result<()> {
+        Ok(self.inner.close()?)
+    }
+
     /// Returns numbers of images in ISyntax file
     /// Should always return 3 images eg WSI, Macro, Label/ILE
     pub fn num_images(&self) -> Result<usize> {
