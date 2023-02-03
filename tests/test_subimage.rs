@@ -3,14 +3,14 @@ mod fixture;
 use fixture::sample;
 use std::path::Path;
 
-use philips_isyntax_rs::{ImageType, PhilipsSlide};
+use philips_isyntax_rs::{ImageType, PhilipsEngine};
 use rstest::rstest;
 
 #[rstest]
 #[case(sample())]
 #[cfg(feature = "image")]
 fn test_sub_image_slide(#[case] filename: &Path) {
-    let engine = PhilipsSlide::new().unwrap();
+    let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name2").unwrap();
     facade.open(filename).unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();
@@ -46,7 +46,7 @@ fn test_sub_image_slide(#[case] filename: &Path) {
 #[case(sample())]
 #[cfg(feature = "image")]
 fn test_sub_image_macro(#[case] filename: &Path) {
-    let engine = PhilipsSlide::new().unwrap();
+    let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name2").unwrap();
     facade.open(filename).unwrap();
     let image = facade.image(&ImageType::MacroImage).unwrap();
@@ -92,7 +92,7 @@ fn test_sub_image_macro(#[case] filename: &Path) {
 #[case(sample())]
 #[cfg(feature = "image")]
 fn test_sub_image_label(#[case] filename: &Path) {
-    let engine = PhilipsSlide::new().unwrap();
+    let engine = PhilipsEngine::new().unwrap();
     let facade = engine.facade("facade_name2").unwrap();
     facade.open(filename).unwrap();
     let image = facade.image(&ImageType::LabelImage).unwrap();

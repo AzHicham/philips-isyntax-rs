@@ -19,9 +19,9 @@ using SourceView = PixelEngine::SourceView;
 using BufferType = PixelEngine::BufferType;
 using SubImage = PixelEngine::SubImage;
 
-class PhilipsSlide {
+class PhilipsEngine {
   public:
-    PhilipsSlide();
+    PhilipsEngine();
 
     std::string const& sdkVersion() const;
     std::vector<std::string> const& containers() const;
@@ -34,8 +34,7 @@ class PhilipsSlide {
     void clientCertificates(std::string const& cert, std::string const& key, std::string const& password);
     void certificates(std::string const& path);
     std::unique_ptr<Facade> facade(std::string const& input) const;
-
-    // void read_region(const RegionRequest& request, rust::Vec<uint8_t>& buffer, Size& image_size) const;
+    std::unique_ptr<PixelEngine>& inner();
 
   private:
     std::unique_ptr<RenderContext> _render_context;
@@ -120,9 +119,11 @@ class ImageView {
     uint16_t samplesPerPixel() const;
     uint32_t numDerivedLevels() const;
     std::vector<size_t> pixelSize() const;
+    void read_region(const std::unique_ptr<PhilipsEngine>& engine, const RegionRequest& request,
+                     rust::Vec<uint8_t>& buffer, Size& image_size) const;
 
   private:
     View& _view;
 };
 
-std::unique_ptr<PhilipsSlide> new_();
+std::unique_ptr<PhilipsEngine> new_();

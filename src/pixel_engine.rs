@@ -2,14 +2,14 @@
 //! Results of theses functions should only depend on the SDK and not ISyntax file
 //!
 
-use crate::{bindings::ffi, Facade, ImageType, PhilipsSlide, Result};
+use crate::{bindings::ffi, Facade, ImageType, PhilipsEngine, Result};
 use cxx::let_cxx_string;
 
-impl PhilipsSlide {
+impl PhilipsEngine {
     /// Create a new instance of PhilipsSlide
     /// May fail if the SDK cannot read the file
     pub fn new() -> Result<Self> {
-        Ok(PhilipsSlide {
+        Ok(PhilipsEngine {
             inner: ffi::new_()?,
         })
     }

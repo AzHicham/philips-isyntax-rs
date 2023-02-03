@@ -37,22 +37,22 @@ pub(crate) mod ffi {
     unsafe extern "C++" {
         include!("philips-isyntax-rs/cpp/philipsslide.hpp");
 
-        pub type PhilipsSlide;
+        pub type PhilipsEngine;
         pub type Facade;
         pub type Image;
         pub type ImageView;
 
         // Pixel Engine
-        fn new_() -> Result<UniquePtr<PhilipsSlide>>;
-        fn containers(self: &PhilipsSlide) -> &CxxVector<CxxString>;
-        fn sdkVersion(self: &PhilipsSlide) -> &CxxString;
-        fn containerVersion(self: &PhilipsSlide, container: &CxxString) -> Result<&CxxString>;
-        fn compressors(self: &PhilipsSlide) -> &CxxVector<CxxString>;
-        fn pixelTransforms(self: &PhilipsSlide) -> &CxxVector<CxxString>;
-        fn colorspaceTransforms(self: &PhilipsSlide) -> &CxxVector<CxxString>;
-        fn qualityPresets(self: &PhilipsSlide) -> &CxxVector<CxxString>;
-        fn supportedFilters(self: &PhilipsSlide) -> &CxxVector<CxxString>;
-        fn facade(self: &PhilipsSlide, input: &CxxString) -> Result<UniquePtr<Facade>>;
+        fn new_() -> Result<UniquePtr<PhilipsEngine>>;
+        fn containers(self: &PhilipsEngine) -> &CxxVector<CxxString>;
+        fn sdkVersion(self: &PhilipsEngine) -> &CxxString;
+        fn containerVersion(self: &PhilipsEngine, container: &CxxString) -> Result<&CxxString>;
+        fn compressors(self: &PhilipsEngine) -> &CxxVector<CxxString>;
+        fn pixelTransforms(self: &PhilipsEngine) -> &CxxVector<CxxString>;
+        fn colorspaceTransforms(self: &PhilipsEngine) -> &CxxVector<CxxString>;
+        fn qualityPresets(self: &PhilipsEngine) -> &CxxVector<CxxString>;
+        fn supportedFilters(self: &PhilipsEngine) -> &CxxVector<CxxString>;
+        fn facade(self: &PhilipsEngine, input: &CxxString) -> Result<UniquePtr<Facade>>;
 
         // Facade properties
         fn open(self: &Facade, url: &str) -> Result<()>;
@@ -110,16 +110,15 @@ pub(crate) mod ffi {
         fn samplesPerPixel(self: &ImageView) -> Result<u16>;
         fn numDerivedLevels(self: &ImageView) -> u32;
         fn envelopesAsRects(self: &ImageView, level: u32) -> Result<Vec<Rectangle>>;
-
-        // read WSI tile
-        /*  pub(crate) fn read_region(
-            self: &PhilipsSlide,
+        fn read_region(
+            self: &ImageView,
+            engine: &UniquePtr<PhilipsEngine>,
             request: &RegionRequest,
             buffer: &mut Vec<u8>,
             image_size: &mut Size,
-        ) -> Result<()>; */
+        ) -> Result<()>;
 
     }
 }
 
-unsafe impl Send for ffi::PhilipsSlide {}
+unsafe impl Send for ffi::PhilipsEngine {}

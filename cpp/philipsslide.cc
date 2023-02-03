@@ -1,69 +1,46 @@
 #include "philipsslide.hpp"
 #include "philips-isyntax-rs/src/bindings.rs.h"
 
-const std::string PhilipsSlide::_version = PixelEngine::version();
+const std::string PhilipsEngine::_version = PixelEngine::version();
 
-std::unique_ptr<PhilipsSlide> new_() { return std::make_unique<PhilipsSlide>(); }
+std::unique_ptr<PhilipsEngine> new_() { return std::make_unique<PhilipsEngine>(); }
 
-PhilipsSlide::PhilipsSlide()
+PhilipsEngine::PhilipsEngine()
     : _render_context(std::make_unique<SoftwareRenderContext>()),
       _render_backend(std::make_unique<SoftwareRenderBackend>()),
       _pixel_engine(std::make_unique<PixelEngine>(*_render_backend, *_render_context)) {}
 
-std::string const& PhilipsSlide::sdkVersion() const { return _version; }
+std::string const& PhilipsEngine::sdkVersion() const { return _version; }
 
-std::vector<std::string> const& PhilipsSlide::containers() const { return _pixel_engine->containers(); }
+std::vector<std::string> const& PhilipsEngine::containers() const { return _pixel_engine->containers(); }
 
-std::string const& PhilipsSlide::containerVersion(std::string const& container) const {
+std::string const& PhilipsEngine::containerVersion(std::string const& container) const {
     return _pixel_engine->containerVersion(container);
 }
 
-std::vector<std::string> const& PhilipsSlide::compressors() const { return _pixel_engine->compressors(); }
+std::vector<std::string> const& PhilipsEngine::compressors() const { return _pixel_engine->compressors(); }
 
-std::vector<std::string> const& PhilipsSlide::pixelTransforms() const { return _pixel_engine->pixelTransforms(); }
+std::vector<std::string> const& PhilipsEngine::pixelTransforms() const { return _pixel_engine->pixelTransforms(); }
 
-std::vector<std::string> const& PhilipsSlide::colorspaceTransforms() const {
+std::vector<std::string> const& PhilipsEngine::colorspaceTransforms() const {
     return _pixel_engine->colorspaceTransforms();
 }
 
-std::vector<std::string> const& PhilipsSlide::qualityPresets() const { return _pixel_engine->qualityPresets(); }
+std::vector<std::string> const& PhilipsEngine::qualityPresets() const { return _pixel_engine->qualityPresets(); }
 
-std::vector<std::string> const& PhilipsSlide::supportedFilters() const { return _pixel_engine->supportedFilters(); }
+std::vector<std::string> const& PhilipsEngine::supportedFilters() const { return _pixel_engine->supportedFilters(); }
 
-void PhilipsSlide::clientCertificates(std::string const& cert, std::string const& key, std::string const& password) {
+void PhilipsEngine::clientCertificates(std::string const& cert, std::string const& key, std::string const& password) {
     _pixel_engine->clientCertificates(cert, key, password);
 }
 
-void PhilipsSlide::certificates(std::string const& path) { _pixel_engine->certificates(path); }
+void PhilipsEngine::certificates(std::string const& path) { _pixel_engine->certificates(path); }
 
-std::unique_ptr<Facade> PhilipsSlide::facade(std::string const& input) const {
+std::unique_ptr<PixelEngine>& PhilipsEngine::inner() { return _pixel_engine; }
+
+std::unique_ptr<Facade> PhilipsEngine::facade(std::string const& input) const {
     return std::make_unique<Facade>(_pixel_engine->operator[](input));
 }
-
-/*
-void PhilipsSlide::read_region(const RegionRequest& request, rust::Vec<uint8_t>& buffer, Size& image_size) const {
-    auto* view = _views.at("WSI");
-
-    const std::vector<std::vector<std::size_t>> view_range{
-        {request.roi.start_x, request.roi.end_x, request.roi.start_y, request.roi.end_y, request.level}};
-    auto const& envelopes = view->dataEnvelopes(request.level);
-
-    auto _ = view->requestRegions(view_range, envelopes, false, {254, 254, 254}, BufferType::RGB);
-    auto regions = _pixel_engine->waitAny();
-    auto region = regions.front();
-
-    // compute image size
-    const auto dimension_range = this->dimensionRanges("WSI", request.level);
-    const auto& range = region->range();
-    image_size.w = 1 + ((range[1] - range[0]) / dimension_range.step_x);
-    image_size.h = 1 + ((range[3] - range[2]) / dimension_range.step_y);
-    const size_t nb_sub_pixels = image_size.w * image_size.h * 3;
-
-    buffer.reserve(nb_sub_pixels); // RGB pixel
-    region->get(buffer.data(), nb_sub_pixels);
-}
-*/
-
 // ------------------------------------
 
 // File properties
@@ -203,3 +180,24 @@ uint16_t ImageView::samplesPerPixel() const { return _view.samplesPerPixel(); }
 uint32_t ImageView::numDerivedLevels() const { return _view.numDerivedLevels(); }
 
 std::vector<size_t> ImageView::pixelSize() const { return _view.pixelSize(); }
+
+void ImageView::read_region(const std::unique_ptr<PhilipsEngine>& engine, const RegionRequest& request,
+                            rust::Vec<uint8_t>& buffer, Size& image_size) const {
+    const std::vector<std::vector<std::size_t>> view_range{
+        {request.roi.start_x, request.roi.end_x, request.roi.start_y, request.roi.end_y, request.level}};
+    auto const& envelopes = _view.dataEnvelopes(request.level);
+    auto regions = _view.requestRegions(view_range, envelopes, false, {254, 254, 254}, BufferType::RGB);
+
+    auto _ = engine.get()->inner()->waitAny();
+    auto region = regions.front();
+
+    // compute image size
+    const auto dimension_range = dimensionRanges(request.level);
+    const auto& range = region->range();
+    image_size.w = 1 + ((range[1] - range[0]) / dimension_range.step_x);
+    image_size.h = 1 + ((range[3] - range[2]) / dimension_range.step_y);
+    const size_t nb_sub_pixels = image_size.w * image_size.h * 3;
+
+    buffer.reserve(nb_sub_pixels); // RGB pixel
+    region->get(buffer.data(), nb_sub_pixels);
+}

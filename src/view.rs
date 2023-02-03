@@ -1,7 +1,10 @@
 //! This module contains all functions related to Philips Views
 //!
 
-use crate::{DimensionsRange, Rectangle, RegionRequest, Result, Size, View};
+use crate::{
+    errors::PhilipsSlideError, DimensionsRange, PhilipsEngine, Rectangle, RegionRequest, Result,
+    Size, View,
+};
 use image::RgbImage;
 
 //#[cfg(feature = "image")]
@@ -89,32 +92,34 @@ impl<'a> View<'a> {
     /// Read a tile from a WSI SubImage.
     ///
     /// This function reads and decompresses a region of a whole slide image into an Vec<u8>
-    pub fn read_region(&self, _request: &RegionRequest) -> Result<(Vec<u8>, Size), cxx::Exception> {
-        todo!()
-        /* let mut buffer = Vec::<u8>::new();
+    pub fn read_region(
+        &self,
+        engine: &PhilipsEngine,
+        request: &RegionRequest,
+    ) -> Result<(Vec<u8>, Size), cxx::Exception> {
+        let mut buffer = Vec::<u8>::new();
         let mut image_size = Size { w: 0, h: 0 };
 
         self.inner
-            .read_region(request, &mut buffer, &mut image_size)?;
+            .read_region(&engine.inner, request, &mut buffer, &mut image_size)?;
         let size = (image_size.w * image_size.h * 3) as usize; // RGB Image
 
         unsafe {
             buffer.set_len(size);
         }
 
-        Ok((buffer, image_size))*/
+        Ok((buffer, image_size))
     }
 
     /// Read a tile from a WSI SubImage.
     ///
     /// This function reads and decompresses a region of a whole slide image into an RgbImage
     #[cfg(feature = "image")]
-    pub fn read_image(&self, _request: &RegionRequest) -> Result<RgbImage> {
-        todo!()
-        /*  let (buffer, size) = self.read_region(request)?;
+    pub fn read_image(&self, engine: &PhilipsEngine, request: &RegionRequest) -> Result<RgbImage> {
+        let (buffer, size) = self.read_region(engine, request)?;
         let image = RgbImage::from_vec(size.w, size.h, buffer).ok_or_else(|| {
             PhilipsSlideError::ImageError("Error while creating RgbImage from buffer".to_string())
         })?;
-        Ok(image)*/
+        Ok(image)
     }
 }

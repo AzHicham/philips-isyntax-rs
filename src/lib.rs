@@ -16,8 +16,8 @@ pub type Result<T, E = errors::PhilipsSlideError> = std::result::Result<T, E>;
 use cxx::UniquePtr;
 use std::marker::PhantomData;
 
-pub struct PhilipsSlide {
-    inner: UniquePtr<bindings::ffi::PhilipsSlide>,
+pub struct PhilipsEngine {
+    inner: UniquePtr<bindings::ffi::PhilipsEngine>,
 }
 
 pub struct Facade<'a> {
