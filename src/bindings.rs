@@ -42,9 +42,8 @@ pub(crate) mod ffi {
         pub type Image;
         pub type ImageView;
 
-        fn new_(url: &str) -> Result<UniquePtr<PhilipsSlide>>;
-
-        // SDK properties
+        // Pixel Engine
+        fn new_() -> Result<UniquePtr<PhilipsSlide>>;
         fn containers(self: &PhilipsSlide) -> &CxxVector<CxxString>;
         fn sdkVersion(self: &PhilipsSlide) -> &CxxString;
         fn containerVersion(self: &PhilipsSlide, container: &CxxString) -> Result<&CxxString>;
@@ -55,7 +54,7 @@ pub(crate) mod ffi {
         fn supportedFilters(self: &PhilipsSlide) -> &CxxVector<CxxString>;
         fn facade(self: &PhilipsSlide, input: &CxxString) -> Result<UniquePtr<Facade>>;
 
-        // File properties
+        // Facade properties
         fn open(self: &Facade, url: &str) -> Result<()>;
         fn numImages(self: &Facade) -> Result<usize>;
         fn iSyntaxFileVersion(self: &Facade) -> Result<&CxxString>;

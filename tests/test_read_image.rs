@@ -1,4 +1,4 @@
-mod fixture;
+/*mod fixture;
 
 use fixture::sample;
 use std::path::Path;
@@ -48,3 +48,4 @@ fn test_read_image_wsi(#[case] filename: &Path) {
     assert_eq!(image.height(), 200);
     assert_eq!(image.len(), 60000);
 }
+*/

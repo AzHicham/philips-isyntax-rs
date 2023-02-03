@@ -125,4 +125,4 @@ class ImageView {
     View& _view;
 };
 
-std::unique_ptr<PhilipsSlide> new_(rust::Str url);
+std::unique_ptr<PhilipsSlide> new_();

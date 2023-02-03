@@ -10,19 +10,19 @@ use rstest::rstest;
 #[case(sample())]
 #[cfg(feature = "image")]
 fn test_sub_image_slide(#[case] filename: &Path) {
-    let slide = PhilipsSlide::new(filename.to_str().unwrap()).unwrap();
+    let engine = PhilipsSlide::new().unwrap();
+    let facade = engine.facade("facade_name2").unwrap();
+    facade.open(filename).unwrap();
+    let image = facade.image(&ImageType::WSI).unwrap();
 
-    assert_eq!(slide.pixel_transform(ImageType::WSI).unwrap(), "legall53");
-    assert_eq!(slide.quality_preset(ImageType::WSI).unwrap(), "Q1");
-    assert_eq!(slide.quality(ImageType::WSI).unwrap(), 18446744073709551615);
-    assert_eq!(slide.compressor(ImageType::WSI).unwrap(), "hulsken");
+    assert_eq!(image.pixel_transform().unwrap(), "legall53");
+    assert_eq!(image.quality_preset().unwrap(), "Q1");
+    assert_eq!(image.quality().unwrap(), 18446744073709551615);
+    assert_eq!(image.compressor().unwrap(), "hulsken");
+    assert_eq!(image.colorspace_transform().unwrap(), "RGB2YCoCg");
+    assert_eq!(image.num_tiles().unwrap(), 212892);
     assert_eq!(
-        slide.colorspace_transform(ImageType::WSI).unwrap(),
-        "RGB2YCoCg"
-    );
-    assert_eq!(slide.num_tiles(ImageType::WSI).unwrap(), 212892);
-    assert_eq!(
-        slide.icc_matrix(ImageType::WSI).unwrap(),
+        image.icc_matrix().unwrap(),
         [
             2.347703959974617,
             -0.09146761300483147,
@@ -35,32 +35,32 @@ fn test_sub_image_slide(#[case] filename: &Path) {
             1.5236921332915387
         ]
     );
-    assert_eq!(slide.lossy_image_compression(ImageType::WSI).unwrap(), "01");
-    assert_eq!(
-        slide.lossy_image_compression_ratio(ImageType::WSI).unwrap(),
-        7.5
-    );
-    assert_eq!(slide.color_linearity(ImageType::WSI).unwrap(), "sRGB");
+    assert_eq!(image.lossy_image_compression().unwrap(), "01");
+    assert_eq!(image.lossy_image_compression_ratio().unwrap(), 7.5);
+    assert_eq!(image.color_linearity().unwrap(), "sRGB");
     // image_data not available for slide image
-    assert_eq!(slide.image_data(ImageType::WSI).unwrap().len(), 0);
+    assert_eq!(image.image_data().unwrap().len(), 0);
 }
 
 #[rstest]
 #[case(sample())]
 #[cfg(feature = "image")]
 fn test_sub_image_macro(#[case] filename: &Path) {
-    let slide = PhilipsSlide::new(filename.to_str().unwrap()).unwrap();
+    let engine = PhilipsSlide::new().unwrap();
+    let facade = engine.facade("facade_name2").unwrap();
+    facade.open(filename).unwrap();
+    let image = facade.image(&ImageType::MacroImage).unwrap();
 
     // Some function are only available with ImageType::WSI
-    assert!(slide.pixel_transform(ImageType::MacroImage).is_err());
-    assert!(slide.quality_preset(ImageType::MacroImage).is_err());
-    assert!(slide.quality(ImageType::MacroImage).is_err());
-    assert!(slide.compressor(ImageType::MacroImage).is_err());
-    assert!(slide.colorspace_transform(ImageType::MacroImage).is_err());
-    assert!(slide.num_tiles(ImageType::MacroImage).is_err());
-    assert!(slide.color_linearity(ImageType::MacroImage).is_err());
+    assert!(image.pixel_transform().is_err());
+    assert!(image.quality_preset().is_err());
+    assert!(image.quality().is_err());
+    assert!(image.compressor().is_err());
+    assert!(image.colorspace_transform().is_err());
+    assert!(image.num_tiles().is_err());
+    assert!(image.color_linearity().is_err());
     assert_eq!(
-        slide.icc_matrix(ImageType::MacroImage).unwrap(),
+        image.icc_matrix().unwrap(),
         [
             4.2469514940794975,
             -0.5188781721132593,
@@ -73,24 +73,11 @@ fn test_sub_image_macro(#[case] filename: &Path) {
             1.881488484919372
         ]
     );
-    assert_eq!(
-        slide
-            .lossy_image_compression(ImageType::MacroImage)
-            .unwrap(),
-        "01"
-    );
-    assert_eq!(
-        slide
-            .lossy_image_compression_ratio(ImageType::MacroImage)
-            .unwrap(),
-        26.0
-    );
-    assert_eq!(
-        slide.image_data(ImageType::MacroImage).unwrap().len(),
-        75580
-    );
+    assert_eq!(image.lossy_image_compression().unwrap(), "01");
+    assert_eq!(image.lossy_image_compression_ratio().unwrap(), 26.0);
+    assert_eq!(image.image_data().unwrap().len(), 75580);
 
-    let macro_image = slide.get_image(ImageType::MacroImage).unwrap();
+    let macro_image = image.get_image().unwrap();
     image::save_buffer(
         Path::new("macro_image.jpeg"),
         macro_image.as_bytes(),
@@ -105,35 +92,25 @@ fn test_sub_image_macro(#[case] filename: &Path) {
 #[case(sample())]
 #[cfg(feature = "image")]
 fn test_sub_image_label(#[case] filename: &Path) {
-    let slide = PhilipsSlide::new(filename.to_str().unwrap()).unwrap();
+    let engine = PhilipsSlide::new().unwrap();
+    let facade = engine.facade("facade_name2").unwrap();
+    facade.open(filename).unwrap();
+    let image = facade.image(&ImageType::LabelImage).unwrap();
 
     // Some function are only available with ImageType::slide
-    assert!(slide.pixel_transform(ImageType::LabelImage).is_err());
-    assert!(slide.quality_preset(ImageType::LabelImage).is_err());
-    assert!(slide.quality(ImageType::LabelImage).is_err());
-    assert!(slide.compressor(ImageType::LabelImage).is_err());
-    assert!(slide.colorspace_transform(ImageType::LabelImage).is_err());
-    assert!(slide.num_tiles(ImageType::LabelImage).is_err());
-    assert!(slide.color_linearity(ImageType::LabelImage).is_err());
-    assert!(slide.icc_matrix(ImageType::LabelImage).is_err());
-    assert_eq!(
-        slide
-            .lossy_image_compression(ImageType::LabelImage)
-            .unwrap(),
-        "01"
-    );
-    assert_eq!(
-        slide
-            .lossy_image_compression_ratio(ImageType::LabelImage)
-            .unwrap(),
-        26.0
-    );
-    assert_eq!(
-        slide.image_data(ImageType::LabelImage).unwrap().len(),
-        52734
-    );
+    assert!(image.pixel_transform().is_err());
+    assert!(image.quality_preset().is_err());
+    assert!(image.quality().is_err());
+    assert!(image.compressor().is_err());
+    assert!(image.colorspace_transform().is_err());
+    assert!(image.num_tiles().is_err());
+    assert!(image.color_linearity().is_err());
+    assert!(image.icc_matrix().is_err());
+    assert_eq!(image.lossy_image_compression().unwrap(), "01");
+    assert_eq!(image.lossy_image_compression_ratio().unwrap(), 26.0);
+    assert_eq!(image.image_data().unwrap().len(), 52734);
 
-    let label_image = slide.get_image(ImageType::LabelImage).unwrap();
+    let label_image = image.get_image().unwrap();
     image::save_buffer(
         Path::new("label_image.jpeg"),
         label_image.as_bytes(),

@@ -130,7 +130,7 @@ impl<'a> Facade<'a> {
         Ok(self.inner.isUVS()?)
     }
 
-    pub fn image(&self, image_type: ImageType) -> Result<Image> {
+    pub fn image(&self, image_type: &ImageType) -> Result<Image> {
         let_cxx_string!(image_type = image_type);
         Ok(Image {
             inner: self.inner.image(&image_type)?,
