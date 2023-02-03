@@ -30,6 +30,11 @@ pub struct Image<'a> {
     _lifetime: PhantomData<&'a ()>, // Note: Represent Facade Lifetime
 }
 
+pub struct View<'a> {
+    inner: UniquePtr<bindings::ffi::ImageView>,
+    _lifetime: PhantomData<&'a ()>, // Note: Represent Facade Lifetime
+}
+
 pub enum ImageType {
     WSI,
     MacroImage,

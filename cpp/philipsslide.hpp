@@ -11,6 +11,7 @@ struct DimensionsRange;
 struct RegionRequest;
 class Facade;
 class Image;
+class ImageView;
 
 using ISyntaxFacade = PixelEngine::ISyntaxFacade;
 using View = PixelEngine::View;
@@ -20,11 +21,8 @@ using SubImage = PixelEngine::SubImage;
 
 class PhilipsSlide {
   public:
-    PhilipsSlide(rust::Str url);
+    PhilipsSlide();
 
-    void initViews();
-
-    // PixelEngine functions
     std::string const& sdkVersion() const;
     std::vector<std::string> const& containers() const;
     std::string const& containerVersion(std::string const& container) const;
@@ -37,70 +35,12 @@ class PhilipsSlide {
     void certificates(std::string const& path);
     std::unique_ptr<Facade> facade(std::string const& input) const;
 
-    // file properties
-    size_t numImages() const;
-    std::string const& iSyntaxFileVersion() const;
-    std::string const& id() const;
-    std::string const& barcode() const;
-    std::string const& scannerCalibrationStatus() const;
-    std::vector<std::string> const& softwareVersions() const;
-    std::string const& derivationDescription() const;
-    std::string const& acquisitionDateTime() const;
-    std::string const& manufacturer() const;
-    std::string const& modelName() const;
-    std::string const& deviceSerialNumber() const;
-    uint16_t scannerRackNumber() const;
-    uint16_t scannerSlotNumber() const;
-    std::string const& scannerOperatorId() const;
-    uint16_t scannerRackPriority() const;
-    std::vector<std::string> const& dateOfLastCalibration() const;
-    std::vector<std::string> const& timeOfLastCalibration() const;
-    bool isPhilips() const;
-    bool isHamamatsu() const;
-    bool isUFS() const;
-    bool isUFSb() const;
-    bool isUVS() const;
-
-    // images properties
-    std::string const& pixelTransform(std::string const& subImage) const;
-    std::string const& qualityPreset(std::string const& subImage) const;
-    size_t quality(std::string const& subImage) const;
-    std::string const& compressor(std::string const& subImage) const;
-    std::string const& colorspaceTransform(std::string const& subImage) const;
-    size_t numTiles(std::string const& subImage) const;
-    std::string const& iccProfile(std::string const& subImage) const;
-    std::array<double, 9> iccMatrix(std::string const& subImage) const;
-    std::vector<uint8_t> const& imageData(std::string const& subImage) const;
-    std::string const& lossyImageCompression(std::string const& subImage) const;
-    double lossyImageCompressionRatio(std::string const& subImage) const;
-    std::string const& lossyImageCompressionMethod(std::string const& subImage) const;
-    std::string const& colorLinearity(std::string const& subImage) const;
-
-    // View (over images) functions
-    DimensionsRange dimensionRanges(std::string const& subImage, uint32_t level) const;
-    std::vector<std::string> const& dimensionNames(std::string const& subImage) const;
-    std::vector<std::string> const& dimensionUnits(std::string const& subImage) const;
-    std::vector<std::string> const& dimensionTypes(std::string const& subImage) const;
-    std::vector<double> const& scale(std::string const& subImage) const;
-    std::vector<double> const& origin(std::string const& subImage) const;
-    rust::Vec<Rectangle> envelopesAsRectangles(std::string const& subImage, uint32_t level) const;
-    uint16_t bitsAllocated(std::string const& subImage) const;
-    uint16_t bitsStored(std::string const& subImage) const;
-    uint16_t highBit(std::string const& subImage) const;
-    uint16_t pixelRepresentation(std::string const& subImage) const;
-    uint16_t planarConfiguration(std::string const& subImage) const;
-    uint16_t samplesPerPixel(std::string const& subImage) const;
-    uint32_t numDerivedLevels(std::string const& subImage) const;
-    std::vector<size_t> pixelSize(std::string const& subImage) const;
-
-    void read_region(const RegionRequest& request, rust::Vec<uint8_t>& buffer, Size& image_size) const;
+    // void read_region(const RegionRequest& request, rust::Vec<uint8_t>& buffer, Size& image_size) const;
 
   private:
     std::unique_ptr<RenderContext> _render_context;
     std::unique_ptr<RenderBackend> _render_backend;
     std::unique_ptr<PixelEngine> _pixel_engine;
-    ISyntaxFacade& _facade;
-    std::map<std::string, View*> _views;
 
     static const std::string _version; // PixelEngine version
 };
@@ -132,8 +72,7 @@ class Facade {
     bool isUFS() const;
     bool isUFSb() const;
     bool isUVS() const;
-
-    std::unique_ptr<Image> sub_image(std::string const& image_type) const;
+    std::unique_ptr<Image> image(std::string const& image_type) const;
 
   private:
     ISyntaxFacade& _facade;
@@ -141,7 +80,7 @@ class Facade {
 
 class Image {
   public:
-    Image(SubImage& sub_image);
+    Image(SubImage& image);
 
     std::string const& pixelTransform() const;
     std::string const& qualityPreset() const;
@@ -156,9 +95,34 @@ class Image {
     double lossyImageCompressionRatio() const;
     std::string const& lossyImageCompressionMethod() const;
     std::string const& colorLinearity() const;
+    std::unique_ptr<ImageView> view() const;
 
   private:
-    SubImage& _sub_image;
+    SubImage& _image;
+};
+
+class ImageView {
+  public:
+    ImageView(View& view);
+
+    DimensionsRange dimensionRanges(uint32_t level) const;
+    std::vector<std::string> const& dimensionNames() const;
+    std::vector<std::string> const& dimensionUnits() const;
+    std::vector<std::string> const& dimensionTypes() const;
+    std::vector<double> const& scale() const;
+    std::vector<double> const& origin() const;
+    rust::Vec<Rectangle> envelopesAsRects(uint32_t level) const;
+    uint16_t bitsAllocated() const;
+    uint16_t bitsStored() const;
+    uint16_t highBit() const;
+    uint16_t pixelRepresentation() const;
+    uint16_t planarConfiguration() const;
+    uint16_t samplesPerPixel() const;
+    uint32_t numDerivedLevels() const;
+    std::vector<size_t> pixelSize() const;
+
+  private:
+    View& _view;
 };
 
 std::unique_ptr<PhilipsSlide> new_(rust::Str url);
