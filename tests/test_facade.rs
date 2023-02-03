@@ -12,7 +12,7 @@ use rstest::rstest;
 )]
 #[case(missing_file())]
 fn test_error_missing_file(#[case] filename: &Path) {
-    let engine = PhilipsEngine::new().unwrap();
+    let engine = PhilipsEngine::new();
     let facade = engine.facade("facade_name").unwrap();
     facade.open(filename, &ContainerName::CachingFicom).unwrap()
 }
@@ -21,7 +21,7 @@ fn test_error_missing_file(#[case] filename: &Path) {
 #[rstest]
 #[case(unsupported_file())]
 fn test_error_unsupported_file(#[case] filename: &Path) {
-    let engine = PhilipsEngine::new().unwrap();
+    let engine = PhilipsEngine::new();
     let facade = engine.facade("facade_name").unwrap();
     assert!(facade.open(filename, &ContainerName::CachingFicom).is_err());
 }
@@ -29,7 +29,7 @@ fn test_error_unsupported_file(#[case] filename: &Path) {
 #[rstest]
 #[case(sample())]
 fn test_properties(#[case] filename: &Path) {
-    let engine = PhilipsEngine::new().unwrap();
+    let engine = PhilipsEngine::new();
     let facade = engine.facade("facade_name").unwrap();
     facade.open(filename, &ContainerName::CachingFicom).unwrap();
 
@@ -82,7 +82,7 @@ fn test_properties(#[case] filename: &Path) {
 #[rstest]
 #[case(sample())]
 fn test_properties_new(#[case] filename: &Path) {
-    let engine = PhilipsEngine::new().unwrap();
+    let engine = PhilipsEngine::new();
     let facade = engine.facade("facade_name2").unwrap();
     facade.open(filename, &ContainerName::CachingFicom).unwrap();
 

@@ -9,7 +9,7 @@ use rstest::rstest;
 #[rstest]
 #[case(sample())]
 fn test_read_region_wsi(#[case] filename: &Path) {
-    let engine = PhilipsEngine::new().unwrap();
+    let engine = PhilipsEngine::new();
     let facade = engine.facade("facade_name2").unwrap();
     facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();
@@ -35,7 +35,7 @@ fn test_read_region_wsi(#[case] filename: &Path) {
 #[case(sample())]
 #[cfg(feature = "image")]
 fn test_read_image_wsi(#[case] filename: &Path) {
-    let engine = PhilipsEngine::new().unwrap();
+    let engine = PhilipsEngine::new();
     let facade = engine.facade("facade_name2").unwrap();
     facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();

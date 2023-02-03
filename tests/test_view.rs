@@ -9,7 +9,7 @@ use rstest::rstest;
 #[rstest]
 #[case(sample())]
 fn test_view_wsi(#[case] filename: &Path) {
-    let engine = PhilipsEngine::new().unwrap();
+    let engine = PhilipsEngine::new();
     let facade = engine.facade("facade_name2").unwrap();
     facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();
@@ -76,7 +76,7 @@ fn test_view_wsi(#[case] filename: &Path) {
 #[rstest]
 #[case(sample())]
 fn test_view_macro(#[case] filename: &Path) {
-    let engine = PhilipsEngine::new().unwrap();
+    let engine = PhilipsEngine::new();
     let facade = engine.facade("facade_name2").unwrap();
     facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::MacroImage).unwrap();
@@ -120,7 +120,7 @@ fn test_view_macro(#[case] filename: &Path) {
 #[rstest]
 #[case(sample())]
 fn test_view_label(#[case] filename: &Path) {
-    let engine = PhilipsEngine::new().unwrap();
+    let engine = PhilipsEngine::new();
     let facade = engine.facade("facade_name2").unwrap();
     facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::LabelImage).unwrap();
@@ -163,7 +163,7 @@ fn test_view_label(#[case] filename: &Path) {
 #[rstest]
 #[case(sample())]
 fn test_envelopes(#[case] filename: &Path) {
-    let engine = PhilipsEngine::new().unwrap();
+    let engine = PhilipsEngine::new();
     let facade = engine.facade("facade_name2").unwrap();
     facade.open(filename, &ContainerName::CachingFicom).unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();

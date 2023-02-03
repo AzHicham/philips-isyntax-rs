@@ -19,7 +19,7 @@ fn make_request(row: u32, col: u32, width: u32, height: u32, level: u32) -> Regi
 }
 
 fn philips_read_region_256_lvl_0(bench: &mut Bencher) {
-    let engine = PhilipsEngine::new().unwrap();
+    let engine = PhilipsEngine::new();
     let facade = engine.facade("facade_name").unwrap();
     facade
         .open(simple_isyntax(), &ContainerName::CachingFicom)
@@ -31,7 +31,7 @@ fn philips_read_region_256_lvl_0(bench: &mut Bencher) {
 }
 
 fn philips_read_region_512_lvl_0(bench: &mut Bencher) {
-    let engine = PhilipsEngine::new().unwrap();
+    let engine = PhilipsEngine::new();
     let facade = engine.facade("facade_name").unwrap();
     facade
         .open(simple_isyntax(), &ContainerName::CachingFicom)
@@ -43,7 +43,7 @@ fn philips_read_region_512_lvl_0(bench: &mut Bencher) {
 }
 
 fn philips_read_region_256_lvl_1(bench: &mut Bencher) {
-    let engine = PhilipsEngine::new().unwrap();
+    let engine = PhilipsEngine::new();
     let facade = engine.facade("facade_name").unwrap();
     facade
         .open(simple_isyntax(), &ContainerName::CachingFicom)
@@ -58,7 +58,7 @@ fn philips_read_region_256_lvl_1(bench: &mut Bencher) {
 }
 
 fn philips_read_region_512_lvl_1(bench: &mut Bencher) {
-    let engine = PhilipsEngine::new().unwrap();
+    let engine = PhilipsEngine::new();
     let facade = engine.facade("facade_name").unwrap();
     facade
         .open(simple_isyntax(), &ContainerName::CachingFicom)
