@@ -37,87 +37,91 @@ pub(crate) mod ffi {
     unsafe extern "C++" {
         include!("philips-isyntax-rs/cpp/philipsslide.hpp");
 
-        pub type PhilipsSlide;
+        pub type PhilipsEngine;
+        pub type Facade;
+        pub type Image;
+        pub type ImageView;
 
-        fn new_(url: &str) -> Result<UniquePtr<PhilipsSlide>>;
+        // Pixel Engine
+        fn new_() -> UniquePtr<PhilipsEngine>;
+        fn containers(self: &PhilipsEngine) -> &CxxVector<CxxString>;
+        fn sdkVersion(self: &PhilipsEngine) -> &CxxString;
+        fn containerVersion(self: &PhilipsEngine, container: &CxxString) -> Result<&CxxString>;
+        fn compressors(self: &PhilipsEngine) -> &CxxVector<CxxString>;
+        fn pixelTransforms(self: &PhilipsEngine) -> &CxxVector<CxxString>;
+        fn colorspaceTransforms(self: &PhilipsEngine) -> &CxxVector<CxxString>;
+        fn qualityPresets(self: &PhilipsEngine) -> &CxxVector<CxxString>;
+        fn supportedFilters(self: &PhilipsEngine) -> &CxxVector<CxxString>;
+        fn facade(self: &PhilipsEngine, input: &CxxString) -> Result<UniquePtr<Facade>>;
 
-        // SDK properties
-        fn containers(&self) -> &CxxVector<CxxString>;
-        fn sdkVersion(&self) -> &CxxString;
-        fn containerVersion(&self, container: &CxxString) -> Result<&CxxString>;
-        fn compressors(&self) -> &CxxVector<CxxString>;
-        fn pixelTransforms(&self) -> &CxxVector<CxxString>;
-        fn colorspaceTransforms(&self) -> &CxxVector<CxxString>;
-        fn qualityPresets(&self) -> &CxxVector<CxxString>;
-        fn supportedFilters(&self) -> &CxxVector<CxxString>;
+        // Facade properties
+        fn open(self: &Facade, url: &str, container: &str) -> Result<()>;
+        fn close(self: &Facade) -> Result<()>;
+        fn numImages(self: &Facade) -> Result<usize>;
+        fn iSyntaxFileVersion(self: &Facade) -> Result<&CxxString>;
+        fn id(self: &Facade) -> Result<&CxxString>;
+        fn barcode(self: &Facade) -> Result<&CxxString>;
+        fn scannerCalibrationStatus(self: &Facade) -> Result<&CxxString>;
+        fn softwareVersions(self: &Facade) -> Result<&CxxVector<CxxString>>;
+        fn derivationDescription(self: &Facade) -> Result<&CxxString>;
+        fn acquisitionDateTime(self: &Facade) -> Result<&CxxString>;
+        fn manufacturer(self: &Facade) -> Result<&CxxString>;
+        fn modelName(self: &Facade) -> Result<&CxxString>;
+        fn deviceSerialNumber(self: &Facade) -> Result<&CxxString>;
+        fn scannerRackNumber(self: &Facade) -> Result<u16>;
+        fn scannerSlotNumber(self: &Facade) -> Result<u16>;
+        fn scannerOperatorId(self: &Facade) -> Result<&CxxString>;
+        fn scannerRackPriority(self: &Facade) -> Result<u16>;
+        fn dateOfLastCalibration(self: &Facade) -> Result<&CxxVector<CxxString>>;
+        fn timeOfLastCalibration(self: &Facade) -> Result<&CxxVector<CxxString>>;
+        fn isPhilips(self: &Facade) -> Result<bool>;
+        fn isHamamatsu(self: &Facade) -> Result<bool>;
+        fn isUFS(self: &Facade) -> Result<bool>;
+        fn isUFSb(self: &Facade) -> Result<bool>;
+        fn isUVS(self: &Facade) -> Result<bool>;
+        fn image(self: &Facade, image_type: &CxxString) -> Result<UniquePtr<Image>>;
 
-        // File properties
-        fn numImages(&self) -> Result<usize>;
-        fn iSyntaxFileVersion(&self) -> Result<&CxxString>;
-        fn id(&self) -> Result<&CxxString>;
-        fn barcode(&self) -> Result<&CxxString>;
-        fn scannerCalibrationStatus(&self) -> Result<&CxxString>;
-        fn softwareVersions(&self) -> Result<&CxxVector<CxxString>>;
-        fn derivationDescription(&self) -> Result<&CxxString>;
-        fn acquisitionDateTime(&self) -> Result<&CxxString>;
-        fn manufacturer(&self) -> Result<&CxxString>;
-        fn modelName(&self) -> Result<&CxxString>;
-        fn deviceSerialNumber(&self) -> Result<&CxxString>;
-        fn scannerRackNumber(&self) -> Result<u16>;
-        fn scannerSlotNumber(&self) -> Result<u16>;
-        fn scannerOperatorId(&self) -> Result<&CxxString>;
-        fn scannerRackPriority(&self) -> Result<u16>;
-        fn dateOfLastCalibration(&self) -> Result<&CxxVector<CxxString>>;
-        fn timeOfLastCalibration(&self) -> Result<&CxxVector<CxxString>>;
-        fn isPhilips(&self) -> Result<bool>;
-        fn isHamamatsu(&self) -> Result<bool>;
-        fn isUFS(&self) -> Result<bool>;
-        fn isUFSb(&self) -> Result<bool>;
-        fn isUVS(&self) -> Result<bool>;
+        // Image properties
+        fn pixelTransform(self: &Image) -> Result<&CxxString>;
+        fn qualityPreset(self: &Image) -> Result<&CxxString>;
+        fn quality(self: &Image) -> Result<usize>;
+        fn compressor(self: &Image) -> Result<&CxxString>;
+        fn colorspaceTransform(self: &Image) -> Result<&CxxString>;
+        fn numTiles(self: &Image) -> Result<usize>;
+        fn iccProfile(self: &Image) -> Result<&CxxString>;
+        fn iccMatrix(self: &Image) -> Result<[f64; 9]>;
+        fn imageData(self: &Image) -> Result<&CxxVector<u8>>;
+        fn lossyImageCompression(self: &Image) -> Result<&CxxString>;
+        fn lossyImageCompressionRatio(self: &Image) -> Result<f64>;
+        fn colorLinearity(self: &Image) -> Result<&CxxString>;
+        fn view(self: &Image) -> Result<UniquePtr<ImageView>>;
 
-        // Sub Image properties
-        fn pixelTransform(&self, sub_image: &CxxString) -> Result<&CxxString>;
-        fn qualityPreset(&self, sub_image: &CxxString) -> Result<&CxxString>;
-        fn quality(&self, sub_image: &CxxString) -> Result<usize>;
-        fn compressor(&self, sub_image: &CxxString) -> Result<&CxxString>;
-        fn colorspaceTransform(&self, sub_image: &CxxString) -> Result<&CxxString>;
-        fn numTiles(&self, sub_image: &CxxString) -> Result<usize>;
-        fn iccProfile(&self, sub_image: &CxxString) -> Result<&CxxString>;
-        fn iccMatrix(&self, sub_image: &CxxString) -> Result<[f64; 9]>;
-        fn imageData(&self, sub_image: &CxxString) -> Result<&CxxVector<u8>>;
-        fn lossyImageCompression(&self, sub_image: &CxxString) -> Result<&CxxString>;
-        fn lossyImageCompressionRatio(&self, sub_image: &CxxString) -> Result<f64>;
-        fn colorLinearity(&self, sub_image: &CxxString) -> Result<&CxxString>;
-
-        // View Properties
-        fn dimensionRanges(&self, sub_image: &CxxString, level: u32) -> Result<DimensionsRange>;
-        fn dimensionNames<'a>(&self, sub_image: &CxxString) -> &'a CxxVector<CxxString>;
-        fn dimensionUnits<'a>(&self, sub_image: &CxxString) -> &'a CxxVector<CxxString>;
-        fn dimensionTypes<'a>(&self, sub_image: &CxxString) -> &'a CxxVector<CxxString>;
-        fn scale<'a>(&self, sub_image: &CxxString) -> &'a CxxVector<f64>;
-        fn origin<'a>(&self, sub_image: &CxxString) -> &'a CxxVector<f64>;
-        fn envelopesAsRectangles(
-            &self,
-            sub_image: &CxxString,
-            level: u32,
-        ) -> Result<Vec<Rectangle>>;
-        fn bitsAllocated(&self, sub_image: &CxxString) -> u16;
-        fn bitsStored(&self, sub_image: &CxxString) -> u16;
-        fn highBit(&self, sub_image: &CxxString) -> u16;
-        fn pixelRepresentation(&self, sub_image: &CxxString) -> Result<u16>;
-        fn planarConfiguration(&self, sub_image: &CxxString) -> Result<u16>;
-        fn samplesPerPixel(&self, sub_image: &CxxString) -> Result<u16>;
-        fn numDerivedLevels(&self, sub_image: &CxxString) -> u32;
-
-        // read WSI tile
-        pub(crate) fn read_region(
-            &self,
+        // View properties
+        fn dimensionRanges(self: &ImageView, level: u32) -> Result<DimensionsRange>;
+        fn dimensionNames<'a>(self: &ImageView) -> &'a CxxVector<CxxString>;
+        fn dimensionUnits<'a>(self: &ImageView) -> &'a CxxVector<CxxString>;
+        fn dimensionTypes<'a>(self: &ImageView) -> &'a CxxVector<CxxString>;
+        fn scale<'a>(self: &ImageView) -> &'a CxxVector<f64>;
+        fn origin<'a>(self: &ImageView) -> &'a CxxVector<f64>;
+        fn bitsAllocated(self: &ImageView) -> u16;
+        fn bitsStored(self: &ImageView) -> u16;
+        fn highBit(self: &ImageView) -> u16;
+        fn pixelRepresentation(self: &ImageView) -> Result<u16>;
+        fn planarConfiguration(self: &ImageView) -> Result<u16>;
+        fn samplesPerPixel(self: &ImageView) -> Result<u16>;
+        fn numDerivedLevels(self: &ImageView) -> u32;
+        fn envelopesAsRects(self: &ImageView, level: u32) -> Result<Vec<Rectangle>>;
+        fn read_region(
+            self: &ImageView,
+            engine: &UniquePtr<PhilipsEngine>,
             request: &RegionRequest,
             buffer: &mut Vec<u8>,
             image_size: &mut Size,
         ) -> Result<()>;
-
     }
 }
 
-unsafe impl Send for ffi::PhilipsSlide {}
+unsafe impl Send for ffi::PhilipsEngine {}
+unsafe impl Send for ffi::Facade {}
+unsafe impl Send for ffi::Image {}
+unsafe impl Send for ffi::ImageView {}

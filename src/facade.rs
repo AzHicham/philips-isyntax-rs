@@ -1,9 +1,21 @@
 //! This module contains all functions related to Philips ISyntaxFacade
 //!
 
-use crate::{PhilipsSlide, Result};
+use crate::{ContainerName, Facade, Image, ImageType, Result};
+use cxx::let_cxx_string;
+use std::path::Path;
 
-impl PhilipsSlide {
+impl<'a> Facade<'a> {
+    /// Open an ISyntax file
+    pub fn open<P: AsRef<Path>>(&self, filename: P, container: &ContainerName) -> Result<()> {
+        let filename = filename.as_ref().display().to_string();
+        Ok(self.inner.open(&filename, container.as_str())?)
+    }
+
+    pub fn close(&self) -> Result<()> {
+        Ok(self.inner.close()?)
+    }
+
     /// Returns numbers of images in ISyntax file
     /// Should always return 3 images eg WSI, Macro, Label/ILE
     pub fn num_images(&self) -> Result<usize> {
@@ -120,5 +132,32 @@ impl PhilipsSlide {
 
     pub fn is_uvs(&self) -> Result<bool> {
         Ok(self.inner.isUVS()?)
+    }
+
+    pub fn image(&self, image_type: &ImageType) -> Result<Image> {
+        let_cxx_string!(image_type = image_type);
+        Ok(Image {
+            inner: self.inner.image(&image_type)?,
+            _lifetime: Default::default(),
+        })
+    }
+}
+
+impl ContainerName {
+    pub fn as_str(&self) -> &str {
+        match &self {
+            Self::Default => "",
+            Self::Ficom => "ficom",
+            Self::Dicom => "dicom",
+            Self::CachingFicom => "caching-ficom",
+            Self::S3 => "s3",
+            Self::Legacy => "legacy",
+        }
+    }
+}
+
+impl AsRef<[u8]> for ContainerName {
+    fn as_ref(&self) -> &[u8] {
+        self.as_str().as_bytes()
     }
 }

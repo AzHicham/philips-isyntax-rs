@@ -14,13 +14,38 @@ pub type DimensionsRange = bindings::ffi::DimensionsRange;
 pub type Result<T, E = errors::PhilipsSlideError> = std::result::Result<T, E>;
 
 use cxx::UniquePtr;
+use std::marker::PhantomData;
 
-pub struct PhilipsSlide {
-    inner: UniquePtr<bindings::ffi::PhilipsSlide>,
+pub struct PhilipsEngine {
+    inner: UniquePtr<bindings::ffi::PhilipsEngine>,
+}
+
+pub struct Facade<'a> {
+    inner: UniquePtr<bindings::ffi::Facade>,
+    _lifetime: PhantomData<&'a ()>, // Note: Represent PixelEngine Lifetime
+}
+
+pub struct Image<'a> {
+    inner: UniquePtr<bindings::ffi::Image>,
+    _lifetime: PhantomData<&'a ()>, // Note: Represent Facade Lifetime
+}
+
+pub struct View<'a> {
+    inner: UniquePtr<bindings::ffi::ImageView>,
+    _lifetime: PhantomData<&'a ()>, // Note: Represent Image Lifetime
 }
 
 pub enum ImageType {
     WSI,
     MacroImage,
     LabelImage,
+}
+
+pub enum ContainerName {
+    Default,
+    Ficom,
+    Dicom,
+    CachingFicom,
+    S3,
+    Legacy,
 }

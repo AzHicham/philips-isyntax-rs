@@ -2,17 +2,21 @@
 //! Results of theses functions should only depend on the SDK and not ISyntax file
 //!
 
-use crate::{bindings::ffi, ImageType, PhilipsSlide, Result};
+use crate::{bindings::ffi, Facade, ImageType, PhilipsEngine, Result};
 use cxx::let_cxx_string;
-use std::path::Path;
 
-impl PhilipsSlide {
+impl PhilipsEngine {
     /// Create a new instance of PhilipsSlide
     /// May fail if the SDK cannot read the file
-    pub fn new<P: AsRef<Path>>(path: P) -> Result<Self> {
-        let filename = path.as_ref().display().to_string();
-        Ok(PhilipsSlide {
-            inner: ffi::new_(&filename)?,
+    pub fn new() -> Self {
+        PhilipsEngine { inner: ffi::new_() }
+    }
+
+    pub fn facade(&self, input: &str) -> Result<Facade> {
+        let_cxx_string!(input = input);
+        Ok(Facade {
+            inner: self.inner.facade(&input)?,
+            _lifetime: Default::default(),
         })
     }
 
