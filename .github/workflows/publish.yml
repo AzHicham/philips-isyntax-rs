@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
-      - uses: MeilCli/regex-match@v1.5.18
+      - uses: MeilCli/regex-match@v1.5.22
         name: SemVer Validation
         id: regex-match
         with:
@@ -38,7 +38,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
       - name: Install dependencies ubuntu
         run: make install-deps
-      - uses: katyo/publish-crates@v1
+      - uses: katyo/publish-crates@v2
         with:
           dry-run: ${{ github.event_name != 'release' }}
           registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
