@@ -1,52 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1675464249267,
+  "lastUpdate": 1675502849589,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "committer": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "id": "e88c30566450a4d40367db1258053cc090542db1",
-          "message": "feature: Add support for 9 bits images",
-          "timestamp": "2022-11-12T15:05:14Z",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/5/commits/e88c30566450a4d40367db1258053cc090542db1"
-        },
-        "date": 1668618455281,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1844077,
-            "range": "± 1567952",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 4173308,
-            "range": "± 1483863",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 10347575,
-            "range": "± 1533097",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 9801064,
-            "range": "± 1800068",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1389,6 +1345,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 7323653,
             "range": "± 1661456",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hicham.azimani1@gmail.com",
+            "name": "Hicham Azimani",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0789434b94ba5185159007dbcd71637f6b9105e2",
+          "message": "Merge pull request #21 from AzHicham/refactor\n\nrefactor: refactor from scratch",
+          "timestamp": "2023-02-04T10:23:28+01:00",
+          "tree_id": "bfbaabbd3350012ec2a696addd967194b61dbc9a",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/0789434b94ba5185159007dbcd71637f6b9105e2"
+        },
+        "date": 1675502849105,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1350116,
+            "range": "± 380186",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 2786097,
+            "range": "± 538232",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 6391501,
+            "range": "± 1128211",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 5714243,
+            "range": "± 977023",
             "unit": "ns/iter"
           }
         ]
