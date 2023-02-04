@@ -12,10 +12,15 @@ impl PhilipsEngine {
         PhilipsEngine { inner: ffi::new_() }
     }
 
-    pub fn facade(&self, input: &str) -> Result<Facade> {
-        let_cxx_string!(input = input);
+    /// Create a new instance of Facade
+    /// A Facade is a reference to a Philips Engine internal object
+    /// You can create multiple Facade for handling multiple files
+    /// WARNING: multiple Facade handler created with the same id will points
+    /// to the same reference in Philips Engine internal.
+    pub fn facade(&self, id: &str) -> Result<Facade> {
+        let_cxx_string!(id = id);
         Ok(Facade {
-            inner: self.inner.facade(&input)?,
+            inner: self.inner.facade(&id)?,
             _lifetime: Default::default(),
         })
     }

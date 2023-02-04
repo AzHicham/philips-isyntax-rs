@@ -24,6 +24,7 @@ fn test_sub_image_slide(#[case] filename: &Path) {
     assert_eq!(image.compressor().unwrap(), "hulsken");
     assert_eq!(image.colorspace_transform().unwrap(), "RGB2YCoCg");
     assert_eq!(image.num_tiles().unwrap(), 212892);
+    assert!(image.icc_profile().is_ok()); // too long to display
     assert_eq!(
         image.icc_matrix().unwrap(),
         [
@@ -62,6 +63,7 @@ fn test_sub_image_macro(#[case] filename: &Path) {
     assert!(image.colorspace_transform().is_err());
     assert!(image.num_tiles().is_err());
     assert!(image.color_linearity().is_err());
+    assert!(image.icc_profile().is_ok()); // too long to display
     assert_eq!(
         image.icc_matrix().unwrap(),
         [
@@ -109,6 +111,7 @@ fn test_sub_image_label(#[case] filename: &Path) {
     assert!(image.num_tiles().is_err());
     assert!(image.color_linearity().is_err());
     assert!(image.icc_matrix().is_err());
+    assert!(image.icc_profile().is_ok()); // too long to display
     assert_eq!(image.lossy_image_compression().unwrap(), "01");
     assert_eq!(image.lossy_image_compression_ratio().unwrap(), 26.0);
     assert_eq!(image.image_data().unwrap().len(), 52734);

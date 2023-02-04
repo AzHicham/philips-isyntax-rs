@@ -5,14 +5,20 @@ use crate::{ContainerName, Facade, Image, ImageType, Result};
 use cxx::let_cxx_string;
 use std::path::Path;
 
+/// A facade is a reference to a Philips Engine internal object
+/// The facade allow file manipulation & file information retrival
+/// NOTE: Philips Engine and all internal objects are not thread safe
 impl<'a> Facade<'a> {
-    /// Open an ISyntax file
+    /// Open an ISyntax file through a facade
     pub fn open<P: AsRef<Path>>(&self, filename: P, container: &ContainerName) -> Result<()> {
         let filename = filename.as_ref().display().to_string();
         Ok(self.inner.open(&filename, container.as_str())?)
     }
 
-    pub fn close(&self) -> Result<()> {
+    // close close hold by the facade
+    // WARNING: Do not call this function if the facade was not "opened"
+    // this will cause a SIGSEGV
+    pub unsafe fn close(&self) -> Result<()> {
         Ok(self.inner.close()?)
     }
 
@@ -27,6 +33,8 @@ impl<'a> Facade<'a> {
         Ok(self.inner.iSyntaxFileVersion()?.to_str()?)
     }
 
+    /// Return the id of the facade
+    /// See also PhilipsEngine::facade
     pub fn id(&self) -> Result<&str> {
         Ok(self.inner.id()?.to_str()?)
     }
@@ -86,6 +94,7 @@ impl<'a> Facade<'a> {
         Ok(self.inner.scannerSlotNumber()?)
     }
 
+    /// Returns the scanner operator id used to create the image file
     pub fn scanner_operator_id(&self) -> Result<&str> {
         Ok(self.inner.scannerOperatorId()?.to_str()?)
     }
@@ -122,6 +131,7 @@ impl<'a> Facade<'a> {
         Ok(self.inner.isHamamatsu()?)
     }
 
+    /// Returns true if the file was created by Philips Ultra Fast Scanner
     pub fn is_ufs(&self) -> Result<bool> {
         Ok(self.inner.isUFS()?)
     }
@@ -134,6 +144,11 @@ impl<'a> Facade<'a> {
         Ok(self.inner.isUVS()?)
     }
 
+    /// Create a new instance of Image
+    /// An Image is a reference to a Philips Engine internal object
+    /// You can create multiple Image handler for every possible ImageType
+    /// WARNING: multiple Image handler created with the same image_type will points
+    /// to the same reference in Philips Engine internal.
     pub fn image(&self, image_type: &ImageType) -> Result<Image> {
         let_cxx_string!(image_type = image_type);
         Ok(Image {
@@ -153,11 +168,5 @@ impl ContainerName {
             Self::S3 => "s3",
             Self::Legacy => "legacy",
         }
-    }
-}
-
-impl AsRef<[u8]> for ContainerName {
-    fn as_ref(&self) -> &[u8] {
-        self.as_str().as_bytes()
     }
 }

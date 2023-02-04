@@ -81,53 +81,43 @@ fn test_properties(#[case] filename: &Path) {
 
 #[rstest]
 #[case(sample())]
-fn test_properties_new(#[case] filename: &Path) {
+fn test_closing(#[case] filename: &Path) {
     let engine = PhilipsEngine::new();
-    let facade = engine.facade("facade_name2").unwrap();
+    let facade = engine.facade("facade_name").unwrap();
     facade.open(filename, &ContainerName::CachingFicom).unwrap();
 
     assert_eq!(facade.isyntax_file_version().unwrap(), "100.5");
     assert_eq!(facade.num_images().unwrap(), 3);
-    assert_eq!(facade.id().unwrap(), "facade_name2");
-    assert_eq!(facade.barcode().unwrap(), "LMS-2-12306355");
-    assert_eq!(facade.scanner_calibration_status().unwrap(), "OK");
-    assert_eq!(
-        facade.software_versions().unwrap().collect::<Vec<_>>(),
-        vec!["1.8.6824", "20180906_R51"]
-    );
-    assert_eq!(
-        facade.derivation_description().unwrap(),
-        "PHILIPS UFS V1.8.6824 | Quality=1 | DWT=1 | Compressor=16"
-    );
-    assert_eq!(
-        facade.acquisition_date_time().unwrap(),
-        "20210125181858.000000"
-    );
-    assert_eq!(facade.manufacturer().unwrap(), "PHILIPS");
-    assert_eq!(facade.model_name().unwrap(), "UFS Scanner");
-    assert_eq!(facade.device_serial_number().unwrap(), "FMT0296");
-    assert_eq!(facade.scanner_rack_number().unwrap(), 4);
-    assert_eq!(facade.scanner_slot_number().unwrap(), 19);
-    assert_eq!(facade.scanner_operator_id().unwrap(), "");
-    assert_eq!(facade.scanner_rack_priority().unwrap(), 0);
-    assert_eq!(
-        facade
-            .date_of_last_calibration()
-            .unwrap()
-            .collect::<Vec<_>>(),
-        vec!["20210125"]
-    );
-    assert_eq!(
-        facade
-            .time_of_last_calibration()
-            .unwrap()
-            .collect::<Vec<_>>(),
-        vec!["174955"]
-    );
 
-    assert!(facade.is_philips().unwrap());
-    assert!(!facade.is_hamamatsu().unwrap());
-    assert!(facade.is_ufs().unwrap());
-    assert!(!facade.is_ufsb().unwrap());
-    assert!(!facade.is_uvs().unwrap());
+    unsafe {
+        facade.close().unwrap();
+    }
+
+    assert!(facade.num_images().is_err());
+}
+
+#[rstest]
+#[case(sample())]
+fn test_open_after_close(#[case] filename: &Path) {
+    let engine = PhilipsEngine::new();
+    let facade = engine.facade("facade_name").unwrap();
+    facade.open(filename, &ContainerName::CachingFicom).unwrap();
+
+    assert_eq!(facade.isyntax_file_version().unwrap(), "100.5");
+    assert_eq!(facade.num_images().unwrap(), 3);
+
+    unsafe {
+        facade.close().unwrap();
+    }
+
+    // You cannot open on the same facade after closing it ...
+    // Investigate on the Philips SDK
+    // SIGABRT !!!!!!
+    // assert!(facade.open(filename, &ContainerName::CachingFicom).is_err());
+
+    // On the other hand you can create a new facade and open the same file
+    let facade = engine.facade("facade_name_2").unwrap();
+    facade.open(filename, &ContainerName::CachingFicom).unwrap();
+    assert_eq!(facade.isyntax_file_version().unwrap(), "100.5");
+    assert_eq!(facade.num_images().unwrap(), 3);
 }
