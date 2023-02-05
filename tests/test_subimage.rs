@@ -14,8 +14,9 @@ use {
 #[cfg(feature = "image")]
 fn test_sub_image_slide(#[case] filename: &Path) {
     let engine = PhilipsEngine::new();
-    let facade = engine.facade("facade_name2").unwrap();
-    facade.open(filename, &ContainerName::CachingFicom).unwrap();
+    let facade = engine
+        .facade(filename, &ContainerName::CachingFicom)
+        .unwrap();
     let image = facade.image(&ImageType::WSI).unwrap();
 
     assert_eq!(image.pixel_transform().unwrap(), "legall53");
@@ -24,6 +25,7 @@ fn test_sub_image_slide(#[case] filename: &Path) {
     assert_eq!(image.compressor().unwrap(), "hulsken");
     assert_eq!(image.colorspace_transform().unwrap(), "RGB2YCoCg");
     assert_eq!(image.num_tiles().unwrap(), 212892);
+    assert!(image.icc_profile().is_ok()); // too long to display
     assert_eq!(
         image.icc_matrix().unwrap(),
         [
@@ -50,8 +52,9 @@ fn test_sub_image_slide(#[case] filename: &Path) {
 #[cfg(feature = "image")]
 fn test_sub_image_macro(#[case] filename: &Path) {
     let engine = PhilipsEngine::new();
-    let facade = engine.facade("facade_name2").unwrap();
-    facade.open(filename, &ContainerName::CachingFicom).unwrap();
+    let facade = engine
+        .facade(filename, &ContainerName::CachingFicom)
+        .unwrap();
     let image = facade.image(&ImageType::MacroImage).unwrap();
 
     // Some function are only available with ImageType::WSI
@@ -62,6 +65,7 @@ fn test_sub_image_macro(#[case] filename: &Path) {
     assert!(image.colorspace_transform().is_err());
     assert!(image.num_tiles().is_err());
     assert!(image.color_linearity().is_err());
+    assert!(image.icc_profile().is_ok()); // too long to display
     assert_eq!(
         image.icc_matrix().unwrap(),
         [
@@ -96,8 +100,9 @@ fn test_sub_image_macro(#[case] filename: &Path) {
 #[cfg(feature = "image")]
 fn test_sub_image_label(#[case] filename: &Path) {
     let engine = PhilipsEngine::new();
-    let facade = engine.facade("facade_name2").unwrap();
-    facade.open(filename, &ContainerName::CachingFicom).unwrap();
+    let facade = engine
+        .facade(filename, &ContainerName::CachingFicom)
+        .unwrap();
     let image = facade.image(&ImageType::LabelImage).unwrap();
 
     // Some function are only available with ImageType::slide
@@ -109,6 +114,7 @@ fn test_sub_image_label(#[case] filename: &Path) {
     assert!(image.num_tiles().is_err());
     assert!(image.color_linearity().is_err());
     assert!(image.icc_matrix().is_err());
+    assert!(image.icc_profile().is_ok()); // too long to display
     assert_eq!(image.lossy_image_compression().unwrap(), "01");
     assert_eq!(image.lossy_image_compression_ratio().unwrap(), 26.0);
     assert_eq!(image.image_data().unwrap().len(), 52734);

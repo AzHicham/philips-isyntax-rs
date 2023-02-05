@@ -12,6 +12,8 @@ struct RegionRequest;
 class Facade;
 class Image;
 class ImageView;
+class SoftwareRenderContext;
+class SoftwareRenderBackend;
 
 using ISyntaxFacade = PixelEngine::ISyntaxFacade;
 using View = PixelEngine::View;
@@ -37,8 +39,8 @@ class PhilipsEngine {
     std::unique_ptr<PixelEngine>& inner();
 
   private:
-    std::unique_ptr<RenderContext> _render_context;
-    std::unique_ptr<RenderBackend> _render_backend;
+    std::unique_ptr<SoftwareRenderContext> _render_context;
+    std::unique_ptr<SoftwareRenderBackend> _render_backend;
     std::unique_ptr<PixelEngine> _pixel_engine;
 
     static const std::string _version; // PixelEngine version

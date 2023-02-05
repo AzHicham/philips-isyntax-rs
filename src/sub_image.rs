@@ -13,38 +13,39 @@ use {
 };
 
 impl<'a> Image<'a> {
-    /// Returns the pixel transform used for the SubImage
+    /// Returns the pixel transform used for this Image
     pub fn pixel_transform(&self) -> Result<&str> {
         Ok(self.inner.pixelTransform()?.to_str()?)
     }
 
-    /// Returns the quality preset used for the SubImage
+    /// Returns the quality preset used for this Image
     pub fn quality_preset(&self) -> Result<&str> {
         Ok(self.inner.qualityPreset()?.to_str()?)
     }
 
-    /// Returns the quality used for the SubImage
+    /// Returns the quality used for this Image
     pub fn quality(&self) -> Result<usize> {
         Ok(self.inner.quality()?)
     }
 
-    /// Returns the compressor used for the SubImage
+    /// Returns the compressor used for this Image
     pub fn compressor(&self) -> Result<&str> {
         Ok(self.inner.compressor()?.to_str()?)
     }
 
-    /// Returns the colorspace transform used for the SubImage
+    /// Returns the colorspace transform used for this Image
     pub fn colorspace_transform(&self) -> Result<&str> {
         Ok(self.inner.colorspaceTransform()?.to_str()?)
     }
 
-    /// Returns the number of tiles in the SubImage
+    /// Returns the number of tiles in this Image
     /// Only applicable to the WSI SubImage,
     /// Returns an error for the Macro and Label/ILE SubImage
     pub fn num_tiles(&self) -> Result<usize> {
         Ok(self.inner.numTiles()?)
     }
 
+    /// Returns the ICC Profile of this Image
     pub fn icc_profile(&self) -> Result<&str> {
         Ok(self.inner.iccProfile()?.to_str()?)
     }
@@ -63,7 +64,7 @@ impl<'a> Image<'a> {
     }
 
     /// Returns image data as a DynamicImage
-    /// Only applicable to Macro and Label/ILE SubImage
+    /// NOTE: Only applicable to Macro and Label/ILE SubImage
     #[cfg(feature = "image")]
     pub fn get_image(&self) -> Result<DynamicImage> {
         let buffer = self.image_data()?;
@@ -85,7 +86,7 @@ impl<'a> Image<'a> {
     }
 
     #[cfg(feature = "image")]
-    pub fn decode_jpeg(buffer: &[u8]) -> Result<DynamicImage> {
+    fn decode_jpeg(buffer: &[u8]) -> Result<DynamicImage> {
         let cursor = Cursor::new(buffer);
         let decoder = JpegDecoder::new(cursor)?;
         let mut image_buffer = vec![0_u8; decoder.total_bytes() as usize];
@@ -105,17 +106,22 @@ impl<'a> Image<'a> {
             Ok(DynamicImage::ImageRgba8(
                 RgbaImage::from_vec(w, h, image_buffer).ok_or_else(|| {
                     PhilipsSlideError::ImageError(
-                        "Error while creating RgbImage from buffer".to_string(),
+                        "Error while creating RgbaImage from buffer".to_string(),
                     )
                 })?,
             ))
         } else {
             Err(PhilipsSlideError::ImageError(
-                "Error while creating RgbImage from buffer".to_string(),
+                "Only RgbImage and RgbaImage are handled currently".to_string(),
             ))
         }
     }
 
+    /// Create a new instance of View
+    /// A View is a reference to a Philips Engine internal object
+    /// You can create multiple View handler for an Image
+    /// WARNING: multiple View handler created from the same Image will points
+    /// to the same reference in Philips Engine internal.
     pub fn view(&self) -> Result<View> {
         Ok(View {
             inner: self.inner.view()?,

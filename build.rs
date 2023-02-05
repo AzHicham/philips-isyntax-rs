@@ -1,6 +1,6 @@
 use std::env;
 
-fn main() -> miette::Result<()> {
+fn main() {
     if env::var("DOCS_RS").is_err() {
         cxx_build::bridge("src/bindings.rs")
             .file("cpp/philipsslide.cc")
@@ -18,5 +18,4 @@ fn main() -> miette::Result<()> {
         println!("cargo:rustc-link-lib=gles2renderbackend");
         println!("cargo:rustc-link-lib=gles3renderbackend");
     }
-    Ok(())
 }

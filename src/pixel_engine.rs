@@ -2,8 +2,10 @@
 //! Results of theses functions should only depend on the SDK and not ISyntax file
 //!
 
-use crate::{bindings::ffi, Facade, ImageType, PhilipsEngine, Result};
+use crate::{bindings::ffi, ContainerName, Facade, ImageType, PhilipsEngine, Result};
 use cxx::let_cxx_string;
+use rand::Rng;
+use std::path::Path;
 
 impl PhilipsEngine {
     /// Create a new instance of PhilipsSlide
@@ -12,12 +14,18 @@ impl PhilipsEngine {
         PhilipsEngine { inner: ffi::new_() }
     }
 
-    pub fn facade(&self, input: &str) -> Result<Facade> {
-        let_cxx_string!(input = input);
-        Ok(Facade {
-            inner: self.inner.facade(&input)?,
+    /// Create a new instance of Facade
+    /// A Facade is a reference to a Philips Engine internal object
+    /// This facade is a handle to a file
+    pub fn facade<P: AsRef<Path>>(&self, filename: P, container: &ContainerName) -> Result<Facade> {
+        let facade_id = rand::thread_rng().gen::<u64>().to_string();
+        let_cxx_string!(facade_id = facade_id);
+        let facade = Facade {
+            inner: self.inner.facade(&facade_id)?,
             _lifetime: Default::default(),
-        })
+        };
+        facade.open(filename, container)?;
+        Ok(facade)
     }
 
     /// Returns the SDK PixelEngine version

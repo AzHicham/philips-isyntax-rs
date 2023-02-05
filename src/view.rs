@@ -59,14 +59,17 @@ impl<'a> View<'a> {
         Ok(self.inner.envelopesAsRects(level)?)
     }
 
+    /// Returns the number of bit allocated per sub-pixel
     pub fn bits_allocated(&self) -> u16 {
         self.inner.bitsAllocated()
     }
 
+    /// Returns the number of bit really used per sub-pixel
     pub fn bits_stored(&self) -> u16 {
         self.inner.bitsStored()
     }
 
+    /// Returns the highest bit
     pub fn high_bit(&self) -> u16 {
         self.inner.highBit()
     }
@@ -79,6 +82,7 @@ impl<'a> View<'a> {
         Ok(self.inner.planarConfiguration()?)
     }
 
+    /// Returns the number of sub pixel per pixel, 3 for RGB and 4 for RGBA
     pub fn samples_per_pixel(&self) -> Result<u16> {
         Ok(self.inner.samplesPerPixel()?)
     }
