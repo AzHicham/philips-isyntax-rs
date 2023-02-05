@@ -5,20 +5,32 @@ use crate::{ContainerName, Facade, Image, ImageType, Result};
 use cxx::let_cxx_string;
 use std::path::Path;
 
+impl<'a> Drop for Facade<'a> {
+    fn drop(&mut self) {
+        if let Err(_err) = self.close() {
+            // todo! log?
+        };
+    }
+}
+
 /// A facade is a reference to a Philips Engine internal object
-/// The facade allow file manipulation & file information retrival
+/// The facade allow file manipulation & file information retrieval
 /// NOTE: Philips Engine and all internal objects are not thread safe
 impl<'a> Facade<'a> {
     /// Open an ISyntax file through a facade
-    pub fn open<P: AsRef<Path>>(&self, filename: P, container: &ContainerName) -> Result<()> {
+    pub(crate) fn open<P: AsRef<Path>>(
+        &self,
+        filename: P,
+        container: &ContainerName,
+    ) -> Result<()> {
         let filename = filename.as_ref().display().to_string();
         Ok(self.inner.open(&filename, container.as_str())?)
     }
 
     // close close hold by the facade
-    // WARNING: Do not call this function if the facade was not "opened"
+    // WARNING: Do not call this function if the facade was not "opened" or already closed
     // this will cause a SIGSEGV
-    pub unsafe fn close(&self) -> Result<()> {
+    fn close(&self) -> Result<()> {
         Ok(self.inner.close()?)
     }
 
