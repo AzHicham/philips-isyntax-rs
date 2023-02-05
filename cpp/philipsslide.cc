@@ -209,8 +209,8 @@ void ImageView::read_region(const std::unique_ptr<PhilipsEngine>& engine, const 
     auto const& envelopes = _view.dataEnvelopes(request.level);
     auto regions = _view.requestRegions(view_range, envelopes, false, {254, 254, 254}, BufferType::RGB);
 
-    auto _ = engine.get()->inner()->waitAny();
-    auto region = regions.front();
+    auto regions_ready = engine.get()->inner()->waitAny(regions);
+    auto region = regions_ready.front();
 
     // compute image size
     const auto dimension_range = dimensionRanges(request.level);

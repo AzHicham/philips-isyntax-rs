@@ -34,6 +34,10 @@ pub(crate) mod ffi {
         pub end_y: u32,
     }
 
+    extern "Rust" {
+        fn println(str: String);
+    }
+
     unsafe extern "C++" {
         include!("philips-isyntax-rs/cpp/philipsslide.hpp");
 
@@ -119,6 +123,10 @@ pub(crate) mod ffi {
             image_size: &mut Size,
         ) -> Result<()>;
     }
+}
+
+fn println(str: String) {
+    println!("{str}");
 }
 
 unsafe impl Send for ffi::PhilipsEngine {}
