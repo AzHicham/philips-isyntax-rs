@@ -1,14 +1,14 @@
 [package]
 name = "philips-isyntax-rs"
 edition = "2021"
-version = "0.2.2"
+version = "1.0.0"
 authors = ["AzHicham <hicham.azimani1@gmail.com>"]
 description = "Rust bindings to the Philips Open Pathology C++ library"
 repository = "https://github.com/AzHicham/philips-isyntax-rs"
 homepage = "https://github.com/AzHicham/philips-isyntax-rs"
 readme = "README.md"
 keywords = ["philips", "isyntax", "histopathology", "microscopy"]
-categories = ["science"]
+categories = ["science", "external-ffi-bindings"]
 license = "MIT/Apache-2.0"
 
 [features]
