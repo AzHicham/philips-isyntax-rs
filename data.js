@@ -1,56 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1677346206828,
+  "lastUpdate": 1677346287944,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "hicham.azimani1@gmail.com",
-            "name": "HichamAz",
-            "username": "AzHicham"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "2cdd9f2f205fd5447bc59de3f57b1dfb08c91545",
-          "message": "Merge pull request #12 from AzHicham/dependabot/cargo/rstest-0.16.0\n\nBump rstest from 0.15.0 to 0.16.0",
-          "timestamp": "2022-11-28T15:16:36+01:00",
-          "tree_id": "9bf09ee8953c3e68f72892017810b5905fc24c87",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/2cdd9f2f205fd5447bc59de3f57b1dfb08c91545"
-        },
-        "date": 1669645284592,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1397780,
-            "range": "± 442144",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 2864112,
-            "range": "± 1117051",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 6908479,
-            "range": "± 1178667",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 5711313,
-            "range": "± 884242",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1387,6 +1339,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 5737492,
             "range": "± 963406",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hicham.azimani1@gmail.com",
+            "name": "Hicham Azimani",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3c6c953968b0ea54ec8e83bd5c9c74f26cac9ebd",
+          "message": "Merge pull request #40 from AzHicham/dependabot/cargo/cxx-1.0.91\n\nBump cxx from 1.0.89 to 1.0.91",
+          "timestamp": "2023-02-25T18:26:20+01:00",
+          "tree_id": "6b51fe60095e7b5ac74d4fa5b6bbbe13d68e0eb6",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/3c6c953968b0ea54ec8e83bd5c9c74f26cac9ebd"
+        },
+        "date": 1677346286923,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1835438,
+            "range": "± 1052123",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 3811734,
+            "range": "± 2383052",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 8563815,
+            "range": "± 1862245",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 7518357,
+            "range": "± 1802920",
             "unit": "ns/iter"
           }
         ]
