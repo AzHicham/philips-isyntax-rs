@@ -1,56 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1680553614940,
+  "lastUpdate": 1680553814043,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "hicham.azimani1@gmail.com",
-            "name": "HichamAz",
-            "username": "AzHicham"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "067a8139736e19d8431f41c4343de08ab9315700",
-          "message": "Merge pull request #14 from AzHicham/dependabot/cargo/cxx-build-1.0.83\n\nBump cxx-build from 1.0.82 to 1.0.83",
-          "timestamp": "2022-12-12T10:29:08+01:00",
-          "tree_id": "6e9c76f4f8428cb1bd03a05cb737707190000048",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/067a8139736e19d8431f41c4343de08ab9315700"
-        },
-        "date": 1670837568591,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1172932,
-            "range": "± 315934",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 2589461,
-            "range": "± 1776124",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 5902483,
-            "range": "± 765985",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 5051425,
-            "range": "± 926292",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1387,6 +1339,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 5689790,
             "range": "± 1202662",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "03ec3bc3fcd6443de21320ad37d8d61fabe1bb9d",
+          "message": "Bump cxx from 1.0.91 to 1.0.94 (#53)\n\nBumps [cxx](https://github.com/dtolnay/cxx) from 1.0.91 to 1.0.94.\r\n- [Release notes](https://github.com/dtolnay/cxx/releases)\r\n- [Commits](https://github.com/dtolnay/cxx/compare/1.0.91...1.0.94)\r\n\r\n---\r\nupdated-dependencies:\r\n- dependency-name: cxx\r\n  dependency-type: direct:production\r\n  update-type: version-update:semver-patch\r\n...\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+          "timestamp": "2023-04-03T22:20:18+02:00",
+          "tree_id": "9c8c1030df0bcaeea7b099076e8abf3edea9ef71",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/03ec3bc3fcd6443de21320ad37d8d61fabe1bb9d"
+        },
+        "date": 1680553813512,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1479102,
+            "range": "± 776373",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 3373798,
+            "range": "± 1439569",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 7350391,
+            "range": "± 1950784",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 6697735,
+            "range": "± 2556299",
             "unit": "ns/iter"
           }
         ]
