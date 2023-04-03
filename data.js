@@ -1,56 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1677346300971,
+  "lastUpdate": 1680553614940,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "hicham.azimani1@gmail.com",
-            "name": "HichamAz",
-            "username": "AzHicham"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "1a3ab82b6d4d77ee8ac73d3c99c353d063b5f6ca",
-          "message": "Merge pull request #13 from AzHicham/dependabot/github_actions/MeilCli/regex-match-1.5.18\n\nBump MeilCli/regex-match from 1.5.17 to 1.5.18",
-          "timestamp": "2022-12-01T11:24:58+01:00",
-          "tree_id": "625812be1aaecf315677299f00e3e43fe691a601",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/1a3ab82b6d4d77ee8ac73d3c99c353d063b5f6ca"
-        },
-        "date": 1669890460011,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1347642,
-            "range": "± 432916",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 2756285,
-            "range": "± 973036",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 6234658,
-            "range": "± 1042305",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 5565444,
-            "range": "± 764487",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1387,6 +1339,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 5742737,
             "range": "± 1162312",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0a6ceea9f92ea115ca5a5d23c307af5463ed5b14",
+          "message": "Bump image from 0.24.5 to 0.24.6 (#51)\n\nBumps [image](https://github.com/image-rs/image) from 0.24.5 to 0.24.6.\r\n- [Release notes](https://github.com/image-rs/image/releases)\r\n- [Changelog](https://github.com/image-rs/image/blob/master/CHANGES.md)\r\n- [Commits](https://github.com/image-rs/image/commits)\r\n\r\n---\r\nupdated-dependencies:\r\n- dependency-name: image\r\n  dependency-type: direct:production\r\n  update-type: version-update:semver-patch\r\n...\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+          "timestamp": "2023-04-03T22:12:00+02:00",
+          "tree_id": "90f5b6849a29ec776f24a2c6e347bbf7db9f78b2",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/0a6ceea9f92ea115ca5a5d23c307af5463ed5b14"
+        },
+        "date": 1680553614451,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1376757,
+            "range": "± 553570",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 2804009,
+            "range": "± 1906639",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 6798022,
+            "range": "± 1146127",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 5689790,
+            "range": "± 1202662",
             "unit": "ns/iter"
           }
         ]
