@@ -1,52 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1682768315927,
+  "lastUpdate": 1682768620783,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "committer": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "id": "3a03983322394da8e2999fa3036de5c620a515e0",
-          "message": "refactor: refactor from scratch ",
-          "timestamp": "2022-11-17T09:21:52Z",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/21/commits/3a03983322394da8e2999fa3036de5c620a515e0"
-        },
-        "date": 1672414777866,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1665340,
-            "range": "± 784545",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 3484025,
-            "range": "± 1764266",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 7456446,
-            "range": "± 1409701",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 6768073,
-            "range": "± 1106310",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1387,6 +1343,50 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 6173173,
             "range": "± 696512",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "AzHicham",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "name": "AzHicham",
+            "username": "AzHicham"
+          },
+          "id": "219bdb8664ab89d9e67c6c9ae8099ac805e64e2f",
+          "message": "feat: Apply ICC Matrix to 9b images",
+          "timestamp": "2023-04-22T13:16:36Z",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/56/commits/219bdb8664ab89d9e67c6c9ae8099ac805e64e2f"
+        },
+        "date": 1682768620101,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 718696,
+            "range": "± 973915",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 2471203,
+            "range": "± 815400",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 5639008,
+            "range": "± 884720",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 4850606,
+            "range": "± 929567",
             "unit": "ns/iter"
           }
         ]
