@@ -1,52 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1682792328893,
+  "lastUpdate": 1682792392839,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "committer": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "id": "8bec462ae2c68e1cb796bd9ccb456cd1e74f31c8",
-          "message": "refactor: Prepare next release ",
-          "timestamp": "2023-01-08T18:45:33Z",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/34/commits/8bec462ae2c68e1cb796bd9ccb456cd1e74f31c8"
-        },
-        "date": 1675584441786,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1879471,
-            "range": "± 1575124",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 3753815,
-            "range": "± 1271232",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 7927822,
-            "range": "± 1371575",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 7368434,
-            "range": "± 1609908",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1375,6 +1331,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 5177436,
             "range": "± 870938",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hicham.azimani1@gmail.com",
+            "name": "Hicham Azimani",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8de229e7bf9cc7821e1b7031fc452778b4801086",
+          "message": "fix: ci clippy (#60)",
+          "timestamp": "2023-04-29T20:16:43+02:00",
+          "tree_id": "92086d931d411aff9ac786cfddf35e76eb00e11b",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/8de229e7bf9cc7821e1b7031fc452778b4801086"
+        },
+        "date": 1682792391869,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1834160,
+            "range": "± 2149947",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 3806256,
+            "range": "± 1233209",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 7960425,
+            "range": "± 1409465",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 7089722,
+            "range": "± 1539919",
             "unit": "ns/iter"
           }
         ]
