@@ -8,6 +8,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  RUST_VERSION: 1.68.2
 
 jobs:
   benchmarks:
@@ -33,10 +34,9 @@ jobs:
       run: make dl-test-images
     - name: Install dependencies
       run: make install-deps
-    - uses: actions-rs/toolchain@v1
+    - uses: dtolnay/rust-toolchain@stable
       with:
-        toolchain: stable
-        override: true
+        toolchain: ${{ env.RUST_VERSION }}
     - uses: Swatinem/rust-cache@v2
       with:
         key: ubuntu-benchmark

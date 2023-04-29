@@ -6,6 +6,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  RUST_VERSION: nightly
 
 jobs:
   clippy:
@@ -23,11 +24,9 @@ jobs:
     - name: Install dependencies
       run: make install-deps
     - name: Install latest nightly
-      uses: actions-rs/toolchain@v1
+      uses: dtolnay/rust-toolchain@stable
       with:
-        toolchain: nightly
-        override: true
-        components: rustfmt, clippy
+        toolchain: ${{ env.RUST_VERSION }}
     - name: Run cargo clippy
       uses: actions-rs/cargo@v1
       with:
