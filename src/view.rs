@@ -94,7 +94,7 @@ impl<'a> View<'a> {
 
     /// Read a tile from a WSI SubImage.
     ///
-    /// This function reads and decompresses a region of a whole slide image into an Vec<u8>
+    /// This function reads and decompresses a region of a whole slide image into an `Vec<u8>`
     pub fn read_region(
         &self,
         engine: &PhilipsEngine,

@@ -10,6 +10,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  RUST_VERSION: 1.68.2
 
 jobs:
   build:
@@ -18,7 +19,7 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-          os: [ "ubuntu-20.04" ]
+          os: [ "ubuntu-20.04", "ubuntu-22.04" ]
           feature: [ "--no-default-features", "" ]
 
     steps:
@@ -31,10 +32,9 @@ jobs:
         create_credentials_file: true
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
-    - uses: actions-rs/toolchain@v1
+    - uses: dtolnay/rust-toolchain@stable
       with:
-        toolchain: stable
-        override: true
+        toolchain: ${{ env.RUST_VERSION }}
     - name: Cache sample slide
       id: cache-slide
       uses: actions/cache@v3
@@ -53,26 +53,24 @@ jobs:
       run: cargo test --workspace ${{ matrix.feature }} -- --nocapture --test-threads=1
 
   doc-rs:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
-    - uses: actions-rs/toolchain@v1
+    - uses: dtolnay/rust-toolchain@stable
       with:
         toolchain: nightly
-        override: true
     - name: Generate Doc
       env:
         DOCS_RS: 1
       run: cargo doc -v
 
   pre-commit:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
-    - uses: actions-rs/toolchain@v1
+    - uses: dtolnay/rust-toolchain@stable
       with:
-        toolchain: stable
-        override: true
+        toolchain: ${{ env.RUST_VERSION }}
         components: clippy, rustfmt
     - uses: actions/setup-python@v4
       with:
