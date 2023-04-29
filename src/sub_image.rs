@@ -5,7 +5,7 @@ use crate::{Image, Result, View};
 
 #[cfg(feature = "image")]
 use {
-    crate::errors::PhilipsSlideError,
+    crate::errors::ImageError,
     image::{
         codecs::jpeg::JpegDecoder, ColorType, DynamicImage, ImageDecoder, RgbImage, RgbaImage,
     },
@@ -68,7 +68,8 @@ impl<'a> Image<'a> {
     #[cfg(feature = "image")]
     pub fn get_image(&self) -> Result<DynamicImage> {
         let buffer = self.image_data()?;
-        Image::decode_jpeg(buffer)
+        let res = Image::decode_jpeg(buffer)?;
+        Ok(res)
     }
 
     /// Indicates whether the image is compressed with or without loss.
@@ -86,7 +87,7 @@ impl<'a> Image<'a> {
     }
 
     #[cfg(feature = "image")]
-    fn decode_jpeg(buffer: &[u8]) -> Result<DynamicImage> {
+    fn decode_jpeg(buffer: &[u8]) -> Result<DynamicImage, ImageError> {
         let cursor = Cursor::new(buffer);
         let decoder = JpegDecoder::new(cursor)?;
         let mut image_buffer = vec![0_u8; decoder.total_bytes() as usize];
@@ -97,21 +98,17 @@ impl<'a> Image<'a> {
         if color_type == ColorType::Rgb8 {
             Ok(DynamicImage::ImageRgb8(
                 RgbImage::from_vec(w, h, image_buffer).ok_or_else(|| {
-                    PhilipsSlideError::ImageError(
-                        "Error while creating RgbImage from buffer".to_string(),
-                    )
+                    ImageError::Other("Error while creating RgbImage from buffer".to_string())
                 })?,
             ))
         } else if color_type == ColorType::Rgba8 {
             Ok(DynamicImage::ImageRgba8(
                 RgbaImage::from_vec(w, h, image_buffer).ok_or_else(|| {
-                    PhilipsSlideError::ImageError(
-                        "Error while creating RgbaImage from buffer".to_string(),
-                    )
+                    ImageError::Other("Error while creating RgbaImage from buffer".to_string())
                 })?,
             ))
         } else {
-            Err(PhilipsSlideError::ImageError(
+            Err(ImageError::Other(
                 "Only RgbImage and RgbaImage are handled currently".to_string(),
             ))
         }

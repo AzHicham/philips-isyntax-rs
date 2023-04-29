@@ -4,7 +4,7 @@
 use crate::{DimensionsRange, PhilipsEngine, Rectangle, RegionRequest, Result, Size, View};
 
 #[cfg(feature = "image")]
-use {crate::errors::PhilipsSlideError, image::RgbImage};
+use {crate::errors::ImageError, image::RgbImage};
 
 //#[cfg(feature = "image")]
 //use {crate::errors::PhilipsSlideError, image::RgbImage};
@@ -121,7 +121,7 @@ impl<'a> View<'a> {
     pub fn read_image(&self, engine: &PhilipsEngine, request: &RegionRequest) -> Result<RgbImage> {
         let (buffer, size) = self.read_region(engine, request)?;
         let image = RgbImage::from_vec(size.w, size.h, buffer).ok_or_else(|| {
-            PhilipsSlideError::ImageError("Error while creating RgbImage from buffer".to_string())
+            ImageError::Other("Error while creating RgbImage from buffer".to_string())
         })?;
         Ok(image)
     }
