@@ -3,9 +3,8 @@
 
 use crate::{DimensionsRange, PhilipsEngine, Rectangle, RegionRequest, Result, Size, View};
 
-use crate::errors::ImageError;
 #[cfg(feature = "image")]
-use {crate::errors::PhilipsSlideError, image::RgbImage};
+use {crate::errors::ImageError, image::RgbImage};
 
 //#[cfg(feature = "image")]
 //use {crate::errors::PhilipsSlideError, image::RgbImage};

@@ -3,10 +3,9 @@
 
 use crate::{Image, Result, View};
 
-use crate::errors::PhilipsSlideError::ImageError;
 #[cfg(feature = "image")]
 use {
-    crate::errors::PhilipsSlideError,
+    crate::errors::ImageError,
     image::{
         codecs::jpeg::JpegDecoder, ColorType, DynamicImage, ImageDecoder, RgbImage, RgbaImage,
     },
@@ -69,7 +68,8 @@ impl<'a> Image<'a> {
     #[cfg(feature = "image")]
     pub fn get_image(&self) -> Result<DynamicImage> {
         let buffer = self.image_data()?;
-        Image::decode_jpeg(buffer)
+        let res = Image::decode_jpeg(buffer)?;
+        Ok(res)
     }
 
     /// Indicates whether the image is compressed with or without loss.
@@ -87,7 +87,7 @@ impl<'a> Image<'a> {
     }
 
     #[cfg(feature = "image")]
-    fn decode_jpeg(buffer: &[u8]) -> Result<DynamicImage> {
+    fn decode_jpeg(buffer: &[u8]) -> Result<DynamicImage, ImageError> {
         let cursor = Cursor::new(buffer);
         let decoder = JpegDecoder::new(cursor)?;
         let mut image_buffer = vec![0_u8; decoder.total_bytes() as usize];

@@ -23,7 +23,7 @@ fn test_container_version() {
 }
 
 #[rstest]
-#[should_panic(expected = "CoreError(\"Invalid factory\")")]
+#[should_panic(expected = "CoreError(Exception { what: \"Invalid factory\" })")]
 fn test_error_container_version() {
     let slide = PhilipsEngine::new();
     slide.container_version("unknown").unwrap();

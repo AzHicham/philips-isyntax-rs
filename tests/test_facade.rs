@@ -8,7 +8,7 @@ use rstest::rstest;
 
 #[rstest]
 #[should_panic(
-    expected = "CoreError(\"PixelEngine internal error: cannot open file for reading: <missing_file>\")"
+    expected = "CoreError(Exception { what: \"PixelEngine internal error: cannot open file for reading: <missing_file>\" })"
 )]
 #[case(missing_file())]
 fn test_error_missing_file(#[case] filename: &Path) {
