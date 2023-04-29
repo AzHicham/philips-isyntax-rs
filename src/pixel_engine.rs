@@ -8,8 +8,7 @@ use rand::Rng;
 use std::path::Path;
 
 impl PhilipsEngine {
-    /// Create a new instance of PhilipsSlide
-    /// May fail if the SDK cannot read the file
+    /// Create a new instance of PhilipsEngine
     pub fn new() -> Self {
         PhilipsEngine { inner: ffi::new_() }
     }
@@ -17,6 +16,7 @@ impl PhilipsEngine {
     /// Create a new instance of Facade
     /// A Facade is a reference to a Philips Engine internal object
     /// This facade is a handle to a file
+    /// May fail if the fail cannot be opened
     pub fn facade<P: AsRef<Path>>(&self, filename: P, container: &ContainerName) -> Result<Facade> {
         let facade_id = rand::thread_rng().gen::<u64>().to_string();
         let_cxx_string!(facade_id = facade_id);

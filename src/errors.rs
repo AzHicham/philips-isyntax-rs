@@ -6,31 +6,30 @@ use std::str::Utf8Error;
 use thiserror::Error;
 
 /// Enum defining all possible error when manipulating OpenSlide struct
-#[derive(Error, Debug, Clone)]
+#[derive(Error, Debug)]
 pub enum PhilipsSlideError {
     /// CxxSring to &str conversion error
     #[error(transparent)]
     StringConversionError(#[from] Utf8Error),
     /// PhilipsSlide lib error
-    #[error("{0}")]
-    CoreError(String),
+    #[error(transparent)]
+    CoreError(#[from] Exception),
     /// NullPtr Error
     #[error("Null pointer error")]
     NullPtrError,
     /// Error while creating Image from vector
-    #[error("{0}")]
-    ImageError(String),
-}
-
-impl From<Exception> for PhilipsSlideError {
-    fn from(error: Exception) -> Self {
-        PhilipsSlideError::CoreError(error.to_string())
-    }
+    #[cfg(feature = "image")]
+    #[error(transparent)]
+    ImageError(#[from] ImageError),
 }
 
 #[cfg(feature = "image")]
-impl From<image::ImageError> for PhilipsSlideError {
-    fn from(error: image::ImageError) -> Self {
-        PhilipsSlideError::ImageError(error.to_string())
-    }
+#[derive(Error, Debug)]
+pub enum ImageError {
+    /// Error while creating Image from vector
+    #[error(transparent)]
+    Image(#[from] image::ImageError),
+    /// PhilipsSlide lib error
+    #[error("{0}")]
+    Other(String),
 }
