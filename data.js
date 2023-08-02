@@ -1,56 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1690992194792,
+  "lastUpdate": 1690992227689,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "49699333+dependabot[bot]@users.noreply.github.com",
-            "name": "dependabot[bot]",
-            "username": "dependabot[bot]"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "03ec3bc3fcd6443de21320ad37d8d61fabe1bb9d",
-          "message": "Bump cxx from 1.0.91 to 1.0.94 (#53)\n\nBumps [cxx](https://github.com/dtolnay/cxx) from 1.0.91 to 1.0.94.\r\n- [Release notes](https://github.com/dtolnay/cxx/releases)\r\n- [Commits](https://github.com/dtolnay/cxx/compare/1.0.91...1.0.94)\r\n\r\n---\r\nupdated-dependencies:\r\n- dependency-name: cxx\r\n  dependency-type: direct:production\r\n  update-type: version-update:semver-patch\r\n...\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
-          "timestamp": "2023-04-03T22:20:18+02:00",
-          "tree_id": "9c8c1030df0bcaeea7b099076e8abf3edea9ef71",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/03ec3bc3fcd6443de21320ad37d8d61fabe1bb9d"
-        },
-        "date": 1680553813512,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1479102,
-            "range": "± 776373",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 3373798,
-            "range": "± 1439569",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 7350391,
-            "range": "± 1950784",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 6697735,
-            "range": "± 2556299",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1387,6 +1339,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 5040413,
             "range": "± 977509",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "beec029c78b12a81777dc3602561c6df60a8f3f4",
+          "message": "Bump cxx from 1.0.97 to 1.0.102 (#75)\n\nBumps [cxx](https://github.com/dtolnay/cxx) from 1.0.97 to 1.0.102.\r\n- [Release notes](https://github.com/dtolnay/cxx/releases)\r\n- [Commits](https://github.com/dtolnay/cxx/compare/1.0.97...1.0.102)\r\n\r\n---\r\nupdated-dependencies:\r\n- dependency-name: cxx\r\n  dependency-type: direct:production\r\n  update-type: version-update:semver-patch\r\n...\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+          "timestamp": "2023-08-02T17:48:26+02:00",
+          "tree_id": "02f17120f8273e72d0f7ef7a7e8a7a82ae434524",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/beec029c78b12a81777dc3602561c6df60a8f3f4"
+        },
+        "date": 1690992226859,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1877142,
+            "range": "± 1240489",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 3245064,
+            "range": "± 1284459",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 7927001,
+            "range": "± 1653446",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 6924109,
+            "range": "± 1672421",
             "unit": "ns/iter"
           }
         ]
