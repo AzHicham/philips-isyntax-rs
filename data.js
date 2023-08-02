@@ -1,56 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1690991912882,
+  "lastUpdate": 1690992194792,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "49699333+dependabot[bot]@users.noreply.github.com",
-            "name": "dependabot[bot]",
-            "username": "dependabot[bot]"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "0a6ceea9f92ea115ca5a5d23c307af5463ed5b14",
-          "message": "Bump image from 0.24.5 to 0.24.6 (#51)\n\nBumps [image](https://github.com/image-rs/image) from 0.24.5 to 0.24.6.\r\n- [Release notes](https://github.com/image-rs/image/releases)\r\n- [Changelog](https://github.com/image-rs/image/blob/master/CHANGES.md)\r\n- [Commits](https://github.com/image-rs/image/commits)\r\n\r\n---\r\nupdated-dependencies:\r\n- dependency-name: image\r\n  dependency-type: direct:production\r\n  update-type: version-update:semver-patch\r\n...\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
-          "timestamp": "2023-04-03T22:12:00+02:00",
-          "tree_id": "90f5b6849a29ec776f24a2c6e347bbf7db9f78b2",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/0a6ceea9f92ea115ca5a5d23c307af5463ed5b14"
-        },
-        "date": 1680553614451,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1376757,
-            "range": "± 553570",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 2804009,
-            "range": "± 1906639",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 6798022,
-            "range": "± 1146127",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 5689790,
-            "range": "± 1202662",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1387,6 +1339,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 7062758,
             "range": "± 1483478",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f80f1229311121c7ad43d2c0514a88da8e9f8241",
+          "message": "Bump thiserror from 1.0.41 to 1.0.44 (#76)\n\nBumps [thiserror](https://github.com/dtolnay/thiserror) from 1.0.41 to 1.0.44.\r\n- [Release notes](https://github.com/dtolnay/thiserror/releases)\r\n- [Commits](https://github.com/dtolnay/thiserror/compare/1.0.41...1.0.44)\r\n\r\n---\r\nupdated-dependencies:\r\n- dependency-name: thiserror\r\n  dependency-type: direct:production\r\n  update-type: version-update:semver-patch\r\n...\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+          "timestamp": "2023-08-02T17:48:37+02:00",
+          "tree_id": "208e3e5ce8ef00df2f83fef696dff1af8d5ffc32",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/f80f1229311121c7ad43d2c0514a88da8e9f8241"
+        },
+        "date": 1690992193660,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1137383,
+            "range": "± 398343",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 2521026,
+            "range": "± 815955",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 5712514,
+            "range": "± 914009",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 5040413,
+            "range": "± 977509",
             "unit": "ns/iter"
           }
         ]
