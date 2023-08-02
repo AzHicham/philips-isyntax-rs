@@ -25,7 +25,7 @@ image = { version = "0.24", optional = true, default-features = false, features 
 cxx-build = "1.0"
 
 [dev-dependencies]
-rstest = "0.17"
+rstest = "0.18"
 bencher = "0.1"
 
 [[bench]]
