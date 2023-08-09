@@ -1,56 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1690992227689,
+  "lastUpdate": 1691591685125,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "49699333+dependabot[bot]@users.noreply.github.com",
-            "name": "dependabot[bot]",
-            "username": "dependabot[bot]"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "32ee2c1e5e1b8c9a2432ce1aaafbf0176946c1f9",
-          "message": "Bump cxx-build from 1.0.91 to 1.0.94 (#52)\n\nBumps [cxx-build](https://github.com/dtolnay/cxx) from 1.0.91 to 1.0.94.\r\n- [Release notes](https://github.com/dtolnay/cxx/releases)\r\n- [Commits](https://github.com/dtolnay/cxx/compare/1.0.91...1.0.94)\r\n\r\n---\r\nupdated-dependencies:\r\n- dependency-name: cxx-build\r\n  dependency-type: direct:production\r\n  update-type: version-update:semver-patch\r\n...\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
-          "timestamp": "2023-04-04T15:03:16+02:00",
-          "tree_id": "c569794795ae9ead17b3ec241b137bbd73b1b1e6",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/32ee2c1e5e1b8c9a2432ce1aaafbf0176946c1f9"
-        },
-        "date": 1680613556268,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 2079374,
-            "range": "± 2177494",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 2851400,
-            "range": "± 1347796",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 6698268,
-            "range": "± 1116591",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 6211144,
-            "range": "± 897767",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1387,6 +1339,50 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 6924109,
             "range": "± 1672421",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "AzHicham",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "name": "AzHicham",
+            "username": "AzHicham"
+          },
+          "id": "dd31e79d735e511af4100c0c2f58ef9574dfbc0c",
+          "message": "chore(deps): update dependency ubuntu to v22",
+          "timestamp": "2023-07-24T11:55:08Z",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/81/commits/dd31e79d735e511af4100c0c2f58ef9574dfbc0c"
+        },
+        "date": 1691591683997,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1778175,
+            "range": "± 1805811",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 3215904,
+            "range": "± 1145644",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 7590335,
+            "range": "± 1717313",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 6771092,
+            "range": "± 1612108",
             "unit": "ns/iter"
           }
         ]
