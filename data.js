@@ -1,52 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1692097675991,
+  "lastUpdate": 1692098148071,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "committer": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "id": "79738137b4eb2cfb136f60d40534ed19bf22fb09",
-          "message": "Bump rhysd/github-action-benchmark from 1.16.2 to 1.17.0",
-          "timestamp": "2023-04-22T13:16:36Z",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/55/commits/79738137b4eb2cfb136f60d40534ed19bf22fb09"
-        },
-        "date": 1682768315500,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1381908,
-            "range": "± 941847",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 2827878,
-            "range": "± 809375",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 6494415,
-            "range": "± 1182293",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 6173173,
-            "range": "± 696512",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1383,6 +1339,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 5013558,
             "range": "± 699080",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f66cb35f6a0476cb70097b2d28ebeb47d10adb48",
+          "message": "Bump thiserror from 1.0.44 to 1.0.45 (#85)",
+          "timestamp": "2023-08-15T12:56:04+02:00",
+          "tree_id": "5eabe773afb507e38f67b27ae4ae65be36f0abf8",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/f66cb35f6a0476cb70097b2d28ebeb47d10adb48"
+        },
+        "date": 1692098147631,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1207177,
+            "range": "± 573511",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 2521195,
+            "range": "± 1142664",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 5626959,
+            "range": "± 974871",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 4882651,
+            "range": "± 893762",
             "unit": "ns/iter"
           }
         ]
