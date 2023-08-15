@@ -1,52 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1692098436741,
+  "lastUpdate": 1692098650767,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "committer": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "id": "8e214d8fc5fdfa51fe8e96ca80365fbe8a0b6b51",
-          "message": "feat: Apply ICC Matrix to 9b images",
-          "timestamp": "2023-04-22T13:16:36Z",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/56/commits/8e214d8fc5fdfa51fe8e96ca80365fbe8a0b6b51"
-        },
-        "date": 1682769023708,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1632433,
-            "range": "± 681904",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 3458779,
-            "range": "± 1161513",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 8053005,
-            "range": "± 1379487",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 7229203,
-            "range": "± 1590356",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1391,6 +1347,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 7529715,
             "range": "± 2141004",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "46077f50966cba7e27321498a05b1a108f7c27ad",
+          "message": "Bump rstest from 0.18.1 to 0.18.2 (#83)",
+          "timestamp": "2023-08-15T12:56:49+02:00",
+          "tree_id": "442d4f28f5b3355f5e0ec419a864783fe776f2eb",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/46077f50966cba7e27321498a05b1a108f7c27ad"
+        },
+        "date": 1692098649741,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1768001,
+            "range": "± 630684",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 3551177,
+            "range": "± 990202",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 7979954,
+            "range": "± 1280091",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 7136732,
+            "range": "± 1687556",
             "unit": "ns/iter"
           }
         ]
