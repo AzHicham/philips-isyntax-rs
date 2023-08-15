@@ -1,56 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1692098419029,
+  "lastUpdate": 1692098436741,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "49699333+dependabot[bot]@users.noreply.github.com",
-            "name": "dependabot[bot]",
-            "username": "dependabot[bot]"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "aee51e811efa82eb456702535fa43a0f0e9c50d4",
-          "message": "Bump rhysd/github-action-benchmark from 1.16.2 to 1.17.0 (#55)\n\n* Bump rhysd/github-action-benchmark from 1.16.2 to 1.17.0\r\n\r\nBumps [rhysd/github-action-benchmark](https://github.com/rhysd/github-action-benchmark) from 1.16.2 to 1.17.0.\r\n- [Release notes](https://github.com/rhysd/github-action-benchmark/releases)\r\n- [Changelog](https://github.com/benchmark-action/github-action-benchmark/blob/master/CHANGELOG.md)\r\n- [Commits](https://github.com/rhysd/github-action-benchmark/compare/v1.16.2...v1.17.0)\r\n\r\n---\r\nupdated-dependencies:\r\n- dependency-name: rhysd/github-action-benchmark\r\n  dependency-type: direct:production\r\n  update-type: version-update:semver-minor\r\n...\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\n\r\n* Update benchmark.yml\r\n\r\n---------\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\r\nCo-authored-by: Hicham Azimani <hicham.azimani1@gmail.com>",
-          "timestamp": "2023-04-29T13:41:40+02:00",
-          "tree_id": "835d190b48b4dee42f00f2199672b139b3751dfb",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/aee51e811efa82eb456702535fa43a0f0e9c50d4"
-        },
-        "date": 1682768634592,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1631385,
-            "range": "± 1023956",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 2774867,
-            "range": "± 2426488",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 6465812,
-            "range": "± 1154241",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 5706230,
-            "range": "± 1055925",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1391,6 +1343,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 4990498,
             "range": "± 793351",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1667bca9d87e812ac129825bab99abf6f5aea2dd",
+          "message": "Bump cxx from 1.0.102 to 1.0.105 (#84)",
+          "timestamp": "2023-08-15T12:56:19+02:00",
+          "tree_id": "82254ab7a7f3a52b7b760ca31dabd5c7cc8fd580",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/1667bca9d87e812ac129825bab99abf6f5aea2dd"
+        },
+        "date": 1692098435902,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 2055120,
+            "range": "± 1556806",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 3939851,
+            "range": "± 1827210",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 8752984,
+            "range": "± 2110929",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 7529715,
+            "range": "± 2141004",
             "unit": "ns/iter"
           }
         ]
