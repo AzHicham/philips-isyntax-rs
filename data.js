@@ -1,56 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1693394336537,
+  "lastUpdate": 1693394388977,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "29139614+renovate[bot]@users.noreply.github.com",
-            "name": "renovate[bot]",
-            "username": "renovate[bot]"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "bfc5b70c93ffb45bb0fc91214aaeb676c05ead6e",
-          "message": "Add renovate.json (#57)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
-          "timestamp": "2023-04-29T18:54:28+02:00",
-          "tree_id": "f7282813b120896cec8ecc81424a580c897d045e",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/bfc5b70c93ffb45bb0fc91214aaeb676c05ead6e"
-        },
-        "date": 1682787435179,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1308201,
-            "range": "± 353123",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 2758563,
-            "range": "± 1026091",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 6189271,
-            "range": "± 1074870",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 5624533,
-            "range": "± 870288",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1403,6 +1355,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 5774702,
             "range": "± 2023460",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fea3531c9c01f0a140689bba4cffba79c2a270c8",
+          "message": "Bump cxx from 1.0.105 to 1.0.107 (#91)\n\nBumps [cxx](https://github.com/dtolnay/cxx) from 1.0.105 to 1.0.107.\r\n- [Release notes](https://github.com/dtolnay/cxx/releases)\r\n- [Commits](https://github.com/dtolnay/cxx/compare/1.0.105...1.0.107)\r\n\r\n---\r\nupdated-dependencies:\r\n- dependency-name: cxx\r\n  dependency-type: direct:production\r\n  update-type: version-update:semver-patch\r\n...\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+          "timestamp": "2023-08-30T13:16:14+02:00",
+          "tree_id": "a1823962067c0566a460cfd64dd2412503151869",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/fea3531c9c01f0a140689bba4cffba79c2a270c8"
+        },
+        "date": 1693394387793,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1821506,
+            "range": "± 933657",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 3852907,
+            "range": "± 1719934",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 8945170,
+            "range": "± 1671080",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 8063557,
+            "range": "± 1284955",
             "unit": "ns/iter"
           }
         ]
