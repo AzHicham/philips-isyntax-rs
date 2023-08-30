@@ -1,56 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1692098782974,
+  "lastUpdate": 1693394324409,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "hicham.azimani1@gmail.com",
-            "name": "Hicham Azimani",
-            "username": "AzHicham"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "3b76e6b419b4a31093962d069cb15a84e05465dd",
-          "message": "feat: Apply ICC Matrix to 9b images (#56)",
-          "timestamp": "2023-04-29T17:35:08+02:00",
-          "tree_id": "72f058778a1af9edc5f856964d6037fcaef28df5",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/3b76e6b419b4a31093962d069cb15a84e05465dd"
-        },
-        "date": 1682782743597,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1919289,
-            "range": "± 1032837",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 3564397,
-            "range": "± 848431",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 8422525,
-            "range": "± 1632917",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 7608066,
-            "range": "± 1378292",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1399,6 +1351,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 7150452,
             "range": "± 1286027",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6103c60441732cf9e91059ce577c73da7213fcde",
+          "message": "Bump thiserror from 1.0.45 to 1.0.47 (#87)\n\nBumps [thiserror](https://github.com/dtolnay/thiserror) from 1.0.45 to 1.0.47.\r\n- [Release notes](https://github.com/dtolnay/thiserror/releases)\r\n- [Commits](https://github.com/dtolnay/thiserror/compare/1.0.45...1.0.47)\r\n\r\n---\r\nupdated-dependencies:\r\n- dependency-name: thiserror\r\n  dependency-type: direct:production\r\n  update-type: version-update:semver-patch\r\n...\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+          "timestamp": "2023-08-30T13:15:54+02:00",
+          "tree_id": "0329a77d005686a56976b16de02afbcc872fa314",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/6103c60441732cf9e91059ce577c73da7213fcde"
+        },
+        "date": 1693394323634,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1297611,
+            "range": "± 568016",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 2643183,
+            "range": "± 836626",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 5911095,
+            "range": "± 1169014",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 5246406,
+            "range": "± 1050378",
             "unit": "ns/iter"
           }
         ]
