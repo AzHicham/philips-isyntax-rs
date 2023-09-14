@@ -1,52 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1694706466471,
+  "lastUpdate": 1694714947695,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "committer": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "id": "7056757a1fc46466cd22649239fcb5200af065fc",
-          "message": "chore: update ci",
-          "timestamp": "2023-04-22T13:16:36Z",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/59/commits/7056757a1fc46466cd22649239fcb5200af065fc"
-        },
-        "date": 1682791184983,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1337149,
-            "range": "± 351475",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 2732227,
-            "range": "± 997852",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 6427457,
-            "range": "± 1176949",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 5737820,
-            "range": "± 992910",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1411,6 +1367,54 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 7665108,
             "range": "± 1465202",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "29139614+renovate[bot]@users.noreply.github.com",
+            "name": "renovate[bot]",
+            "username": "renovate[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d5fb44ddef02056543ea0d2063a5f3580aa76501",
+          "message": "chore(deps): update codecov/codecov-action action to v4 (#94)",
+          "timestamp": "2023-09-14T20:05:02+02:00",
+          "tree_id": "3d00c2a915dfae2c1b3d695de10fe4f840d4b58f",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/d5fb44ddef02056543ea0d2063a5f3580aa76501"
+        },
+        "date": 1694714946580,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 2429488,
+            "range": "± 2080127",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 4316347,
+            "range": "± 1381700",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 9766062,
+            "range": "± 2216269",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 8787792,
+            "range": "± 2421245",
             "unit": "ns/iter"
           }
         ]
