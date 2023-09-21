@@ -1,56 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1695293427562,
+  "lastUpdate": 1695293679064,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "hicham.azimani@owkin.com",
-            "name": "Hicham",
-            "username": "AzHicham"
-          },
-          "committer": {
-            "email": "hicham.azimani@owkin.com",
-            "name": "Hicham",
-            "username": "AzHicham"
-          },
-          "distinct": true,
-          "id": "570f54224bd9f54b501f51fabba943b286d6027a",
-          "message": "release 1.1.0",
-          "timestamp": "2023-04-29T20:07:18+02:00",
-          "tree_id": "cbb41b98d289024f1f1f48e386c2bd5e66e505be",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/570f54224bd9f54b501f51fabba943b286d6027a"
-        },
-        "date": 1682791783383,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1322791,
-            "range": "± 537687",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 2765203,
-            "range": "± 1259516",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 6413185,
-            "range": "± 1170555",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 5753110,
-            "range": "± 1072152",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1411,6 +1363,50 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 6749175,
             "range": "± 1033149",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "AzHicham",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "name": "AzHicham",
+            "username": "AzHicham"
+          },
+          "id": "362bcb9f481bebf8c407868d085bdeb6d78245cf",
+          "message": "chore: Update Rust toolchain",
+          "timestamp": "2023-07-24T11:55:08Z",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/95/commits/362bcb9f481bebf8c407868d085bdeb6d78245cf"
+        },
+        "date": 1695293676643,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1760593,
+            "range": "± 1133358",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 2903173,
+            "range": "± 1193550",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 6392196,
+            "range": "± 1275039",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 5715637,
+            "range": "± 1073162",
             "unit": "ns/iter"
           }
         ]
