@@ -8,7 +8,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  RUST_VERSION: 1.68.2
+  RUST_VERSION: 1.72.1
 
 jobs:
   coverage:
@@ -44,7 +44,7 @@ jobs:
           cargo llvm-cov clean --workspace # remove artifacts that may affect the coverage results
           cargo llvm-cov --no-report --workspace
           cargo llvm-cov --no-run --workspace --lcov --output-path lcov.info
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: lcov.info
