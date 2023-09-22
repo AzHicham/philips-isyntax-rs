@@ -1,56 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1695294590424,
+  "lastUpdate": 1695407462820,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "49699333+dependabot[bot]@users.noreply.github.com",
-            "name": "dependabot[bot]",
-            "username": "dependabot[bot]"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "fbd83b28914f6385f27bfb1ce7836d6ca0d46458",
-          "message": "Bump cxx-build from 1.0.95 to 1.0.97 (#64)\n\nBumps [cxx-build](https://github.com/dtolnay/cxx) from 1.0.95 to 1.0.97.\r\n- [Release notes](https://github.com/dtolnay/cxx/releases)\r\n- [Commits](https://github.com/dtolnay/cxx/compare/1.0.95...1.0.97)\r\n\r\n---\r\nupdated-dependencies:\r\n- dependency-name: cxx-build\r\n  dependency-type: direct:production\r\n  update-type: version-update:semver-patch\r\n...\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
-          "timestamp": "2023-06-22T17:18:21+02:00",
-          "tree_id": "080702338c71dd1add492c9a355321e19461e190",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/fbd83b28914f6385f27bfb1ce7836d6ca0d46458"
-        },
-        "date": 1687447503098,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1413661,
-            "range": "± 354521",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 2971803,
-            "range": "± 1069700",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 7065297,
-            "range": "± 1089628",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 6387581,
-            "range": "± 1032566",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1403,6 +1355,50 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 6255286,
             "range": "± 1132222",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "AzHicham",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "name": "AzHicham",
+            "username": "AzHicham"
+          },
+          "id": "c35c6859b01662d7e59849d79f8d325d65f8d06a",
+          "message": "chore(deps): update actions/checkout digest to 8ade135",
+          "timestamp": "2023-07-24T11:55:08Z",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/97/commits/c35c6859b01662d7e59849d79f8d325d65f8d06a"
+        },
+        "date": 1695407461702,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 1987048,
+            "range": "± 983653",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 3644319,
+            "range": "± 1591944",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 8136333,
+            "range": "± 1273985",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 7431919,
+            "range": "± 2384893",
             "unit": "ns/iter"
           }
         ]
