@@ -1,10 +1,9 @@
 mod fixture;
 
-use philips_isyntax_rs::ContainerName;
 #[cfg(feature = "image")]
 use {
     fixture::sample,
-    philips_isyntax_rs::{ImageType, PhilipsEngine},
+    philips_isyntax_rs::{ContainerName, ImageType, PhilipsEngine},
     rstest::rstest,
     std::path::Path,
 };

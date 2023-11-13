@@ -89,6 +89,12 @@ impl PhilipsEngine {
     }
 }
 
+impl Default for PhilipsEngine {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl ImageType {
     pub fn as_str(&self) -> &str {
         match &self {
