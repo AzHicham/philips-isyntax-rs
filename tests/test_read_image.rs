@@ -1,6 +1,6 @@
 mod fixture;
 
-use fixture::sample;
+use fixture::{sample, sample_i2syntax};
 use std::path::Path;
 
 use philips_isyntax_rs::{ContainerName, ImageType, PhilipsEngine, Rectangle, RegionRequest};
@@ -8,6 +8,7 @@ use rstest::rstest;
 
 #[rstest]
 #[case(sample())]
+#[case(sample_i2syntax())]
 fn test_read_region_wsi(#[case] filename: &Path) {
     let engine = PhilipsEngine::new();
     let facade = engine
@@ -34,6 +35,7 @@ fn test_read_region_wsi(#[case] filename: &Path) {
 
 #[rstest]
 #[case(sample())]
+#[case(sample_i2syntax())]
 #[cfg(feature = "image")]
 fn test_read_image_wsi(#[case] filename: &Path) {
     let engine = PhilipsEngine::new();

@@ -18,3 +18,9 @@ pub fn unsupported_file() -> &'static Path {
 pub fn sample() -> &'static Path {
     Path::new("tests/data/sample.isyntax")
 }
+
+#[fixture]
+#[once]
+pub fn sample_i2syntax() -> &'static Path {
+    Path::new("tests/data/sample-9b.i2syntax")
+}

@@ -6,6 +6,10 @@ fn simple_isyntax() -> &'static Path {
     Path::new("tests/data/sample.isyntax")
 }
 
+fn simple_i2syntax() -> &'static Path {
+    Path::new("tests/data/sample-9b.i2syntax")
+}
+
 fn make_request(row: u32, col: u32, width: u32, height: u32, level: u32) -> RegionRequest {
     RegionRequest {
         roi: Rectangle {
@@ -65,12 +69,63 @@ fn philips_read_region_512_lvl_1(bench: &mut Bencher) {
     bench.iter(|| view.read_region(&engine, &make_request(10, 10, 512, 512, 1)));
 }
 
+fn philips_i2syntax_read_region_256_lvl_0(bench: &mut Bencher) {
+    let engine = PhilipsEngine::new();
+    let facade = engine
+        .facade(simple_i2syntax(), &ContainerName::CachingFicom)
+        .unwrap();
+    let image = facade.image(&ImageType::WSI).unwrap();
+    let view = image.view().unwrap();
+
+    bench.iter(|| view.read_region(&engine, &make_request(10, 10, 256, 256, 0)));
+}
+
+fn philips_i2syntax_read_region_512_lvl_0(bench: &mut Bencher) {
+    let engine = PhilipsEngine::new();
+    let facade = engine
+        .facade(simple_i2syntax(), &ContainerName::CachingFicom)
+        .unwrap();
+    let image = facade.image(&ImageType::WSI).unwrap();
+    let view = image.view().unwrap();
+
+    bench.iter(|| view.read_region(&engine, &make_request(10, 10, 512, 512, 0)));
+}
+
+fn philips_i2syntax_read_region_256_lvl_1(bench: &mut Bencher) {
+    let engine = PhilipsEngine::new();
+    let facade = engine
+        .facade(simple_i2syntax(), &ContainerName::CachingFicom)
+        .unwrap();
+    let image = facade.image(&ImageType::WSI).unwrap();
+    let view = image.view().unwrap();
+
+    bench.iter(|| {
+        view.read_region(&engine, &make_request(10, 10, 256, 256, 1))
+            .unwrap()
+    });
+}
+
+fn philips_i2syntax_read_region_512_lvl_1(bench: &mut Bencher) {
+    let engine = PhilipsEngine::new();
+    let facade = engine
+        .facade(simple_i2syntax(), &ContainerName::CachingFicom)
+        .unwrap();
+    let image = facade.image(&ImageType::WSI).unwrap();
+    let view = image.view().unwrap();
+
+    bench.iter(|| view.read_region(&engine, &make_request(10, 10, 512, 512, 1)));
+}
+
 benchmark_group!(
     benches_region,
     philips_read_region_256_lvl_0,
     philips_read_region_512_lvl_0,
     philips_read_region_256_lvl_1,
-    philips_read_region_512_lvl_1
+    philips_read_region_512_lvl_1,
+    philips_i2syntax_read_region_256_lvl_0,
+    philips_i2syntax_read_region_512_lvl_0,
+    philips_i2syntax_read_region_256_lvl_1,
+    philips_i2syntax_read_region_512_lvl_1
 );
 
 benchmark_main!(benches_region);

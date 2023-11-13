@@ -13,3 +13,4 @@ install-deps:
 
 dl-test-images:
 	gsutil cp gs://az-philips/sample.isyntax ./tests/data/sample.isyntax
+	gsutil cp gs://az-philips/sample-9b.i2syntax ./tests/data/sample-9b.i2syntax
