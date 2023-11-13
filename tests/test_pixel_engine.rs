@@ -18,7 +18,7 @@ fn test_containers() {
 
 #[rstest]
 fn test_container_version() {
-    let slide = PhilipsEngine::new();
+    let slide = PhilipsEngine::default();
     assert_eq!(slide.container_version("ficom").unwrap(), "100.5");
 }
 
