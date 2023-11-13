@@ -1,52 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1697711112389,
+  "lastUpdate": 1699881936202,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "committer": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "id": "ae167294f5bfa43935b4c9b9115f0dd7ff66c7f0",
-          "message": "chore(deps): update rust crate rstest to 0.18",
-          "timestamp": "2023-05-02T14:16:02Z",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/65/commits/ae167294f5bfa43935b4c9b9115f0dd7ff66c7f0"
-        },
-        "date": 1688625582264,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1226687,
-            "range": "± 1766571",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 2561764,
-            "range": "± 757937",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 5714856,
-            "range": "± 904455",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 5020458,
-            "range": "± 600318",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1399,6 +1355,74 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 7003959,
             "range": "± 1671770",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "AzHicham",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "name": "AzHicham",
+            "username": "AzHicham"
+          },
+          "id": "a98abe148ce0973aec7702b51c4336fded0c7c49",
+          "message": "fix: Read 9bit i2syntax",
+          "timestamp": "2023-07-24T11:55:08Z",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/109/commits/a98abe148ce0973aec7702b51c4336fded0c7c49"
+        },
+        "date": 1699881935830,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_i2syntax_read_region_256_lvl_0",
+            "value": 1351068,
+            "range": "± 247891",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_256_lvl_1",
+            "value": 1157091,
+            "range": "± 127118",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_512_lvl_0",
+            "value": 1547114,
+            "range": "± 416916",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_512_lvl_1",
+            "value": 7304770,
+            "range": "± 315170",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 495281,
+            "range": "± 44129",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 1237372,
+            "range": "± 55389",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 3559621,
+            "range": "± 163003",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 2764050,
+            "range": "± 116293",
             "unit": "ns/iter"
           }
         ]
