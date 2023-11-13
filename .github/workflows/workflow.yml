@@ -23,7 +23,7 @@ jobs:
           feature: [ "--no-default-features", "" ]
 
     steps:
-    - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
+    - uses: actions/checkout@v4 # v4
     - name: Google Storage authentication
       uses: google-github-actions/auth@v1
       with:
@@ -55,7 +55,7 @@ jobs:
   doc-rs:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
+    - uses: actions/checkout@v4 # v4
     - uses: dtolnay/rust-toolchain@stable
       with:
         toolchain: nightly
@@ -67,7 +67,7 @@ jobs:
   pre-commit:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
+    - uses: actions/checkout@v4 # v4
     - uses: dtolnay/rust-toolchain@stable
       with:
         toolchain: ${{ env.RUST_VERSION }}
