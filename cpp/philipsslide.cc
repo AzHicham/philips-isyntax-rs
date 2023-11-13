@@ -135,25 +135,25 @@ std::string const& Image::colorLinearity() const { return _image.colorLinearity(
 
 std::unique_ptr<ImageView> Image::view() const {
     const auto type = _image.imageType();
-    auto& source_view = _image.sourceView();
-    View& view = static_cast<View&>(source_view); // Should be safe because View is the base class of SourceView
+    SourceView* source_view = &_image.sourceView();
+    View* view = source_view;
 
     if (type == "WSI") {
-        const auto bitsStored = view.bitsStored();
+        const auto bitsStored = view->bitsStored();
         // Enable best quality
         const std::map<std::size_t, std::vector<std::size_t>> truncationLevel{{0, {0, 0, 0}}};
-        source_view.truncation(false, false, truncationLevel);
+        source_view->truncation(false, false, truncationLevel);
 
         if (bitsStored > 8) {
-            PixelEngine::UserView& user_view = source_view.addChainedView();
+            PixelEngine::UserView& user_view = source_view->addChainedView();
             auto matrix = user_view.addFilter("3x3Matrix16"); // Apply ICC profile
             auto icc_matrix = iccMatrix();
             user_view.filterParameterMatrix3x3(matrix, "matrix3x3", icc_matrix);
             user_view.addFilter("Linear16ToSRGB8"); // This Filter converts 9-bit image to 8-bit image.
-            view = static_cast<View&>(user_view);   // Safe because View is the base class of UserView
+            view = static_cast<View*>(&user_view);  // Safe because View is the base class of UserView
         }
     }
-    return std::make_unique<ImageView>(view);
+    return std::make_unique<ImageView>(*view);
 }
 
 // ------------------------------------
