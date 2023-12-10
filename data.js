@@ -1,56 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1702228158295,
+  "lastUpdate": 1702228504623,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "29139614+renovate[bot]@users.noreply.github.com",
-            "name": "renovate[bot]",
-            "username": "renovate[bot]"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "d5fb44ddef02056543ea0d2063a5f3580aa76501",
-          "message": "chore(deps): update codecov/codecov-action action to v4 (#94)",
-          "timestamp": "2023-09-14T20:05:02+02:00",
-          "tree_id": "3d00c2a915dfae2c1b3d695de10fe4f840d4b58f",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/d5fb44ddef02056543ea0d2063a5f3580aa76501"
-        },
-        "date": 1694714946580,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 2429488,
-            "range": "± 2080127",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 4316347,
-            "range": "± 1381700",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 9766062,
-            "range": "± 2216269",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 8787792,
-            "range": "± 2421245",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1823,6 +1775,78 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 3196576,
             "range": "± 195241",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hicham.azimani@owkin.com",
+            "name": "Hicham",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "email": "hicham.azimani@owkin.com",
+            "name": "Hicham",
+            "username": "AzHicham"
+          },
+          "distinct": true,
+          "id": "002b51c9b528a813155a532d4b114cd89abd7f15",
+          "message": "ci: Enable renovate pre-commit",
+          "timestamp": "2023-12-10T18:11:31+01:00",
+          "tree_id": "6c4f0e687f6a774c3935bf0d0afaf9735cdde707",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/002b51c9b528a813155a532d4b114cd89abd7f15"
+        },
+        "date": 1702228503625,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_i2syntax_read_region_256_lvl_0",
+            "value": 1346465,
+            "range": "± 244375",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_256_lvl_1",
+            "value": 1133926,
+            "range": "± 59568",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_512_lvl_0",
+            "value": 1524034,
+            "range": "± 120713",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_512_lvl_1",
+            "value": 7240824,
+            "range": "± 360299",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 489885,
+            "range": "± 29709",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 1222853,
+            "range": "± 47551",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 3482738,
+            "range": "± 150463",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 2705405,
+            "range": "± 84378",
             "unit": "ns/iter"
           }
         ]
