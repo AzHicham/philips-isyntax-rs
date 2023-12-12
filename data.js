@@ -1,52 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1702374306366,
+  "lastUpdate": 1702389512502,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "committer": {
-            "name": "AzHicham",
-            "username": "AzHicham"
-          },
-          "id": "c35c6859b01662d7e59849d79f8d325d65f8d06a",
-          "message": "chore(deps): update actions/checkout digest to 8ade135",
-          "timestamp": "2023-07-24T11:55:08Z",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/97/commits/c35c6859b01662d7e59849d79f8d325d65f8d06a"
-        },
-        "date": 1695407461702,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 1987048,
-            "range": "± 983653",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 3644319,
-            "range": "± 1591944",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 8136333,
-            "range": "± 1273985",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 7431919,
-            "range": "± 2384893",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1987,6 +1943,74 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 2746958,
             "range": "± 117287",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "AzHicham",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "name": "AzHicham",
+            "username": "AzHicham"
+          },
+          "id": "35dc4600d2ada5385d745f97446ef104c2a8fba7",
+          "message": "chore(deps): update pre-commit hook renovatebot/pre-commit-hooks to v37.91.3",
+          "timestamp": "2023-11-13T16:32:02Z",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/pull/122/commits/35dc4600d2ada5385d745f97446ef104c2a8fba7"
+        },
+        "date": 1702389512137,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_i2syntax_read_region_256_lvl_0",
+            "value": 1384356,
+            "range": "± 83361",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_256_lvl_1",
+            "value": 1170125,
+            "range": "± 39158",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_512_lvl_0",
+            "value": 1574556,
+            "range": "± 141042",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_512_lvl_1",
+            "value": 7385889,
+            "range": "± 291086",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 504984,
+            "range": "± 44009",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 1246173,
+            "range": "± 52207",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 3604655,
+            "range": "± 181436",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 2777770,
+            "range": "± 88118",
             "unit": "ns/iter"
           }
         ]
