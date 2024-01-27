@@ -216,7 +216,7 @@ void ImageView::read_region(const std::unique_ptr<PhilipsEngine>& engine, const 
 
     // compute image size
     const auto dimension_range = dimensionRanges(request.level);
-    const auto& range = region[0]->range();
+    const auto& range = region.front()->range();
     image_size.w = 1 + ((range[1] - range[0]) / dimension_range.step_x);
     image_size.h = 1 + ((range[3] - range[2]) / dimension_range.step_y);
     const size_t nb_sub_pixels = image_size.w * image_size.h * 3;
