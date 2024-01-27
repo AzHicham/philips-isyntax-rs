@@ -210,13 +210,14 @@ void ImageView::read_region(const std::unique_ptr<PhilipsEngine>& engine, const 
     const std::vector<std::vector<std::size_t>> view_range{
         {request.roi.start_x, request.roi.end_x, request.roi.start_y, request.roi.end_y, request.level}};
     auto const& envelopes = _view.dataEnvelopes(request.level);
-    auto region = _view.requestRegions(view_range, envelopes, true, {254, 254, 254}, BufferType::RGB);
+    auto regions = _view.requestRegions(view_range, envelopes, true, {254, 254, 254}, BufferType::RGB);
 
-    engine.get()->inner()->waitAll(region);
+    engine.get()->inner()->waitAll(regions);
+    auto region = regions.front(); // We have only one region
 
     // compute image size
     const auto dimension_range = dimensionRanges(request.level);
-    const auto& range = region.front()->range();
+    const auto& range = region->range();
     image_size.w = 1 + ((range[1] - range[0]) / dimension_range.step_x);
     image_size.h = 1 + ((range[3] - range[2]) / dimension_range.step_y);
     const size_t nb_sub_pixels = image_size.w * image_size.h * 3;
