@@ -8,7 +8,9 @@ std::unique_ptr<PhilipsEngine> new_() { return std::make_unique<PhilipsEngine>()
 PhilipsEngine::PhilipsEngine()
     : _render_context(std::make_unique<SoftwareRenderContext>()),
       _render_backend(std::make_unique<SoftwareRenderBackend>(RenderBackend::ImageFormatType::RGB)),
-      _pixel_engine(std::make_unique<PixelEngine>(*_render_backend, *_render_context)) {}
+      _pixel_engine(std::make_unique<PixelEngine>(*_render_backend, *_render_context)) {
+        _render_context->numberOfWorkerThreads(8);
+      }
 
 std::string const& PhilipsEngine::sdkVersion() const { return _version; }
 
