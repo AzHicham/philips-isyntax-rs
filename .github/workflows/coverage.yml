@@ -26,7 +26,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
       - name: Cache sample slide
         id: cache-slide
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: tests/data/
           key: slides-test
