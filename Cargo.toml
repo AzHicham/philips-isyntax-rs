@@ -19,7 +19,7 @@ image = ["dep:image"]
 thiserror = "1.0"
 cxx = "1.0"
 rand = "0.8.5"
-image = { version = "0.24", optional = true, default-features = false, features = ["jpeg"] }
+image = { version = "0.25", optional = true, default-features = false, features = ["jpeg"] }
 
 [build-dependencies]
 cxx-build = "1.0"
