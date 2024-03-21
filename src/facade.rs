@@ -70,7 +70,7 @@ impl<'a> Facade<'a> {
             .filter_map(|cxx_str| cxx_str.to_str().ok()))
     }
 
-    /// Returns the derivation desription
+    /// Returns the derivation description
     /// Example: "PHILIPS UFS V1.6.6063 | Quality=1 | DWT=1 | Compressor=16"
     pub fn derivation_description(&self) -> Result<&str> {
         Ok(self.inner.derivationDescription()?.to_str()?)
