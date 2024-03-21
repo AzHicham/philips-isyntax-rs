@@ -8,7 +8,7 @@ use thiserror::Error;
 /// Enum defining all possible error when manipulating OpenSlide struct
 #[derive(Error, Debug)]
 pub enum PhilipsSlideError {
-    /// CxxSring to &str conversion error
+    /// CxxString to &str conversion error
     #[error(transparent)]
     StringConversionError(#[from] Utf8Error),
     /// PhilipsSlide lib error
