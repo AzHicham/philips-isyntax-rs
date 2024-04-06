@@ -2,7 +2,7 @@ default_language_version:
     python: python3
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v4.6.0
     hooks:
     -   id: check-byte-order-marker
     -   id: check-case-conflict
@@ -13,7 +13,7 @@ repos:
     -   id: mixed-line-ending
     -   id: trailing-whitespace
 -   repo: https://github.com/pre-commit/pre-commit
-    rev: v3.6.2
+    rev: v3.7.0
     hooks:
     -   id: validate_manifest
 -   repo: https://github.com/doublify/pre-commit-rust
@@ -27,6 +27,6 @@ repos:
       args: [-i]
       files: \.(c|cc|cxx|cpp|h|hpp|hxx)$
 -   repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 37.235.1
+    rev: 37.278.0
     hooks:
     - id: renovate-config-validator
