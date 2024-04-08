@@ -50,7 +50,7 @@ class Facade {
   public:
     Facade(ISyntaxFacade& facade);
 
-    void open(rust::Str url, rust::Str container) const;
+    void open(rust::Str url, rust::Str container, rust::Str cache_filename) const;
     void close() const;
     size_t numImages() const;
     std::string const& iSyntaxFileVersion() const;

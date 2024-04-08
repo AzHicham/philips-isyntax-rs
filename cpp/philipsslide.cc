@@ -46,10 +46,11 @@ std::unique_ptr<Facade> PhilipsEngine::facade(std::string const& input) const {
 // File properties
 Facade::Facade(ISyntaxFacade& facade) : _facade(facade) {}
 
-void Facade::open(rust::Str url, rust::Str container) const {
+void Facade::open(rust::Str url, rust::Str container, rust::Str cache_filename) const {
     std::string _url(url);
     std::string _container(container);
-    _facade.open(_url, _container, std::ios::in | std::ios::binary, "");
+    std::string _cache_filename(cache_filename);
+    _facade.open(_url, _container, std::ios::in | std::ios::binary, _cache_filename);
 }
 
 void Facade::close() const { _facade.close(); }

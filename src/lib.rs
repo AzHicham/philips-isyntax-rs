@@ -35,12 +35,14 @@ pub struct View<'a> {
     _lifetime: PhantomData<&'a ()>, // Note: Represent Image Lifetime
 }
 
+#[derive(Debug, Clone)]
 pub enum ImageType {
     WSI,
     MacroImage,
     LabelImage,
 }
 
+#[derive(Debug, Clone)]
 pub enum ContainerName {
     Default,
     Ficom,

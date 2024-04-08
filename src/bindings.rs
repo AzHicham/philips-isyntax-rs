@@ -59,7 +59,7 @@ pub(crate) mod ffi {
         fn facade(self: &PhilipsEngine, input: &CxxString) -> Result<UniquePtr<Facade>>;
 
         // Facade properties
-        fn open(self: &Facade, url: &str, container: &str) -> Result<()>;
+        fn open(self: &Facade, url: &str, container: &str, cache_filename: &str) -> Result<()>;
         fn close(self: &Facade) -> Result<()>;
         fn numImages(self: &Facade) -> Result<usize>;
         fn iSyntaxFileVersion(self: &Facade) -> Result<&CxxString>;
