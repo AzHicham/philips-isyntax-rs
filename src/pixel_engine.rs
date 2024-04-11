@@ -18,13 +18,26 @@ impl PhilipsEngine {
     /// This facade is a handle to a file
     /// May fail if the fail cannot be opened
     pub fn facade<P: AsRef<Path>>(&self, filename: P, container: &ContainerName) -> Result<Facade> {
+        self.facade_with_cache_file(filename, container, "")
+    }
+
+    /// Create a new instance of Facade
+    /// A Facade is a reference to a Philips Engine internal object
+    /// This facade is a handle to a file
+    /// May fail if the fail cannot be opened
+    pub fn facade_with_cache_file<P: AsRef<Path>, R: AsRef<Path>>(
+        &self,
+        filename: P,
+        container: &ContainerName,
+        cache_filename: R,
+    ) -> Result<Facade> {
         let facade_id = rand::thread_rng().gen::<u64>().to_string();
         let_cxx_string!(facade_id = facade_id);
         let facade = Facade {
             inner: self.inner.facade(&facade_id)?,
             _lifetime: Default::default(),
         };
-        facade.open(filename, container)?;
+        facade.open_with_cache_file(filename, container, cache_filename)?;
         Ok(facade)
     }
 

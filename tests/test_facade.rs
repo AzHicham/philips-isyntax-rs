@@ -1,7 +1,7 @@
 mod fixture;
 
 use fixture::{missing_file, sample, sample_i2syntax, unsupported_file};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use philips_isyntax_rs::{ContainerName, PhilipsEngine};
 use rstest::rstest;
@@ -156,4 +156,24 @@ fn test_multiple_file(#[case] filename: &Path) {
 
     assert_eq!(facade2.isyntax_file_version().unwrap(), "100.5");
     assert_eq!(facade2.num_images().unwrap(), 3);
+}
+
+#[rstest]
+#[case(sample())]
+fn test_facade_with_cache_file(#[case] filename: &Path) {
+    let engine = PhilipsEngine::new();
+
+    let cache_file = PathBuf::from("/tmp/sample-cache-file.fic");
+    assert!(!cache_file.exists());
+
+    let facade = engine
+        .facade_with_cache_file(
+            filename,
+            &ContainerName::CachingFicom,
+            "/tmp/sample-cache-file.fic",
+        )
+        .expect("Cannot open file");
+    assert_eq!(facade.isyntax_file_version().unwrap(), "100.5");
+
+    assert!(cache_file.exists());
 }

@@ -17,14 +17,19 @@ impl<'a> Drop for Facade<'a> {
 /// The facade allow file manipulation & file information retrieval
 /// NOTE: Philips Engine and all internal objects are not thread safe
 impl<'a> Facade<'a> {
-    /// Open an ISyntax file through a facade
-    pub(crate) fn open<P: AsRef<Path>>(
+    /// Open an ISyntax file through a facade and specify a cache file
+    /// if the container allows it
+    pub(crate) fn open_with_cache_file<P: AsRef<Path>, R: AsRef<Path>>(
         &self,
         filename: P,
         container: &ContainerName,
+        cache_filename: R,
     ) -> Result<()> {
         let filename = filename.as_ref().display().to_string();
-        Ok(self.inner.open(&filename, container.as_str())?)
+        let cache_filename = cache_filename.as_ref().display().to_string();
+        Ok(self
+            .inner
+            .open(&filename, container.as_str(), &cache_filename)?)
     }
 
     // close close hold by the facade
