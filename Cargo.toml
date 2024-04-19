@@ -9,7 +9,7 @@ homepage = "https://github.com/AzHicham/philips-isyntax-rs"
 readme = "README.md"
 keywords = ["philips", "isyntax", "histopathology", "microscopy"]
 categories = ["science", "external-ffi-bindings"]
-license = "MIT/Apache-2.0"
+license = "MIT OR Apache-2.0"
 
 [features]
 default = ["image"]
