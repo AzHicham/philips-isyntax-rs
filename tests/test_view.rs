@@ -3,7 +3,9 @@ mod fixture;
 use fixture::sample;
 use std::path::Path;
 
-use philips_isyntax_rs::{ContainerName, DimensionsRange, ImageType, PhilipsEngine, Rectangle};
+use philips_isyntax_rs::{
+    ContainerName, DimensionsRange, ImageType, PhilipsEngine, Rectangle, Size,
+};
 use rstest::rstest;
 
 #[rstest]
@@ -212,5 +214,40 @@ fn test_envelopes(#[case] filename: &Path) {
             start_y: 43008,
             end_y: 61952
         }
+    );
+}
+
+// Note: the dimensions for each levels are:
+// {
+//     0: Size { w: 158726, h: 90627},
+//     1: Size { w: 79361, h: 45313 },
+//     2: Size { w: 39678, h: 22655 },
+//     3: Size { w: 19837, h: 11327 },
+//     4: Size { w: 9917, h: 5663 },
+//     5: Size { w: 4957, h: 2831 },
+//     6: Size { w: 2477, h: 1415 },
+//     7: Size { w: 1237, h: 707 },
+//     8: Size { w: 617, h: 353 },
+//     9: Size { w: 307, h: 175 },
+// }
+#[rstest]
+#[case(sample(), Size::new(500, 500), 8)]
+#[case(sample(), Size::new(100, 100), 9)]
+#[case(sample(), Size::new(800, 800), 7)]
+#[case(sample(), Size::new(100000, 100000), 0)]
+fn test_get_best_level_for_dimensions(
+    #[case] filename: &Path,
+    #[case] size: Size,
+    #[case] expected_level: u32,
+) {
+    let engine = PhilipsEngine::new();
+    let facade = engine
+        .facade(filename, &ContainerName::CachingFicom)
+        .unwrap();
+    let image = facade.image(&ImageType::WSI).unwrap();
+    let view = image.view().unwrap();
+    assert_eq!(
+        view.get_best_level_for_dimensions(&size).unwrap(),
+        expected_level
     );
 }

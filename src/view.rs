@@ -1,13 +1,11 @@
 //! This module contains all functions related to Philips Views
 //!
 
+use crate::utils::{preserve_aspect_ratio, resize_rgb_image};
 use crate::{DimensionsRange, PhilipsEngine, Rectangle, RegionRequest, Result, Size, View};
 
 #[cfg(feature = "image")]
 use {crate::errors::ImageError, image::RgbImage};
-
-//#[cfg(feature = "image")]
-//use {crate::errors::PhilipsSlideError, image::RgbImage};
 
 impl<'a> View<'a> {
     /// Returns the dimension ranges of the SubImage for a certain level
@@ -124,5 +122,63 @@ impl<'a> View<'a> {
             ImageError::Other("Error while creating RgbImage from buffer".to_string())
         })?;
         Ok(image)
+    }
+
+    /// Read a thumbnail from a WSI SubImage.
+    ///
+    /// This function reads and decompresses a thumbnail of a whole slide image into an RgbImage
+    #[cfg(feature = "image")]
+    pub fn read_thumbnail(&self, engine: &PhilipsEngine, size: &Size) -> Result<RgbImage> {
+        let best_level = self.get_best_level_for_dimensions(&size)?;
+        let dimensions_range = self.dimension_ranges(best_level)?;
+        let region_request = RegionRequest {
+            roi: Rectangle {
+                start_x: dimensions_range.start_x,
+                end_x: dimensions_range.end_x,
+                start_y: dimensions_range.start_y,
+                end_y: dimensions_range.end_y,
+            },
+            level: best_level,
+        };
+        let image = self.read_image(engine, &region_request)?;
+        let final_size =
+            preserve_aspect_ratio(&size, &Size::from_dimensions_range(&dimensions_range));
+        let image = resize_rgb_image(image, &final_size)?;
+        Ok(image)
+    }
+
+    // Get the appropriate level for the given dimensions: i.e. the level with at least one
+    // dimensions greater than the dimension requested along one axis
+    pub fn get_best_level_for_dimensions(&self, dimension: &Size) -> Result<u32> {
+        let level_count = self.num_derived_levels() + 1;
+        let dimension_level0 = Size::from_dimensions_range(&self.dimension_ranges(0)?);
+        let downsample = f64::max(
+            f64::from(dimension_level0.w) / f64::from(dimension.w),
+            f64::from(dimension_level0.h) / f64::from(dimension.h),
+        );
+        let level_dowsamples: Vec<f64> = (0..level_count)
+            .map(|level| 2_u32.pow(level) as f64)
+            .collect();
+        if downsample < 1.0 {
+            return Ok(0);
+        }
+        for i in 1..level_count {
+            if downsample < level_dowsamples[i as usize] {
+                return Ok(i - 1);
+            }
+        }
+        Ok(level_count - 1)
+    }
+}
+
+impl Size {
+    pub fn new(w: u32, h: u32) -> Self {
+        Self { w, h }
+    }
+    pub fn from_dimensions_range(range: &DimensionsRange) -> Self {
+        Self {
+            w: (range.end_x - range.start_x) / range.step_x,
+            h: (range.end_y - range.start_y) / range.step_y,
+        }
     }
 }
