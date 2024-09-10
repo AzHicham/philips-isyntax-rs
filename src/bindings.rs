@@ -125,6 +125,18 @@ pub(crate) mod ffi {
     }
 }
 
+impl ffi::Size {
+    pub fn new(w: u32, h: u32) -> Self {
+        Self { w, h }
+    }
+    pub fn from_dimensions_range(range: &ffi::DimensionsRange) -> Self {
+        Self {
+            w: (range.end_x - range.start_x) / range.step_x,
+            h: (range.end_y - range.start_y) / range.step_y,
+        }
+    }
+}
+
 fn println(str: String) {
     println!("{str}");
 }

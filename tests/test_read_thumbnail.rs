@@ -6,6 +6,7 @@ use std::path::Path;
 use philips_isyntax_rs::{ContainerName, ImageType, PhilipsEngine, Size};
 use rstest::rstest;
 
+#[cfg(feature = "image")]
 #[rstest]
 fn test_thumbnail(
     #[values(sample(), sample_i2syntax())] filename: &Path,
