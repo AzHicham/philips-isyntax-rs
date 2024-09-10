@@ -28,19 +28,30 @@ jobs:
     needs: [validate]
     steps:
       - uses: actions/checkout@v4 # v4
-      - uses: dtolnay/rust-toolchain@stable
+      - name: Cache SDK
+        id: cache-sdk
+        uses: actions/cache@v4
         with:
-          toolchain: ${{ env.RUST_VERSION }}
+          path: /tmp/sdk/
+          key: cache-sdk
       - name: Google Storage authentication
+        if: ${{ steps.cache-sdk.outputs.cache-hit != 'true' }}
         uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
           export_environment_variables: true
           create_credentials_file: true
       - name: Set up Cloud SDK
+        if: ${{ steps.cache-sdk.outputs.cache-hit != 'true' }}
         uses: google-github-actions/setup-gcloud@v2
+      - name: Download dependencies
+        if: ${{ steps.cache-sdk.outputs.cache-hit != 'true' }}
+        run: make dl-sdk
       - name: Install dependencies ubuntu
         run: make install-deps
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ env.RUST_VERSION }}
       - uses: katyo/publish-crates@v2
         with:
           dry-run: ${{ github.event_name != 'release' }}
