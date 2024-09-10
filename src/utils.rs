@@ -114,6 +114,7 @@ mod tests {
     #[case(Size::new(100, 100), 9)]
     #[case(Size::new(800, 800), 7)]
     #[case(Size::new(100000, 100000), 0)]
+    #[case(Size::new(200000, 200000), 0)]
     fn test_get_best_level_for_dimensions(#[case] size: Size, #[case] expected_level: u32) {
         let dimension_level_0 = Size::new(158726, 90627);
         let level_count = 10;
