@@ -10,6 +10,7 @@ readme = "README.md"
 keywords = ["philips", "isyntax", "histopathology", "microscopy"]
 categories = ["science", "external-ffi-bindings"]
 license = "MIT OR Apache-2.0"
+rust-version = "1.75.0"
 
 [features]
 default = ["image"]
