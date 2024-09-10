@@ -1,4 +1,4 @@
-.PHONY: install-deps dl-test-images
+.PHONY: dl-sdk install-deps dl-test-images
 
 dl-sdk:
 	cd /tmp && \
