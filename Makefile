@@ -1,13 +1,15 @@
 .PHONY: install-deps dl-test-images
 
+dl-sdk:
+	cd /tmp && \
+	gsutil cp gs://az-philips/sdk.zip . && \
+	unzip sdk.zip -d .
+
 install-deps:
 	export DEBIAN_FRONTEND=noninteractive && \
 	sudo apt-get update -qq && \
 	sudo apt-get install -y --no-install-recommends unzip binutils build-essential && \
-	cd /tmp && \
-	gsutil cp gs://az-philips/sdk.zip . && \
-	unzip sdk.zip -d . && \
-	cd ./sdk && \
+	cd /tmp/sdk && \
 	chmod +x InstallPathologySDK.sh && \
     sudo ./InstallPathologySDK.sh -y
 
