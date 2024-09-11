@@ -3,6 +3,7 @@ pub mod errors;
 mod facade;
 mod pixel_engine;
 mod sub_image;
+#[cfg(feature = "image")]
 mod utils;
 mod view;
 

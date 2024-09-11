@@ -1,6 +1,8 @@
 //! This module contains the bindings to the Philips Open Pathology C++ library
 //!
 
+use crate::errors::PhilipsSlideError;
+
 #[cxx::bridge]
 pub(crate) mod ffi {
     /// Simple struct Size with width and height for an image/tile
@@ -129,10 +131,31 @@ impl ffi::Size {
     pub fn new(w: u32, h: u32) -> Self {
         Self { w, h }
     }
-    pub fn from_dimensions_range(range: &ffi::DimensionsRange) -> Self {
-        Self {
-            w: (range.end_x - range.start_x) / range.step_x,
-            h: (range.end_y - range.start_y) / range.step_y,
+}
+impl TryFrom<&ffi::DimensionsRange> for ffi::Size {
+    type Error = PhilipsSlideError;
+
+    fn try_from(value: &ffi::DimensionsRange) -> Result<Self, Self::Error> {
+        if value.step_x == 0 || value.step_y == 0 {
+            return Err(PhilipsSlideError::ConversionError(
+                "Step is zero!".to_string(),
+            ));
+        }
+        if let Some(width) = value.end_x.checked_sub(value.start_x) {
+            if let Some(height) = value.end_y.checked_sub(value.start_y) {
+                Ok(Self {
+                    w: width / value.step_x,
+                    h: height / value.step_y,
+                })
+            } else {
+                Err(PhilipsSlideError::ConversionError(
+                    "Height is less than zero!".to_string(),
+                ))
+            }
+        } else {
+            Err(PhilipsSlideError::ConversionError(
+                "Width is less than zero!".to_string(),
+            ))
         }
     }
 }

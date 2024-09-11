@@ -1,14 +1,10 @@
 use crate::{Result, Size};
-use std::cmp;
-
-#[cfg(feature = "image")]
 use fast_image_resize as fr;
-#[cfg(feature = "image")]
+use std::cmp;
 use {crate::errors::ImageError, image::RgbImage};
 
 // Get the appropriate level for the given dimensions: i.e. the level with at least one
 // dimensions (i.e along one axis) greater than the dimension requested
-#[cfg(feature = "image")]
 pub fn get_best_level_for_dimensions(
     dimension: &Size,
     dimension_level_0: &Size,
@@ -18,21 +14,13 @@ pub fn get_best_level_for_dimensions(
         f64::from(dimension_level_0.w) / f64::from(dimension.w),
         f64::from(dimension_level_0.h) / f64::from(dimension.h),
     );
-    let level_dowsamples: Vec<f64> = (0..level_count)
+    (0..level_count)
         .map(|level| 2_u32.pow(level) as f64)
-        .collect();
-    if downsample < 1.0 {
-        return 0;
-    }
-    for i in 1..level_count {
-        if downsample < level_dowsamples[i as usize] {
-            return i - 1;
-        }
-    }
-    level_count - 1
+        .enumerate()
+        .rfind(|(_, ds)| ds <= &downsample)
+        .map_or(0, |(index, _)| index) as u32
 }
 
-#[cfg(feature = "image")]
 pub(crate) fn resize_rgb_image(image: RgbImage, new_size: &Size) -> Result<RgbImage> {
     let src_image = fr::images::Image::from_vec_u8(
         image.width(),
@@ -57,7 +45,6 @@ pub(crate) fn resize_rgb_image(image: RgbImage, new_size: &Size) -> Result<RgbIm
     Ok(image)
 }
 
-#[cfg(feature = "image")]
 pub(crate) fn preserve_aspect_ratio(size: &Size, dimension: &Size) -> Size {
     // Code adapted from https://pillow.readthedocs.io/en/latest/_modules/PIL/Image.html#Image.thumbnail
     fn round_aspect<F: FnMut(f32) -> f32>(number: f32, mut key: F) -> u32 {
@@ -91,7 +78,6 @@ pub(crate) fn preserve_aspect_ratio(size: &Size, dimension: &Size) -> Size {
 }
 
 #[cfg(test)]
-#[cfg(feature = "image")]
 mod tests {
     use super::*;
     use rstest::rstest;
@@ -110,8 +96,8 @@ mod tests {
     //     9: Size { w: 307, h: 175 },
     // }
     #[rstest]
-    #[case(Size::new(500, 500), 8)]
     #[case(Size::new(100, 100), 9)]
+    #[case(Size::new(500, 500), 8)]
     #[case(Size::new(800, 800), 7)]
     #[case(Size::new(100000, 100000), 0)]
     #[case(Size::new(200000, 200000), 0)]

@@ -131,7 +131,7 @@ impl<'a> View<'a> {
     #[cfg(feature = "image")]
     pub fn read_thumbnail(&self, engine: &PhilipsEngine, size: &Size) -> Result<RgbImage> {
         let level_count = self.num_derived_levels() + 1;
-        let dimension_level_0 = Size::from_dimensions_range(&self.dimension_ranges(0)?);
+        let dimension_level_0 = Size::try_from(&self.dimension_ranges(0)?)?;
         let best_level = get_best_level_for_dimensions(&size, &dimension_level_0, level_count);
         let dimensions_range = self.dimension_ranges(best_level)?;
         let region_request = RegionRequest {
@@ -144,8 +144,7 @@ impl<'a> View<'a> {
             level: best_level,
         };
         let image = self.read_image(engine, &region_request)?;
-        let final_size =
-            preserve_aspect_ratio(&size, &Size::from_dimensions_range(&dimensions_range));
+        let final_size = preserve_aspect_ratio(&size, &Size::try_from(&dimensions_range)?);
         let image = resize_rgb_image(image, &final_size)?;
         Ok(image)
     }
