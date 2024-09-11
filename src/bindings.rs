@@ -1,7 +1,7 @@
 //! This module contains the bindings to the Philips Open Pathology C++ library
 //!
 
-use crate::errors::PhilipsSlideError;
+use crate::errors::DimensionsRangeToSizeError;
 
 #[cxx::bridge]
 pub(crate) mod ffi {
@@ -133,13 +133,14 @@ impl ffi::Size {
     }
 }
 impl TryFrom<&ffi::DimensionsRange> for ffi::Size {
-    type Error = PhilipsSlideError;
+    type Error = DimensionsRangeToSizeError;
 
     fn try_from(value: &ffi::DimensionsRange) -> Result<Self, Self::Error> {
-        if value.step_x == 0 || value.step_y == 0 {
-            return Err(PhilipsSlideError::ConversionError(
-                "Step is zero!".to_string(),
-            ));
+        if value.step_x == 0 {
+            return Err(DimensionsRangeToSizeError::NullStepX);
+        }
+        if value.step_y == 0 {
+            return Err(DimensionsRangeToSizeError::NullStepY);
         }
         if let Some(width) = value.end_x.checked_sub(value.start_x) {
             if let Some(height) = value.end_y.checked_sub(value.start_y) {
@@ -148,14 +149,10 @@ impl TryFrom<&ffi::DimensionsRange> for ffi::Size {
                     h: height / value.step_y,
                 })
             } else {
-                Err(PhilipsSlideError::ConversionError(
-                    "Height is less than zero!".to_string(),
-                ))
+                Err(DimensionsRangeToSizeError::NegativeHeigh)
             }
         } else {
-            Err(PhilipsSlideError::ConversionError(
-                "Width is less than zero!".to_string(),
-            ))
+            Err(DimensionsRangeToSizeError::NegativeWidth)
         }
     }
 }
