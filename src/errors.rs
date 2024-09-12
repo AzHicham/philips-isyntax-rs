@@ -5,7 +5,7 @@ use cxx::Exception;
 use std::str::Utf8Error;
 use thiserror::Error;
 
-/// Enum defining all possible error when manipulating OpenSlide struct
+/// Enum defining all possible error when manipulating Philips struct
 #[derive(Error, Debug)]
 pub enum PhilipsSlideError {
     /// CxxString to &str conversion error
@@ -21,6 +21,8 @@ pub enum PhilipsSlideError {
     #[cfg(feature = "image")]
     #[error(transparent)]
     ImageError(#[from] ImageError),
+    #[error(transparent)]
+    DimensionsRangeToSizeError(#[from] DimensionsRangeToSizeError),
 }
 
 #[cfg(feature = "image")]
@@ -32,4 +34,16 @@ pub enum ImageError {
     /// PhilipsSlide lib error
     #[error("{0}")]
     Other(String),
+}
+
+#[derive(Error, Debug)]
+pub enum DimensionsRangeToSizeError {
+    #[error("Step X is null")]
+    NullStepX,
+    #[error("Step Y is null")]
+    NullStepY,
+    #[error("End X is smaller than Start X")]
+    NegativeWidth,
+    #[error("End Y is smaller than Start Y")]
+    NegativeHeigh,
 }

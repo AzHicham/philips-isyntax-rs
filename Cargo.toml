@@ -14,13 +14,14 @@ rust-version = "1.75.0"
 
 [features]
 default = ["image"]
-image = ["dep:image"]
+image = ["dep:image", "dep:fast_image_resize"]
 
 [dependencies]
 thiserror = "1.0"
 cxx = "1.0"
 rand = "0.8.5"
 image = { version = "0.25", optional = true, default-features = false, features = ["jpeg"] }
+fast_image_resize = { version = "4.2.1", optional = true }
 
 [build-dependencies]
 cxx-build = "1.0"

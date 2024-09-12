@@ -1,6 +1,8 @@
 //! This module contains the bindings to the Philips Open Pathology C++ library
 //!
 
+use crate::errors::DimensionsRangeToSizeError;
+
 #[cxx::bridge]
 pub(crate) mod ffi {
     /// Simple struct Size with width and height for an image/tile
@@ -122,6 +124,36 @@ pub(crate) mod ffi {
             buffer: &mut Vec<u8>,
             image_size: &mut Size,
         ) -> Result<()>;
+    }
+}
+
+impl ffi::Size {
+    pub fn new(w: u32, h: u32) -> Self {
+        Self { w, h }
+    }
+}
+impl TryFrom<&ffi::DimensionsRange> for ffi::Size {
+    type Error = DimensionsRangeToSizeError;
+
+    fn try_from(value: &ffi::DimensionsRange) -> Result<Self, Self::Error> {
+        if value.step_x == 0 {
+            return Err(DimensionsRangeToSizeError::NullStepX);
+        }
+        if value.step_y == 0 {
+            return Err(DimensionsRangeToSizeError::NullStepY);
+        }
+        if let Some(width) = value.end_x.checked_sub(value.start_x) {
+            if let Some(height) = value.end_y.checked_sub(value.start_y) {
+                Ok(Self {
+                    w: width / value.step_x,
+                    h: height / value.step_y,
+                })
+            } else {
+                Err(DimensionsRangeToSizeError::NegativeHeigh)
+            }
+        } else {
+            Err(DimensionsRangeToSizeError::NegativeWidth)
+        }
     }
 }
 
