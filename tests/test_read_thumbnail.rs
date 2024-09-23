@@ -33,7 +33,7 @@ fn test_thumbnail(
                 .file_stem()
                 .expect("Invalid file name")
                 .to_str()
-                .expect("Invalide file name"),
+                .expect("Invalid file name"),
             size.w
         ))
         .unwrap();
