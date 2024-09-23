@@ -1,3 +1,38 @@
+## [1.3.0](https://github.com/AzHicham/philips-isyntax-rs/compare/1.2.0...1.3.0) (2024-09-23)
+
+
+### Features
+
+* add read_thumbnail ([#154](https://github.com/AzHicham/philips-isyntax-rs/issues/154)) ([c929fff](https://github.com/AzHicham/philips-isyntax-rs/commit/c929fff565ee00e5748422031c471d53d013b7dc))
+
+
+### Bug Fixes
+
+* **deps:** update cargo ([#142](https://github.com/AzHicham/philips-isyntax-rs/issues/142)) ([847c5bc](https://github.com/AzHicham/philips-isyntax-rs/commit/847c5bc1fb9b85e8fb8690e2602f38162b746f66))
+* **deps:** update cargo ([#144](https://github.com/AzHicham/philips-isyntax-rs/issues/144)) ([894427f](https://github.com/AzHicham/philips-isyntax-rs/commit/894427fee2d20a5fb4e68238ea157b380ff29eee))
+* **deps:** update cargo ([#150](https://github.com/AzHicham/philips-isyntax-rs/issues/150)) ([0443a65](https://github.com/AzHicham/philips-isyntax-rs/commit/0443a657fae9d6270457693c3d7f0cc7924c1278))
+* **deps:** update cargo to v1.0.126 ([#152](https://github.com/AzHicham/philips-isyntax-rs/issues/152)) ([c11d749](https://github.com/AzHicham/philips-isyntax-rs/commit/c11d749976e65d95bde3bdb266b68cef5ea2df99))
+* **deps:** update rust crate thiserror to v1.0.62 ([#148](https://github.com/AzHicham/philips-isyntax-rs/issues/148)) ([9926ce4](https://github.com/AzHicham/philips-isyntax-rs/commit/9926ce4a516f2f815412e38ad59b711437ff1312))
+* update minimum Rust verison ([bfa4050](https://github.com/AzHicham/philips-isyntax-rs/commit/bfa4050a1adbf7763479325ee60e1a063352fdf1))
+
+
+### CI/CD
+
+* cache sdk ([#155](https://github.com/AzHicham/philips-isyntax-rs/issues/155)) ([b9ce7e4](https://github.com/AzHicham/philips-isyntax-rs/commit/b9ce7e426be2ed4200e1e465f5e7ae6b05a2342e))
+* fix clippy and publish workflows ([5042213](https://github.com/AzHicham/philips-isyntax-rs/commit/50422133521892e4b857ecf0a196fd4bc91fa253))
+
+
+### Miscellaneous Chores
+
+* **deps:** update pre-commit ([#143](https://github.com/AzHicham/philips-isyntax-rs/issues/143)) ([564b7ed](https://github.com/AzHicham/philips-isyntax-rs/commit/564b7edf93d08862d8f928f7409d64e3f8f2c1e4))
+* **deps:** update pre-commit ([#151](https://github.com/AzHicham/philips-isyntax-rs/issues/151)) ([2694e13](https://github.com/AzHicham/philips-isyntax-rs/commit/2694e131f01233114406d93209401a592aec360a))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.319.1 ([#140](https://github.com/AzHicham/philips-isyntax-rs/issues/140)) ([b410d07](https://github.com/AzHicham/philips-isyntax-rs/commit/b410d073e76ecabdebb0b963d0462febcf6f2ef9))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.333.0 ([#141](https://github.com/AzHicham/philips-isyntax-rs/issues/141)) ([7ede266](https://github.com/AzHicham/philips-isyntax-rs/commit/7ede26643cdd02256b3c4de61b5c90f7751a1cde))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.410.3 ([#145](https://github.com/AzHicham/philips-isyntax-rs/issues/145)) ([2fe2e3f](https://github.com/AzHicham/philips-isyntax-rs/commit/2fe2e3f148fa798df047ed9bbd3778f733163dce))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.424.1 ([#147](https://github.com/AzHicham/philips-isyntax-rs/issues/147)) ([94bfb07](https://github.com/AzHicham/philips-isyntax-rs/commit/94bfb075216211d51173a14b34afc8d6b3594510))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.432.0 ([#149](https://github.com/AzHicham/philips-isyntax-rs/issues/149)) ([c220dfa](https://github.com/AzHicham/philips-isyntax-rs/commit/c220dfa9a34de607ead0203c7b8a4f6664d7c465))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v38 ([#153](https://github.com/AzHicham/philips-isyntax-rs/issues/153)) ([cf1e0a0](https://github.com/AzHicham/philips-isyntax-rs/commit/cf1e0a05bbc3f34eac91b6bfd4a6f4a6bc38f6b9))
+
 ## [1.2.0](https://github.com/AzHicham/philips-isyntax-rs/compare/1.1.3...1.2.0) (2024-04-11)
 
 
