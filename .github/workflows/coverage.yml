@@ -50,6 +50,8 @@ jobs:
         with:
           toolchain: ${{ env.RUST_VERSION }}
       - name: Install llvm-cov & Build & Tests
+        env:
+          RUST_TEST_THREADS: 1
         run: |
           rustup component add llvm-tools-preview
           cargo install cargo-llvm-cov
