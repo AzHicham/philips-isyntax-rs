@@ -13,7 +13,7 @@
 * **deps:** update cargo ([#150](https://github.com/AzHicham/philips-isyntax-rs/issues/150)) ([0443a65](https://github.com/AzHicham/philips-isyntax-rs/commit/0443a657fae9d6270457693c3d7f0cc7924c1278))
 * **deps:** update cargo to v1.0.126 ([#152](https://github.com/AzHicham/philips-isyntax-rs/issues/152)) ([c11d749](https://github.com/AzHicham/philips-isyntax-rs/commit/c11d749976e65d95bde3bdb266b68cef5ea2df99))
 * **deps:** update rust crate thiserror to v1.0.62 ([#148](https://github.com/AzHicham/philips-isyntax-rs/issues/148)) ([9926ce4](https://github.com/AzHicham/philips-isyntax-rs/commit/9926ce4a516f2f815412e38ad59b711437ff1312))
-* update minimum Rust verison ([bfa4050](https://github.com/AzHicham/philips-isyntax-rs/commit/bfa4050a1adbf7763479325ee60e1a063352fdf1))
+* update minimum Rust version ([bfa4050](https://github.com/AzHicham/philips-isyntax-rs/commit/bfa4050a1adbf7763479325ee60e1a063352fdf1))
 
 
 ### CI/CD

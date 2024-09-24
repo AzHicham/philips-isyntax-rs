@@ -149,7 +149,7 @@ impl TryFrom<&ffi::DimensionsRange> for ffi::Size {
                     h: height / value.step_y,
                 })
             } else {
-                Err(DimensionsRangeToSizeError::NegativeHeigh)
+                Err(DimensionsRangeToSizeError::NegativeHeight)
             }
         } else {
             Err(DimensionsRangeToSizeError::NegativeWidth)

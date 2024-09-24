@@ -45,5 +45,5 @@ pub enum DimensionsRangeToSizeError {
     #[error("End X is smaller than Start X")]
     NegativeWidth,
     #[error("End Y is smaller than Start Y")]
-    NegativeHeigh,
+    NegativeHeight,
 }
