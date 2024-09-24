@@ -1,7 +1,7 @@
-use crate::{Result, Size};
+use crate::{errors::ImageError, Result, Size};
 use fast_image_resize as fr;
+use image::RgbImage;
 use std::cmp;
-use {crate::errors::ImageError, image::RgbImage};
 
 // Get the appropriate level for the given dimensions: i.e. the level with at least one
 // dimensions (i.e along one axis) greater than the dimension requested
