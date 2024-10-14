@@ -104,11 +104,11 @@ pub(crate) mod ffi {
 
         // View properties
         fn dimensionRanges(self: &ImageView, level: u32) -> Result<DimensionsRange>;
-        fn dimensionNames<'a>(self: &ImageView) -> &'a CxxVector<CxxString>;
-        fn dimensionUnits<'a>(self: &ImageView) -> &'a CxxVector<CxxString>;
-        fn dimensionTypes<'a>(self: &ImageView) -> &'a CxxVector<CxxString>;
-        fn scale<'a>(self: &ImageView) -> &'a CxxVector<f64>;
-        fn origin<'a>(self: &ImageView) -> &'a CxxVector<f64>;
+        fn dimensionNames(self: &ImageView) -> &CxxVector<CxxString>;
+        fn dimensionUnits(self: &ImageView) -> &CxxVector<CxxString>;
+        fn dimensionTypes(self: &ImageView) -> &CxxVector<CxxString>;
+        fn scale(self: &ImageView) -> &CxxVector<f64>;
+        fn origin(self: &ImageView) -> &CxxVector<f64>;
         fn bitsAllocated(self: &ImageView) -> u16;
         fn bitsStored(self: &ImageView) -> u16;
         fn highBit(self: &ImageView) -> u16;
