@@ -9,7 +9,7 @@ env:
 
 jobs:
   validate:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4 # v4
       - uses: MeilCli/regex-match@v1
@@ -24,7 +24,7 @@ jobs:
         run: exit 1
 
   publish:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [validate]
     steps:
       - uses: actions/checkout@v4 # v4
