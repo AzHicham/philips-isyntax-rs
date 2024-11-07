@@ -17,7 +17,7 @@ default = ["image"]
 image = ["dep:image", "dep:fast_image_resize"]
 
 [dependencies]
-thiserror = "1.0"
+thiserror = "2.0"
 cxx = "1.0"
 rand = "0.8.5"
 image = { version = "0.25", optional = true, default-features = false, features = ["jpeg"] }
