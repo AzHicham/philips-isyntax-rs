@@ -10,21 +10,21 @@ readme = "README.md"
 keywords = ["philips", "isyntax", "histopathology", "microscopy"]
 categories = ["science", "external-ffi-bindings"]
 license = "MIT OR Apache-2.0"
-rust-version = "1.75.0"
+rust-version = "1.81.0"
 
 [features]
 default = ["image"]
 image = ["dep:image", "dep:fast_image_resize"]
 
 [dependencies]
-thiserror = "1.0"
-cxx = "1.0"
-rand = "0.8.5"
+thiserror = "2"
+cxx = "1"
+rand = "0.8"
 image = { version = "0.25", optional = true, default-features = false, features = ["jpeg"] }
-fast_image_resize = { version = "4.2.1", optional = true }
+fast_image_resize = { version = "5", optional = true }
 
 [build-dependencies]
-cxx-build = "1.0"
+cxx-build = "1"
 
 [dev-dependencies]
 rstest = "0.23"

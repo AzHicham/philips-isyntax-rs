@@ -16,9 +16,9 @@ Philips-isyntax-rs can read virtual slides in these formats:
 
 ## Requirements
 
-* Rust &ge; 1.56
+* Rust &ge; 1.81
 * Philips Open Pathology C++ SDK 2.0
-* Ubuntu >= 20.04
+* Ubuntu 20.04 or 22.04
 
 ## More Information
 
