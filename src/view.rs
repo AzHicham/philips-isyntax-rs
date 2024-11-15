@@ -8,7 +8,7 @@ use crate::{DimensionsRange, PhilipsEngine, Rectangle, RegionRequest, Result, Si
 #[cfg(feature = "image")]
 use {crate::errors::ImageError, image::RgbImage};
 
-impl<'a> View<'a> {
+impl View<'_> {
     /// Returns the dimension ranges of the SubImage for a certain level
     /// For Macro and Label/ILE image this function return a result only for level 0
     pub fn dimension_ranges(&self, level: u32) -> Result<DimensionsRange> {

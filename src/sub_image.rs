@@ -12,7 +12,7 @@ use {
     std::io::Cursor,
 };
 
-impl<'a> Image<'a> {
+impl Image<'_> {
     /// Returns the pixel transform used for this Image
     pub fn pixel_transform(&self) -> Result<&str> {
         Ok(self.inner.pixelTransform()?.to_str()?)
