@@ -19,7 +19,7 @@ image = ["dep:image", "dep:fast_image_resize"]
 [dependencies]
 thiserror = "2"
 cxx = "1"
-rand = "0.8"
+rand = "0.9"
 image = { version = "0.25", optional = true, default-features = false, features = ["jpeg"] }
 fast_image_resize = { version = "5", optional = true }
 
