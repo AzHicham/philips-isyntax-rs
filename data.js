@@ -1,80 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1739894173870,
+  "lastUpdate": 1739894185880,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "jayvdb@gmail.com",
-            "name": "John Vandenberg",
-            "username": "jayvdb"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "3227604cb53dd2807032aea5375a764af0fac8a4",
-          "message": "fix: Fix typo in error enum variant (#157)",
-          "timestamp": "2024-09-24T08:42:08+02:00",
-          "tree_id": "5d3ad2816b894d6cdfa95c4fe07b05d0591ee363",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/3227604cb53dd2807032aea5375a764af0fac8a4"
-        },
-        "date": 1727160302421,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_i2syntax_read_region_256_lvl_0",
-            "value": 1364575,
-            "range": "± 115355",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_i2syntax_read_region_256_lvl_1",
-            "value": 1167734,
-            "range": "± 43405",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_i2syntax_read_region_512_lvl_0",
-            "value": 1561243,
-            "range": "± 66932",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_i2syntax_read_region_512_lvl_1",
-            "value": 7378150,
-            "range": "± 456643",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 508489,
-            "range": "± 27276",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 1241770,
-            "range": "± 55329",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 3625588,
-            "range": "± 398970",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 2740300,
-            "range": "± 152691",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -2159,6 +2087,78 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 2731155,
             "range": "± 106257",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "29139614+renovate[bot]@users.noreply.github.com",
+            "name": "renovate[bot]",
+            "username": "renovate[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "afb28d7002782b64a59fdb33c255a1fed764cf25",
+          "message": "chore(deps): update pre-commit (#190)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+          "timestamp": "2025-02-18T16:53:23+01:00",
+          "tree_id": "6a5ca2004835c6fcf0fb48cec6aabd17b3959ff4",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/afb28d7002782b64a59fdb33c255a1fed764cf25"
+        },
+        "date": 1739894185498,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_i2syntax_read_region_256_lvl_0",
+            "value": 1341774,
+            "range": "± 41286",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_256_lvl_1",
+            "value": 1140547,
+            "range": "± 33842",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_512_lvl_0",
+            "value": 1575994,
+            "range": "± 168226",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_512_lvl_1",
+            "value": 7351679,
+            "range": "± 267138",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 504605,
+            "range": "± 39021",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 1239869,
+            "range": "± 54584",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 3545602,
+            "range": "± 149512",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 2760238,
+            "range": "± 99726",
             "unit": "ns/iter"
           }
         ]
