@@ -17,7 +17,11 @@ impl PhilipsEngine {
     /// A Facade is a reference to a Philips Engine internal object
     /// This facade is a handle to a file
     /// May fail if the fail cannot be opened
-    pub fn facade<P: AsRef<Path>>(&self, filename: P, container: &ContainerName) -> Result<Facade> {
+    pub fn facade<P: AsRef<Path>>(
+        &self,
+        filename: P,
+        container: &ContainerName,
+    ) -> Result<Facade<'_>> {
         self.facade_with_cache_file(filename, container, "")
     }
 
@@ -30,7 +34,7 @@ impl PhilipsEngine {
         filename: P,
         container: &ContainerName,
         cache_filename: R,
-    ) -> Result<Facade> {
+    ) -> Result<Facade<'_>> {
         let facade_id = rand::thread_rng().gen::<u64>().to_string();
         let_cxx_string!(facade_id = facade_id);
         let facade = Facade {

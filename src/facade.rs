@@ -166,7 +166,7 @@ impl Facade<'_> {
     /// You can create multiple Image handler for every possible ImageType
     /// WARNING: multiple Image handler created with the same image_type will points
     /// to the same reference in Philips Engine internal.
-    pub fn image(&self, image_type: &ImageType) -> Result<Image> {
+    pub fn image(&self, image_type: &ImageType) -> Result<Image<'_>> {
         let_cxx_string!(image_type = image_type);
         Ok(Image {
             inner: self.inner.image(&image_type)?,
