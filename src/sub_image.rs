@@ -7,7 +7,7 @@ use crate::{Image, Result, View};
 use {
     crate::errors::ImageError,
     image::{
-        codecs::jpeg::JpegDecoder, ColorType, DynamicImage, ImageDecoder, RgbImage, RgbaImage,
+        ColorType, DynamicImage, ImageDecoder, RgbImage, RgbaImage, codecs::jpeg::JpegDecoder,
     },
     std::io::Cursor,
 };

@@ -1,4 +1,4 @@
-use crate::{errors::ImageError, Result, Size};
+use crate::{Result, Size, errors::ImageError};
 use fast_image_resize as fr;
 use image::RgbImage;
 use std::cmp;
@@ -67,11 +67,7 @@ pub(crate) fn preserve_aspect_ratio(size: &Size, dimension: &Size) -> Size {
         Size::new(
             w as u32,
             round_aspect(w / aspect, |n| {
-                if n == 0. {
-                    0.
-                } else {
-                    (aspect - w / n).abs()
-                }
+                if n == 0. { 0. } else { (aspect - w / n).abs() }
             }),
         )
     }

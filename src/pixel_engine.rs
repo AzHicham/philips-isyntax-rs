@@ -2,7 +2,7 @@
 //! Results of theses functions should only depend on the SDK and not ISyntax file
 //!
 
-use crate::{bindings::ffi, ContainerName, Facade, ImageType, PhilipsEngine, Result};
+use crate::{ContainerName, Facade, ImageType, PhilipsEngine, Result, bindings::ffi};
 use cxx::let_cxx_string;
 use rand::Rng;
 use std::path::Path;
