@@ -119,7 +119,7 @@ impl Image<'_> {
     /// You can create multiple View handler for an Image
     /// WARNING: multiple View handler created from the same Image will points
     /// to the same reference in Philips Engine internal.
-    pub fn view(&self) -> Result<View> {
+    pub fn view(&self) -> Result<View<'_>> {
         Ok(View {
             inner: self.inner.view()?,
             _lifetime: Default::default(),
