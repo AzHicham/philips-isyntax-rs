@@ -10,7 +10,7 @@ readme = "README.md"
 keywords = ["philips", "isyntax", "histopathology", "microscopy"]
 categories = ["science", "external-ffi-bindings"]
 license = "MIT OR Apache-2.0"
-rust-version = "1.81.0"
+rust-version = "1.87.0"
 
 [features]
 default = ["image"]
@@ -27,7 +27,7 @@ fast_image_resize = { version = "5", optional = true }
 cxx-build = "1"
 
 [dev-dependencies]
-rstest = "0.25"
+rstest = "0.26"
 bencher = "0.1"
 
 [[bench]]

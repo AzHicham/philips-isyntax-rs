@@ -35,7 +35,7 @@ impl PhilipsEngine {
         container: &ContainerName,
         cache_filename: R,
     ) -> Result<Facade<'_>> {
-        let facade_id = rand::thread_rng().gen::<u64>().to_string();
+        let facade_id = rand::rng().random::<u64>().to_string();
         let_cxx_string!(facade_id = facade_id);
         let facade = Facade {
             inner: self.inner.facade(&facade_id)?,
