@@ -1,10 +1,12 @@
 mod fixture;
 
-use fixture::{sample, sample_i2syntax};
-use std::path::Path;
-
-use philips_isyntax_rs::{ContainerName, ImageType, PhilipsEngine, Size};
-use rstest::rstest;
+#[cfg(feature = "image")]
+use {
+    fixture::{sample, sample_i2syntax},
+    philips_isyntax_rs::{ContainerName, ImageType, PhilipsEngine, Size},
+    rstest::rstest,
+    std::path::Path,
+};
 
 #[cfg(feature = "image")]
 #[rstest]
