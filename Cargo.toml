@@ -26,12 +26,12 @@ features = []
 [dependencies.cxx]
 version = "1"
 default-features = false
-features = []
+features = ["std", "c++17"]
 
 [dependencies.rand]
 version = "0.9"
 default-features = false
-features = []
+features = ["thread_rng"]
 
 [dependencies.image]
 version = "0.25"
