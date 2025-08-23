@@ -4,7 +4,8 @@ fn main() {
     if env::var("DOCS_RS").is_err() {
         cxx_build::bridge("src/bindings.rs")
             .file("cpp/philipsslide.cc")
-            .flag_if_supported("-std=c++17")
+            .cpp(true)
+            .std("c++17")
             .compile("philips-bindings");
 
         println!("cargo:rerun-if-changed=src/bindings.rs");

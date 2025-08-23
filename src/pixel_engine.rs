@@ -4,7 +4,6 @@
 
 use crate::{ContainerName, Facade, ImageType, PhilipsEngine, Result, bindings::ffi};
 use cxx::let_cxx_string;
-use rand::Rng;
 use std::path::Path;
 
 impl PhilipsEngine {
@@ -35,8 +34,8 @@ impl PhilipsEngine {
         container: &ContainerName,
         cache_filename: R,
     ) -> Result<Facade<'_>> {
-        let facade_id = rand::rng().random::<u64>().to_string();
-        let_cxx_string!(facade_id = facade_id);
+        let facade_id_str = format!("{}", filename.as_ref().display());
+        let_cxx_string!(facade_id = facade_id_str);
         let facade = Facade {
             inner: self.inner.facade(&facade_id)?,
             _lifetime: Default::default(),

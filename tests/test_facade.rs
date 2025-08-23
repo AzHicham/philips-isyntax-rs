@@ -136,8 +136,30 @@ fn test_properties_2(#[case] filename: &Path) {
 }
 
 #[rstest]
+#[case(sample(), sample_i2syntax())]
+fn test_multiple_file(#[case] filename_a: &Path, #[case] filename_b: &Path) {
+    let engine = PhilipsEngine::new();
+
+    let facade_a = engine
+        .facade(filename_a, &ContainerName::CachingFicom)
+        .unwrap();
+    assert_eq!(facade_a.isyntax_file_version().unwrap(), "100.5");
+    assert_eq!(facade_a.num_images().unwrap(), 3);
+
+    let facade_b = engine
+        .facade(filename_b, &ContainerName::CachingFicom)
+        .unwrap();
+
+    assert_eq!(facade_b.isyntax_file_version().unwrap(), "100.5");
+    assert_eq!(facade_b.num_images().unwrap(), 3);
+}
+
+#[rstest]
+#[should_panic(
+    expected = "CoreError(Exception { what: \"PixelEngine internal error: cannot change container type after calling open\" })"
+)]
 #[case(sample())]
-fn test_multiple_file(#[case] filename: &Path) {
+fn test_same_multiple_file(#[case] filename: &Path) {
     let engine = PhilipsEngine::new();
     let facade = engine
         .facade(filename, &ContainerName::CachingFicom)
@@ -145,17 +167,9 @@ fn test_multiple_file(#[case] filename: &Path) {
     assert_eq!(facade.isyntax_file_version().unwrap(), "100.5");
     assert_eq!(facade.num_images().unwrap(), 3);
 
-    // On the other hand you can create a new facade and open the same file
-    // The two facade should be independent !
-    // eg. you can drop one of them without any consequences on the other
-    let facade2 = engine
+    let _facade = engine
         .facade(filename, &ContainerName::CachingFicom)
         .unwrap();
-
-    drop(facade);
-
-    assert_eq!(facade2.isyntax_file_version().unwrap(), "100.5");
-    assert_eq!(facade2.num_images().unwrap(), 3);
 }
 
 #[rstest]
