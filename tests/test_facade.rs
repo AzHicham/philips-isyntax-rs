@@ -167,7 +167,7 @@ fn test_same_multiple_file(#[case] filename: &Path) {
     assert_eq!(facade.isyntax_file_version().unwrap(), "100.5");
     assert_eq!(facade.num_images().unwrap(), 3);
 
-    let facade = engine
+    let _facade = engine
         .facade(filename, &ContainerName::CachingFicom)
         .unwrap();
 }
