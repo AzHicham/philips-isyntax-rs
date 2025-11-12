@@ -36,7 +36,7 @@ jobs:
           export_environment_variables: true
           create_credentials_file: true
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
+        uses: google-github-actions/setup-gcloud@v3
         if: ${{ steps.cache-slide.outputs.cache-hit != 'true' || steps.cache-sdk.outputs.cache-hit != 'true' }}
       - name: Download sample tests data
         if: steps.cache-slide.outputs.cache-hit != 'true'
