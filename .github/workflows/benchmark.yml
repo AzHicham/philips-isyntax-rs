@@ -18,7 +18,7 @@ jobs:
   benchmarks:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - name: Cache sample slide
       id: cache-slide
       uses: actions/cache@v4
