@@ -1,3 +1,5 @@
+#![cfg(feature = "native-sdk")]
+
 mod fixture;
 
 #[cfg(feature = "image")]

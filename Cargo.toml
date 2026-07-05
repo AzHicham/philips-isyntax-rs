@@ -13,8 +13,9 @@ license = "MIT OR Apache-2.0"
 rust-version = "1.87.0"
 
 [features]
-default = ["image"]
+default = ["image", "native-sdk"]
 image = ["dep:image", "dep:fast_image_resize"]
+native-sdk = []
 
 
 [dependencies]

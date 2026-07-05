@@ -3,6 +3,7 @@
 
 use crate::errors::DimensionsRangeToSizeError;
 
+#[cfg(feature = "native-sdk")]
 #[cxx::bridge]
 pub(crate) mod ffi {
     /// Simple struct Size with width and height for an image/tile
@@ -127,6 +128,49 @@ pub(crate) mod ffi {
     }
 }
 
+#[cfg(not(feature = "native-sdk"))]
+pub(crate) mod ffi {
+    /// Simple struct Size with width and height for an image/tile
+    #[derive(Debug, Clone, PartialEq, Eq)]
+    pub struct Size {
+        pub w: u32,
+        pub h: u32,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Eq)]
+    pub struct RegionRequest {
+        pub roi: Rectangle,
+        pub level: u32,
+    }
+
+    #[derive(Debug, Clone, PartialEq, Eq)]
+    pub struct DimensionsRange {
+        pub start_x: u32,
+        pub step_x: u32,
+        pub end_x: u32,
+        pub start_y: u32,
+        pub step_y: u32,
+        pub end_y: u32,
+    }
+
+    #[derive(Clone, Debug, PartialEq, Eq)]
+    pub struct Rectangle {
+        pub start_x: u32,
+        pub end_x: u32,
+        pub start_y: u32,
+        pub end_y: u32,
+    }
+
+    pub struct PhilipsEngine;
+    pub struct Facade;
+    pub struct Image;
+    pub struct ImageView;
+
+    pub fn new_() -> PhilipsEngine {
+        PhilipsEngine
+    }
+}
+
 impl ffi::Size {
     pub fn new(w: u32, h: u32) -> Self {
         Self { w, h }
@@ -157,11 +201,16 @@ impl TryFrom<&ffi::DimensionsRange> for ffi::Size {
     }
 }
 
+#[cfg(feature = "native-sdk")]
 fn println(str: String) {
     println!("{str}");
 }
 
+#[cfg(feature = "native-sdk")]
 unsafe impl Send for ffi::PhilipsEngine {}
+#[cfg(feature = "native-sdk")]
 unsafe impl Send for ffi::Facade {}
+#[cfg(feature = "native-sdk")]
 unsafe impl Send for ffi::Image {}
+#[cfg(feature = "native-sdk")]
 unsafe impl Send for ffi::ImageView {}

@@ -14,6 +14,9 @@ pub enum PhilipsSlideError {
     /// PhilipsSlide lib error
     #[error(transparent)]
     CoreError(#[from] Exception),
+    /// Native Philips SDK support was not compiled into this build.
+    #[error("Philips SDK support is not compiled; enable the native-sdk feature")]
+    SdkUnavailable,
     /// NullPtr Error
     #[error("Null pointer error")]
     NullPtrError,
