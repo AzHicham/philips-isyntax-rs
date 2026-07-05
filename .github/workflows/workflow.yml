@@ -24,7 +24,7 @@ jobs:
           feature: [ "--no-default-features", "" ]
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Cache sample slide
       id: cache-slide
       uses: actions/cache@v5
@@ -67,7 +67,7 @@ jobs:
   doc-rs:
     runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - uses: dtolnay/rust-toolchain@stable
       with:
         toolchain: nightly
@@ -79,7 +79,7 @@ jobs:
   pre-commit:
     runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - uses: dtolnay/rust-toolchain@stable
       with:
         toolchain: ${{ env.RUST_VERSION }}
