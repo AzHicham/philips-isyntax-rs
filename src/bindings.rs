@@ -124,7 +124,7 @@ pub(crate) mod ffi {
             request: &RegionRequest,
             buffer: &mut Vec<u8>,
             image_size: &mut Size,
-        ) -> Result<()>;
+        ) -> Result<usize>;
     }
 }
 

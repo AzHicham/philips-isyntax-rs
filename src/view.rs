@@ -3,10 +3,72 @@
 
 #[cfg(feature = "image")]
 use crate::utils::{get_best_level_for_dimensions, preserve_aspect_ratio, resize_rgb_image};
-use crate::{DimensionsRange, PhilipsEngine, Rectangle, RegionRequest, Result, Size, View};
+use crate::{
+    DimensionsRange, PhilipsEngine, Rectangle, RegionRequest, Result, Size, View,
+    errors::PhilipsSlideError,
+};
 
 #[cfg(feature = "image")]
 use {crate::errors::ImageError, image::RgbImage};
+
+const RGB_BYTES_PER_PIXEL: usize = 3;
+
+fn rgb_buffer_len(size: &Size) -> Result<usize> {
+    let pixels = (size.w as usize).checked_mul(size.h as usize).ok_or(
+        PhilipsSlideError::BufferSizeOverflow {
+            width: size.w,
+            height: size.h,
+            bytes_per_pixel: RGB_BYTES_PER_PIXEL,
+        },
+    )?;
+    pixels
+        .checked_mul(RGB_BYTES_PER_PIXEL)
+        .ok_or(PhilipsSlideError::BufferSizeOverflow {
+            width: size.w,
+            height: size.h,
+            bytes_per_pixel: RGB_BYTES_PER_PIXEL,
+        })
+}
+
+fn invalid_region(roi: &Rectangle) -> PhilipsSlideError {
+    PhilipsSlideError::InvalidRegion {
+        start_x: roi.start_x,
+        end_x: roi.end_x,
+        start_y: roi.start_y,
+        end_y: roi.end_y,
+    }
+}
+
+fn region_output_size(request: &RegionRequest, dimension_range: &DimensionsRange) -> Result<Size> {
+    if dimension_range.step_x == 0 {
+        return Err(crate::errors::DimensionsRangeToSizeError::NullStepX.into());
+    }
+    if dimension_range.step_y == 0 {
+        return Err(crate::errors::DimensionsRangeToSizeError::NullStepY.into());
+    }
+
+    let width = request
+        .roi
+        .end_x
+        .checked_sub(request.roi.start_x)
+        .ok_or_else(|| invalid_region(&request.roi))?
+        / dimension_range.step_x;
+    let height = request
+        .roi
+        .end_y
+        .checked_sub(request.roi.start_y)
+        .ok_or_else(|| invalid_region(&request.roi))?
+        / dimension_range.step_y;
+
+    Ok(Size {
+        w: width
+            .checked_add(1)
+            .ok_or_else(|| invalid_region(&request.roi))?,
+        h: height
+            .checked_add(1)
+            .ok_or_else(|| invalid_region(&request.roi))?,
+    })
+}
 
 impl View<'_> {
     /// Returns the dimension ranges of the SubImage for a certain level
@@ -98,19 +160,41 @@ impl View<'_> {
         &self,
         engine: &PhilipsEngine,
         request: &RegionRequest,
-    ) -> Result<(Vec<u8>, Size), cxx::Exception> {
+    ) -> Result<(Vec<u8>, Size)> {
         let mut buffer = Vec::<u8>::new();
-        let mut image_size = Size { w: 0, h: 0 };
+        let image_size = self.read_region_into(engine, request, &mut buffer)?;
+        Ok((buffer, image_size))
+    }
 
-        self.inner
-            .read_region(&engine.inner, request, &mut buffer, &mut image_size)?;
-        let size = (image_size.w * image_size.h * 3) as usize; // RGB Image
+    /// Read a tile from a WSI SubImage into a caller-provided buffer.
+    ///
+    /// The buffer is resized and reused, which avoids repeated allocations for tile sweeps.
+    pub fn read_region_into(
+        &self,
+        engine: &PhilipsEngine,
+        request: &RegionRequest,
+        buffer: &mut Vec<u8>,
+    ) -> Result<Size> {
+        let dimension_range = self.dimension_ranges(request.level)?;
+        let mut image_size = region_output_size(request, &dimension_range)?;
+        let expected_size = rgb_buffer_len(&image_size)?;
 
-        unsafe {
-            buffer.set_len(size);
+        if buffer.len() != expected_size {
+            buffer.resize(expected_size, 0);
+        }
+        let bytes_written =
+            self.inner
+                .read_region(&engine.inner, request, &mut buffer, &mut image_size)?;
+        let actual_expected_size = rgb_buffer_len(&image_size)?;
+
+        if bytes_written != actual_expected_size || buffer.len() != actual_expected_size {
+            return Err(PhilipsSlideError::UnexpectedBufferSize {
+                expected: actual_expected_size,
+                actual: bytes_written,
+            });
         }
 
-        Ok((buffer, image_size))
+        Ok(image_size)
     }
 
     /// Read a tile from a WSI SubImage.

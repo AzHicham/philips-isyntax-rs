@@ -1,5 +1,6 @@
 #include "philipsslide.hpp"
 #include "philips-isyntax-rs/src/bindings.rs.h"
+#include <stdexcept>
 
 const std::string PhilipsEngine::_version = PixelEngine::version();
 
@@ -206,14 +207,17 @@ uint32_t ImageView::numDerivedLevels() const { return _view.numDerivedLevels(); 
 
 std::vector<size_t> ImageView::pixelSize() const { return _view.pixelSize(); }
 
-void ImageView::read_region(const std::unique_ptr<PhilipsEngine>& engine, const RegionRequest& request,
-                            rust::Vec<uint8_t>& buffer, Size& image_size) const {
+size_t ImageView::read_region(const std::unique_ptr<PhilipsEngine>& engine, const RegionRequest& request,
+                              rust::Vec<uint8_t>& buffer, Size& image_size) const {
     const std::vector<std::vector<std::size_t>> view_range{
         {request.roi.start_x, request.roi.end_x, request.roi.start_y, request.roi.end_y, request.level}};
     auto const& envelopes = _view.dataEnvelopes(request.level);
     auto regions = _view.requestRegions(view_range, envelopes, false, {254, 254, 254}, BufferType::RGB);
 
     auto regions_ready = engine.get()->inner()->waitAny(regions);
+    if (regions_ready.empty()) {
+        throw std::runtime_error("PixelEngine returned no regions for request");
+    }
     auto region = regions_ready.front();
 
     // compute image size
@@ -223,7 +227,10 @@ void ImageView::read_region(const std::unique_ptr<PhilipsEngine>& engine, const 
     image_size.h = 1 + ((range[3] - range[2]) / dimension_range.step_y);
     const size_t nb_sub_pixels = image_size.w * image_size.h * 3;
 
-    buffer.reserve(nb_sub_pixels); // RGB pixel
+    if (buffer.size() != nb_sub_pixels) {
+        throw std::runtime_error("read_region buffer size mismatch");
+    }
     region->get(buffer.data(), nb_sub_pixels);
+    return nb_sub_pixels;
 }
 // ------------------------------------

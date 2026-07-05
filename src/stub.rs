@@ -381,6 +381,16 @@ impl View<'_> {
         unavailable()
     }
 
+    /// Read a tile from a WSI SubImage into a caller-provided buffer.
+    pub fn read_region_into(
+        &self,
+        _engine: &PhilipsEngine,
+        _request: &RegionRequest,
+        _buffer: &mut Vec<u8>,
+    ) -> Result<Size> {
+        unavailable()
+    }
+
     /// Read a tile from a WSI SubImage into an RgbImage.
     #[cfg(feature = "image")]
     pub fn read_image(

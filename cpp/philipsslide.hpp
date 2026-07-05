@@ -122,8 +122,8 @@ class ImageView {
     uint16_t samplesPerPixel() const;
     uint32_t numDerivedLevels() const;
     std::vector<size_t> pixelSize() const;
-    void read_region(const std::unique_ptr<PhilipsEngine>& engine, const RegionRequest& request,
-                     rust::Vec<uint8_t>& buffer, Size& image_size) const;
+    size_t read_region(const std::unique_ptr<PhilipsEngine>& engine, const RegionRequest& request,
+                       rust::Vec<uint8_t>& buffer, Size& image_size) const;
 
   private:
     View& _view;

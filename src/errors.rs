@@ -17,6 +17,26 @@ pub enum PhilipsSlideError {
     /// Native Philips SDK support was not compiled into this build.
     #[error("Philips SDK support is not compiled; enable the native-sdk feature")]
     SdkUnavailable,
+    /// Computed RGB buffer size overflowed usize.
+    #[error(
+        "RGB buffer size overflow for {width}x{height} image with {bytes_per_pixel} bytes per pixel"
+    )]
+    BufferSizeOverflow {
+        width: u32,
+        height: u32,
+        bytes_per_pixel: usize,
+    },
+    /// Native decoder wrote a different number of bytes than the Rust side expected.
+    #[error("unexpected RGB buffer size: expected {expected} bytes, got {actual} bytes")]
+    UnexpectedBufferSize { expected: usize, actual: usize },
+    /// Requested region coordinates are invalid for the requested level.
+    #[error("invalid region: ({start_x}, {start_y}) to ({end_x}, {end_y})")]
+    InvalidRegion {
+        start_x: u32,
+        end_x: u32,
+        start_y: u32,
+        end_y: u32,
+    },
     /// NullPtr Error
     #[error("Null pointer error")]
     NullPtrError,
