@@ -186,9 +186,12 @@ impl View<'_> {
         if buffer.len() != expected_size {
             buffer.resize(expected_size, 0);
         }
-        let bytes_written =
-            self.inner
-                .read_region(&engine.inner, request, &mut buffer, &mut image_size)?;
+        let bytes_written = self.inner.read_region(
+            &engine.inner,
+            request,
+            buffer,
+            &mut image_size,
+        )?;
         let actual_expected_size = rgb_buffer_len(&image_size)?;
 
         if bytes_written != actual_expected_size || buffer.len() != actual_expected_size {

@@ -1,5 +1,5 @@
 #include "philipsslide.hpp"
-#include "philips-isyntax-rs/src/bindings.rs.h"
+#include "philips-isyntax-rs/src/native_bridge.rs.h"
 #include <stdexcept>
 
 const std::string PhilipsEngine::_version = PixelEngine::version();

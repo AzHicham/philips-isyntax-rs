@@ -6,12 +6,13 @@ fn main() {
 
     println!("cargo:rerun-if-env-changed=DOCS_RS");
     println!("cargo:rerun-if-changed=src/bindings.rs");
+    println!("cargo:rerun-if-changed=src/native_bridge.rs");
 
     if docs_rs || !native_sdk {
         return;
     }
 
-    cxx_build::bridge("src/bindings.rs")
+    cxx_build::bridge("src/native_bridge.rs")
         .file("cpp/philipsslide.cc")
         .cpp(true)
         .std("c++17")
