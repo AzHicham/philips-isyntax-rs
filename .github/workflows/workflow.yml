@@ -20,8 +20,16 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-          os: [ "ubuntu-22.04" ]
-          feature: [ "--no-default-features", "" ]
+          include:
+            - os: "ubuntu-22.04"
+              feature: ""
+              name: "default"
+            - os: "ubuntu-22.04"
+              feature: "--no-default-features --features native-sdk"
+              name: "native-no-image"
+            - os: "ubuntu-22.04"
+              feature: "--no-default-features"
+              name: "sdk-less"
 
     steps:
     - uses: actions/checkout@v6
@@ -60,7 +68,7 @@ jobs:
         toolchain: ${{ env.RUST_VERSION }}
     - uses: Swatinem/rust-cache@v2
       with:
-        key: ${{ matrix.os }}-${{ matrix.feature }}
+        key: ${{ matrix.os }}-${{ matrix.name }}
     - name: Build & Test
       run: cargo test --workspace ${{ matrix.feature }} -- --nocapture --test-threads=1
 
