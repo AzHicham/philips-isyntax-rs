@@ -101,6 +101,7 @@ class Image {
 
   private:
     SubImage& _image;
+    mutable View* _view;
 };
 
 class ImageView {

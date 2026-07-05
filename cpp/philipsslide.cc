@@ -107,7 +107,7 @@ std::unique_ptr<Image> Facade::image(std::string const& image_type) const {
 // ------------------------------------
 
 // Image properties
-Image::Image(SubImage& image) : _image(image) {}
+Image::Image(SubImage& image) : _image(image), _view(nullptr) {}
 
 std::string const& Image::pixelTransform() const { return _image.pixelTransform(); }
 
@@ -136,6 +136,10 @@ std::string const& Image::lossyImageCompressionMethod() const { return _image.lo
 std::string const& Image::colorLinearity() const { return _image.colorLinearity(); }
 
 std::unique_ptr<ImageView> Image::view() const {
+    if (_view != nullptr) {
+        return std::make_unique<ImageView>(*_view);
+    }
+
     const auto type = _image.imageType();
     SourceView* source_view = &_image.sourceView();
     View* view = source_view;
@@ -155,6 +159,7 @@ std::unique_ptr<ImageView> Image::view() const {
             view = static_cast<View*>(&user_view);  // Safe because View is the base class of UserView
         }
     }
+    _view = view;
     return std::make_unique<ImageView>(*view);
 }
 
