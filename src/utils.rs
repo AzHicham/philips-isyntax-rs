@@ -1,4 +1,7 @@
-use crate::{Result, Size, errors::ImageError};
+use crate::{
+    Result, Size,
+    errors::{ImageError, PhilipsSlideError},
+};
 use fast_image_resize as fr;
 use image::RgbImage;
 use std::cmp;
@@ -9,16 +12,36 @@ pub fn get_best_level_for_dimensions(
     dimension: &Size,
     dimension_level_0: &Size,
     level_count: u32,
-) -> u32 {
+) -> Result<u32> {
+    validate_non_zero_size(dimension)?;
+    validate_non_zero_size(dimension_level_0)?;
+    if level_count == 0 {
+        return Err(PhilipsSlideError::InvalidSize {
+            width: 0,
+            height: 0,
+        });
+    }
+
     let downsample = f64::max(
         f64::from(dimension_level_0.w) / f64::from(dimension.w),
         f64::from(dimension_level_0.h) / f64::from(dimension.h),
     );
-    (0..level_count)
-        .map(|level| 2_u32.pow(level) as f64)
+
+    Ok((0..level_count)
+        .map(|level| (1_u64 << level.min(63)) as f64)
         .enumerate()
         .rfind(|(_, ds)| ds <= &downsample)
-        .map_or(0, |(index, _)| index) as u32
+        .map_or(0, |(index, _)| index) as u32)
+}
+
+pub(crate) fn validate_non_zero_size(size: &Size) -> Result<()> {
+    if size.w == 0 || size.h == 0 {
+        return Err(PhilipsSlideError::InvalidSize {
+            width: size.w,
+            height: size.h,
+        });
+    }
+    Ok(())
 }
 
 pub(crate) fn resize_rgb_image(image: RgbImage, new_size: &Size) -> Result<RgbImage> {
@@ -40,7 +63,10 @@ pub(crate) fn resize_rgb_image(image: RgbImage, new_size: &Size) -> Result<RgbIm
     resizer
         .resize(&src_image, &mut dst_image, &option)
         .map_err(|err| ImageError::Other(err.to_string()))?;
-    let image = RgbImage::from_vec(new_size.w, new_size.h, dst_image.into_vec()).unwrap(); // safe because dst_image buffer is big enough
+    let image =
+        RgbImage::from_vec(new_size.w, new_size.h, dst_image.into_vec()).ok_or_else(|| {
+            ImageError::Other("Error while creating RgbImage from resized buffer".to_string())
+        })?;
 
     Ok(image)
 }
@@ -101,9 +127,19 @@ mod tests {
         let dimension_level_0 = Size::new(158726, 90627);
         let level_count = 10;
         assert_eq!(
-            get_best_level_for_dimensions(&size, &dimension_level_0, level_count),
+            get_best_level_for_dimensions(&size, &dimension_level_0, level_count).unwrap(),
             expected_level
         );
+    }
+
+    #[rstest]
+    #[case(Size::new(0, 100))]
+    #[case(Size::new(100, 0))]
+    fn test_get_best_level_rejects_zero_dimensions(#[case] size: Size) {
+        let dimension_level_0 = Size::new(158726, 90627);
+        let level_count = 10;
+
+        assert!(get_best_level_for_dimensions(&size, &dimension_level_0, level_count).is_err());
     }
 
     #[test]
@@ -125,11 +161,6 @@ mod tests {
             // Edge case
             preserve_aspect_ratio(&Size { w: 100, h: 200 }, &Size { w: 1, h: 1 }),
             Size { w: 100, h: 100 }
-        );
-        assert_eq!(
-            // Edge case
-            preserve_aspect_ratio(&Size { w: 0, h: 5 }, &Size { w: 1, h: 10 }),
-            Size { w: 0, h: 1 }
         );
         assert_eq!(
             // Not round ratio

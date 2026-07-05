@@ -37,6 +37,12 @@ pub enum PhilipsSlideError {
         start_y: u32,
         end_y: u32,
     },
+    /// Image dimensions must be non-zero.
+    #[error("invalid image size: {width}x{height}")]
+    InvalidSize { width: u32, height: u32 },
+    /// Thumbnail generation would require decoding an excessively large intermediate image.
+    #[error("thumbnail intermediate image is too large: {bytes} bytes exceeds limit {limit} bytes")]
+    ThumbnailTooLarge { bytes: usize, limit: usize },
     /// NullPtr Error
     #[error("Null pointer error")]
     NullPtrError,

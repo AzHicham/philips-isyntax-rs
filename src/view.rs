@@ -2,7 +2,9 @@
 //!
 
 #[cfg(feature = "image")]
-use crate::utils::{get_best_level_for_dimensions, preserve_aspect_ratio, resize_rgb_image};
+use crate::utils::{
+    get_best_level_for_dimensions, preserve_aspect_ratio, resize_rgb_image, validate_non_zero_size,
+};
 use crate::{
     DimensionsRange, PhilipsEngine, Rectangle, RegionRequest, Result, Size, View,
     errors::PhilipsSlideError,
@@ -12,6 +14,8 @@ use crate::{
 use {crate::errors::ImageError, image::RgbImage};
 
 const RGB_BYTES_PER_PIXEL: usize = 3;
+#[cfg(feature = "image")]
+const MAX_THUMBNAIL_INTERMEDIATE_BYTES: usize = 512 * 1024 * 1024;
 
 fn rgb_buffer_len(size: &Size) -> Result<usize> {
     let pixels = (size.w as usize).checked_mul(size.h as usize).ok_or(
@@ -214,10 +218,19 @@ impl View<'_> {
     /// This function reads and decompresses a thumbnail of a whole slide image into an RgbImage
     #[cfg(feature = "image")]
     pub fn read_thumbnail(&self, engine: &PhilipsEngine, size: &Size) -> Result<RgbImage> {
+        validate_non_zero_size(size)?;
         let level_count = self.num_derived_levels() + 1;
         let dimension_level_0 = Size::try_from(&self.dimension_ranges(0)?)?;
-        let best_level = get_best_level_for_dimensions(size, &dimension_level_0, level_count);
+        let best_level = get_best_level_for_dimensions(size, &dimension_level_0, level_count)?;
         let dimensions_range = self.dimension_ranges(best_level)?;
+        let intermediate_size = Size::try_from(&dimensions_range)?;
+        let intermediate_bytes = rgb_buffer_len(&intermediate_size)?;
+        if intermediate_bytes > MAX_THUMBNAIL_INTERMEDIATE_BYTES {
+            return Err(PhilipsSlideError::ThumbnailTooLarge {
+                bytes: intermediate_bytes,
+                limit: MAX_THUMBNAIL_INTERMEDIATE_BYTES,
+            });
+        }
         let region_request = RegionRequest {
             roi: Rectangle {
                 start_x: dimensions_range.start_x,
@@ -228,7 +241,7 @@ impl View<'_> {
             level: best_level,
         };
         let image = self.read_image(engine, &region_request)?;
-        let final_size = preserve_aspect_ratio(size, &Size::try_from(&dimensions_range)?);
+        let final_size = preserve_aspect_ratio(size, &intermediate_size);
         let image = resize_rgb_image(image, &final_size)?;
         Ok(image)
     }
@@ -240,22 +253,28 @@ impl View<'_> {
         dimension: &Size,
         dimension_level_0: &Size,
         level_count: u32,
-    ) -> u32 {
+    ) -> Result<u32> {
+        if dimension.w == 0 || dimension.h == 0 {
+            return Err(PhilipsSlideError::InvalidSize {
+                width: dimension.w,
+                height: dimension.h,
+            });
+        }
+        if dimension_level_0.w == 0 || dimension_level_0.h == 0 || level_count == 0 {
+            return Err(PhilipsSlideError::InvalidSize {
+                width: dimension_level_0.w,
+                height: dimension_level_0.h,
+            });
+        }
+
         let downsample = f64::max(
             f64::from(dimension_level_0.w) / f64::from(dimension.w),
             f64::from(dimension_level_0.h) / f64::from(dimension.h),
         );
-        let level_dowsamples: Vec<f64> = (0..level_count)
-            .map(|level| 2_u32.pow(level) as f64)
-            .collect();
-        if downsample < 1.0 {
-            return 0;
-        }
-        for i in 1..level_count {
-            if downsample < level_dowsamples[i as usize] {
-                return i - 1;
-            }
-        }
-        level_count - 1
+        Ok((0..level_count)
+            .map(|level| (1_u64 << level.min(63)) as f64)
+            .enumerate()
+            .rfind(|(_, ds)| ds <= &downsample)
+            .map_or(0, |(index, _)| index) as u32)
     }
 }

@@ -413,7 +413,7 @@ impl View<'_> {
         _dimension: &Size,
         _dimension_level_0: &Size,
         _level_count: u32,
-    ) -> u32 {
-        0
+    ) -> Result<u32> {
+        unavailable()
     }
 }
