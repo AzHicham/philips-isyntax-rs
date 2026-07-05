@@ -14,7 +14,6 @@ struct Size;
 struct Rectangle;
 struct DimensionsRange;
 struct RegionRequest;
-struct ViewOptions;
 class Facade;
 class Image;
 class ImageView;
@@ -103,7 +102,8 @@ class Image {
     double lossyImageCompressionRatio() const;
     std::string const& lossyImageCompressionMethod() const;
     std::string const& colorLinearity() const;
-    std::unique_ptr<ImageView> view(const ViewOptions& options) const;
+    std::unique_ptr<ImageView> view(bool apply_color_correction, uint8_t background_r, uint8_t background_g,
+                                    uint8_t background_b) const;
 
   private:
     SubImage& _image;
@@ -114,7 +114,7 @@ class Image {
 
 class ImageView {
   public:
-    ImageView(View& view, const ViewOptions& options);
+    ImageView(View& view, uint8_t background_r, uint8_t background_g, uint8_t background_b);
 
     DimensionsRange dimensionRanges(uint32_t level) const;
     std::vector<std::string> const& dimensionNames() const;

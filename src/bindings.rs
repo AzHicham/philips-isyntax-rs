@@ -110,7 +110,13 @@ pub(crate) mod ffi {
         fn lossyImageCompression(self: &Image) -> Result<&CxxString>;
         fn lossyImageCompressionRatio(self: &Image) -> Result<f64>;
         fn colorLinearity(self: &Image) -> Result<&CxxString>;
-        fn view(self: &Image, options: &ViewOptions) -> Result<UniquePtr<ImageView>>;
+        fn view(
+            self: &Image,
+            apply_color_correction: bool,
+            background_r: u8,
+            background_g: u8,
+            background_b: u8,
+        ) -> Result<UniquePtr<ImageView>>;
 
         // View properties
         fn dimensionRanges(self: &ImageView, level: u32) -> Result<DimensionsRange>;

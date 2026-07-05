@@ -136,7 +136,8 @@ std::string const& Image::lossyImageCompressionMethod() const { return _image.lo
 
 std::string const& Image::colorLinearity() const { return _image.colorLinearity(); }
 
-std::unique_ptr<ImageView> Image::view(const ViewOptions& options) const {
+std::unique_ptr<ImageView> Image::view(bool apply_color_correction, uint8_t background_r, uint8_t background_g,
+                                       uint8_t background_b) const {
     const auto type = _image.imageType();
     if (_source_view == nullptr) {
         _source_view = &_image.sourceView();
@@ -153,7 +154,7 @@ std::unique_ptr<ImageView> Image::view(const ViewOptions& options) const {
             _truncation_initialized = true;
         }
 
-        if (options.apply_color_correction && bitsStored > 8) {
+        if (apply_color_correction && bitsStored > 8) {
             if (_color_corrected_view == nullptr) {
                 PixelEngine::UserView& user_view = source_view->addChainedView();
                 auto matrix = user_view.addFilter("3x3Matrix16"); // Apply ICC profile
@@ -165,14 +166,14 @@ std::unique_ptr<ImageView> Image::view(const ViewOptions& options) const {
             view = _color_corrected_view;
         }
     }
-    return std::make_unique<ImageView>(*view, options);
+    return std::make_unique<ImageView>(*view, background_r, background_g, background_b);
 }
 
 // ------------------------------------
 
 // View properties
-ImageView::ImageView(View& view, const ViewOptions& options)
-    : _view(view), _background_color({options.background_r, options.background_g, options.background_b}) {}
+ImageView::ImageView(View& view, uint8_t background_r, uint8_t background_g, uint8_t background_b)
+    : _view(view), _background_color{{background_r, background_g, background_b}} {}
 
 const std::array<uint32_t, 6>& ImageView::dimensionRangeData(uint32_t level) const {
     auto cached = _dimension_ranges.find(level);

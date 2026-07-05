@@ -126,7 +126,12 @@ impl Image<'_> {
     /// Create a new instance of View with explicit render options.
     pub fn view_with_options(&self, options: &ViewOptions) -> Result<View<'_>> {
         Ok(View {
-            inner: self.inner.view(options)?,
+            inner: self.inner.view(
+                options.apply_color_correction,
+                options.background_r,
+                options.background_g,
+                options.background_b,
+            )?,
             _lifetime: Default::default(),
         })
     }
