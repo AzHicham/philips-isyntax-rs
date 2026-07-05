@@ -17,6 +17,7 @@ pub type Size = bindings::ffi::Size;
 pub type Rectangle = bindings::ffi::Rectangle;
 pub type RegionRequest = bindings::ffi::RegionRequest;
 pub type DimensionsRange = bindings::ffi::DimensionsRange;
+pub type ViewOptions = bindings::ffi::ViewOptions;
 
 /// The corresponding result type used by the crate.
 pub type Result<T, E = errors::PhilipsSlideError> = std::result::Result<T, E>;

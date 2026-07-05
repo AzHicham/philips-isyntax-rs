@@ -2,7 +2,7 @@
 
 use crate::{
     ContainerName, DimensionsRange, Facade, Image, ImageType, PhilipsEngine, Rectangle,
-    RegionRequest, Result, Size, View, bindings::ffi, errors::PhilipsSlideError,
+    RegionRequest, Result, Size, View, ViewOptions, bindings::ffi, errors::PhilipsSlideError,
 };
 use std::{iter, path::Path};
 
@@ -299,6 +299,11 @@ impl Image<'_> {
 
     /// Create a new instance of View.
     pub fn view(&self) -> Result<View<'_>> {
+        unavailable()
+    }
+
+    /// Create a new instance of View with explicit render options.
+    pub fn view_with_options(&self, _options: &ViewOptions) -> Result<View<'_>> {
         unavailable()
     }
 }

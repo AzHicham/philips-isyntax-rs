@@ -37,6 +37,15 @@ pub(crate) mod ffi {
         pub end_y: u32,
     }
 
+    /// Options used when constructing a view and rendering regions from it.
+    #[derive(Debug, Clone, PartialEq, Eq)]
+    pub struct ViewOptions {
+        pub apply_color_correction: bool,
+        pub background_r: u8,
+        pub background_g: u8,
+        pub background_b: u8,
+    }
+
     extern "Rust" {
         fn println(str: String);
     }
@@ -101,7 +110,7 @@ pub(crate) mod ffi {
         fn lossyImageCompression(self: &Image) -> Result<&CxxString>;
         fn lossyImageCompressionRatio(self: &Image) -> Result<f64>;
         fn colorLinearity(self: &Image) -> Result<&CxxString>;
-        fn view(self: &Image) -> Result<UniquePtr<ImageView>>;
+        fn view(self: &Image, options: &ViewOptions) -> Result<UniquePtr<ImageView>>;
 
         // View properties
         fn dimensionRanges(self: &ImageView, level: u32) -> Result<DimensionsRange>;
@@ -161,6 +170,15 @@ pub(crate) mod ffi {
         pub end_y: u32,
     }
 
+    /// Options used when constructing a view and rendering regions from it.
+    #[derive(Debug, Clone, PartialEq, Eq)]
+    pub struct ViewOptions {
+        pub apply_color_correction: bool,
+        pub background_r: u8,
+        pub background_g: u8,
+        pub background_b: u8,
+    }
+
     pub struct PhilipsEngine;
     pub struct Facade;
     pub struct Image;
@@ -174,6 +192,33 @@ pub(crate) mod ffi {
 impl ffi::Size {
     pub fn new(w: u32, h: u32) -> Self {
         Self { w, h }
+    }
+}
+
+impl Default for ffi::ViewOptions {
+    fn default() -> Self {
+        Self {
+            apply_color_correction: true,
+            background_r: 254,
+            background_g: 254,
+            background_b: 254,
+        }
+    }
+}
+
+impl ffi::ViewOptions {
+    pub fn new(
+        apply_color_correction: bool,
+        background_r: u8,
+        background_g: u8,
+        background_b: u8,
+    ) -> Self {
+        Self {
+            apply_color_correction,
+            background_r,
+            background_g,
+            background_b,
+        }
     }
 }
 impl TryFrom<&ffi::DimensionsRange> for ffi::Size {
