@@ -86,14 +86,8 @@ fn test_sub_image_macro(#[case] filename: &Path) {
     assert_eq!(image.image_data().unwrap().len(), 75580);
 
     let macro_image = image.get_image().unwrap();
-    image::save_buffer(
-        Path::new("macro_image.jpeg"),
-        macro_image.as_bytes(),
-        macro_image.width(),
-        macro_image.height(),
-        macro_image.color(),
-    )
-    .unwrap();
+    assert!(macro_image.width() > 0);
+    assert!(macro_image.height() > 0);
 }
 
 #[rstest]
@@ -121,14 +115,8 @@ fn test_sub_image_label(#[case] filename: &Path) {
     assert_eq!(image.image_data().unwrap().len(), 52734);
 
     let label_image = image.get_image().unwrap();
-    image::save_buffer(
-        Path::new("label_image.jpeg"),
-        label_image.as_bytes(),
-        label_image.width(),
-        label_image.height(),
-        label_image.color(),
-    )
-    .unwrap();
+    assert!(label_image.width() > 0);
+    assert!(label_image.height() > 0);
 }
 
 #[rstest]
@@ -194,14 +182,8 @@ fn test_i2syntax_sub_image_macro(#[case] filename: &Path) {
     assert_eq!(image.image_data().unwrap().len(), 1209706);
 
     let macro_image = image.get_image().unwrap();
-    image::save_buffer(
-        Path::new("macro_image.jpeg"),
-        macro_image.as_bytes(),
-        macro_image.width(),
-        macro_image.height(),
-        macro_image.color(),
-    )
-    .unwrap();
+    assert!(macro_image.width() > 0);
+    assert!(macro_image.height() > 0);
 }
 
 #[rstest]
@@ -229,12 +211,6 @@ fn test_i2syntax_sub_image_label(#[case] filename: &Path) {
     assert_eq!(image.image_data().unwrap().len(), 470591);
 
     let label_image = image.get_image().unwrap();
-    image::save_buffer(
-        Path::new("label_image.jpeg"),
-        label_image.as_bytes(),
-        label_image.width(),
-        label_image.height(),
-        label_image.color(),
-    )
-    .unwrap();
+    assert!(label_image.width() > 0);
+    assert!(label_image.height() > 0);
 }
