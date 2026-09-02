@@ -3,7 +3,12 @@
 #include "PhilipsPixelEngine/softwarerenderbackend.hpp"
 #include "PhilipsPixelEngine/softwarerendercontext.hpp"
 #include "rust/cxx.h"
+#include <array>
+#include <cstdint>
 #include <memory>
+#include <unordered_map>
+#include <utility>
+#include <vector>
 
 struct Size;
 struct Rectangle;
@@ -97,15 +102,19 @@ class Image {
     double lossyImageCompressionRatio() const;
     std::string const& lossyImageCompressionMethod() const;
     std::string const& colorLinearity() const;
-    std::unique_ptr<ImageView> view() const;
+    std::unique_ptr<ImageView> view(bool apply_color_correction, uint8_t background_r, uint8_t background_g,
+                                    uint8_t background_b) const;
 
   private:
     SubImage& _image;
+    mutable SourceView* _source_view;
+    mutable View* _color_corrected_view;
+    mutable bool _truncation_initialized;
 };
 
 class ImageView {
   public:
-    ImageView(View& view);
+    ImageView(View& view, uint8_t background_r, uint8_t background_g, uint8_t background_b);
 
     DimensionsRange dimensionRanges(uint32_t level) const;
     std::vector<std::string> const& dimensionNames() const;
@@ -122,11 +131,17 @@ class ImageView {
     uint16_t samplesPerPixel() const;
     uint32_t numDerivedLevels() const;
     std::vector<size_t> pixelSize() const;
-    void read_region(const std::unique_ptr<PhilipsEngine>& engine, const RegionRequest& request,
-                     rust::Vec<uint8_t>& buffer, Size& image_size) const;
+    size_t read_region(const std::unique_ptr<PhilipsEngine>& engine, const RegionRequest& request,
+                       rust::Vec<uint8_t>& buffer, Size& image_size) const;
 
   private:
+    const std::array<uint32_t, 6>& dimensionRangeData(uint32_t level) const;
+    const std::vector<std::array<uint32_t, 4>>& envelopeRectData(uint32_t level) const;
+
     View& _view;
+    std::array<uint8_t, 3> _background_color;
+    mutable std::unordered_map<uint32_t, std::array<uint32_t, 6>> _dimension_ranges;
+    mutable std::unordered_map<uint32_t, std::vector<std::array<uint32_t, 4>>> _envelope_rects;
 };
 
 std::unique_ptr<PhilipsEngine> new_();

@@ -1,7 +1,7 @@
 //! This module contains all functions related to Philips SubImages
 //!
 
-use crate::{Image, Result, View};
+use crate::{Image, Result, View, ViewOptions};
 
 #[cfg(feature = "image")]
 use {
@@ -120,8 +120,18 @@ impl Image<'_> {
     /// WARNING: multiple View handler created from the same Image will points
     /// to the same reference in Philips Engine internal.
     pub fn view(&self) -> Result<View<'_>> {
+        self.view_with_options(&ViewOptions::default())
+    }
+
+    /// Create a new instance of View with explicit render options.
+    pub fn view_with_options(&self, options: &ViewOptions) -> Result<View<'_>> {
         Ok(View {
-            inner: self.inner.view()?,
+            inner: self.inner.view(
+                options.apply_color_correction,
+                options.background_r,
+                options.background_g,
+                options.background_b,
+            )?,
             _lifetime: Default::default(),
         })
     }

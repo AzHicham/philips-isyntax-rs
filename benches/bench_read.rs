@@ -1,3 +1,5 @@
+#![cfg(feature = "native-sdk")]
+
 use bencher::{Bencher, benchmark_group, benchmark_main};
 use philips_isyntax_rs::{ContainerName, ImageType, PhilipsEngine, Rectangle, RegionRequest};
 use std::path::Path;
