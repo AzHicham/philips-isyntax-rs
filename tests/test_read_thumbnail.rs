@@ -1,3 +1,5 @@
+#![cfg(feature = "native-sdk")]
+
 mod fixture;
 
 #[cfg(feature = "image")]
@@ -28,17 +30,6 @@ fn test_thumbnail(
     let view = image.view().unwrap();
 
     let thumbnail = view.read_thumbnail(&engine, &size).unwrap();
-    thumbnail
-        .save(format!(
-            "{0}_thumbnail_{1}.jpg",
-            filename
-                .file_stem()
-                .expect("Invalid file name")
-                .to_str()
-                .expect("Invalid file name"),
-            size.w
-        ))
-        .unwrap();
 
     // Make sure one of the dimensions is equal to the requested one
     // and the other one is smaller than the requested one

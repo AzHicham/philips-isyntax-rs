@@ -1,5 +1,6 @@
 #include "philipsslide.hpp"
-#include "philips-isyntax-rs/src/bindings.rs.h"
+#include "philips-isyntax-rs/src/native_bridge.rs.h"
+#include <stdexcept>
 
 const std::string PhilipsEngine::_version = PixelEngine::version();
 
@@ -106,7 +107,8 @@ std::unique_ptr<Image> Facade::image(std::string const& image_type) const {
 // ------------------------------------
 
 // Image properties
-Image::Image(SubImage& image) : _image(image) {}
+Image::Image(SubImage& image)
+    : _image(image), _source_view(nullptr), _color_corrected_view(nullptr), _truncation_initialized(false) {}
 
 std::string const& Image::pixelTransform() const { return _image.pixelTransform(); }
 
@@ -134,38 +136,74 @@ std::string const& Image::lossyImageCompressionMethod() const { return _image.lo
 
 std::string const& Image::colorLinearity() const { return _image.colorLinearity(); }
 
-std::unique_ptr<ImageView> Image::view() const {
+std::unique_ptr<ImageView> Image::view(bool apply_color_correction, uint8_t background_r, uint8_t background_g,
+                                       uint8_t background_b) const {
     const auto type = _image.imageType();
-    SourceView* source_view = &_image.sourceView();
-    View* view = source_view;
+    if (_source_view == nullptr) {
+        _source_view = &_image.sourceView();
+    }
+    SourceView* source_view = _source_view;
+    View* view = _source_view;
 
     if (type == "WSI") {
         const auto bitsStored = view->bitsStored();
-        // Enable best quality
-        const std::map<std::size_t, std::vector<std::size_t>> truncationLevel{{0, {0, 0, 0}}};
-        source_view->truncation(false, false, truncationLevel);
+        if (!_truncation_initialized) {
+            // Enable best quality once for this source view.
+            const std::map<std::size_t, std::vector<std::size_t>> truncationLevel{{0, {0, 0, 0}}};
+            source_view->truncation(false, false, truncationLevel);
+            _truncation_initialized = true;
+        }
 
-        if (bitsStored > 8) {
-            PixelEngine::UserView& user_view = source_view->addChainedView();
-            auto matrix = user_view.addFilter("3x3Matrix16"); // Apply ICC profile
-            auto icc_matrix = iccMatrix();
-            user_view.filterParameterMatrix3x3(matrix, "matrix3x3", icc_matrix);
-            user_view.addFilter("Linear16ToSRGB8"); // This Filter converts 9-bit image to 8-bit image.
-            view = static_cast<View*>(&user_view);  // Safe because View is the base class of UserView
+        if (apply_color_correction && bitsStored > 8) {
+            if (_color_corrected_view == nullptr) {
+                PixelEngine::UserView& user_view = source_view->addChainedView();
+                auto matrix = user_view.addFilter("3x3Matrix16"); // Apply ICC profile
+                auto icc_matrix = iccMatrix();
+                user_view.filterParameterMatrix3x3(matrix, "matrix3x3", icc_matrix);
+                user_view.addFilter("Linear16ToSRGB8"); // This filter converts 9-bit image to 8-bit image.
+                _color_corrected_view = static_cast<View*>(&user_view); // Safe because View is the base class of UserView.
+            }
+            view = _color_corrected_view;
         }
     }
-    return std::make_unique<ImageView>(*view);
+    return std::make_unique<ImageView>(*view, background_r, background_g, background_b);
 }
 
 // ------------------------------------
 
 // View properties
-ImageView::ImageView(View& view) : _view(view) {}
+ImageView::ImageView(View& view, uint8_t background_r, uint8_t background_g, uint8_t background_b)
+    : _view(view), _background_color{{background_r, background_g, background_b}} {}
+
+const std::array<uint32_t, 6>& ImageView::dimensionRangeData(uint32_t level) const {
+    auto cached = _dimension_ranges.find(level);
+    if (cached == _dimension_ranges.end()) {
+        const auto ranges = _view.dimensionRanges(level);
+        cached = _dimension_ranges
+                     .emplace(level, std::array<uint32_t, 6>{ranges.at(0).at(0), ranges.at(0).at(1), ranges.at(0).at(2),
+                                                            ranges.at(1).at(0), ranges.at(1).at(1), ranges.at(1).at(2)})
+                     .first;
+    }
+    return cached->second;
+}
+
+const std::vector<std::array<uint32_t, 4>>& ImageView::envelopeRectData(uint32_t level) const {
+    auto cached = _envelope_rects.find(level);
+    if (cached == _envelope_rects.end()) {
+        auto envelopes_range = _view.dataEnvelopes(level).asRectangles();
+        std::vector<std::array<uint32_t, 4>> rects;
+        rects.reserve(envelopes_range.size());
+        for (auto& range : envelopes_range) {
+            rects.push_back(std::array<uint32_t, 4>{range.at(0), range.at(1), range.at(2), range.at(3)});
+        }
+        cached = _envelope_rects.emplace(level, std::move(rects)).first;
+    }
+    return cached->second;
+}
 
 DimensionsRange ImageView::dimensionRanges(uint32_t level) const {
-    const auto ranges = _view.dimensionRanges(level);
-    return DimensionsRange{ranges.at(0).at(0), ranges.at(0).at(1), ranges.at(0).at(2),
-                           ranges.at(1).at(0), ranges.at(1).at(1), ranges.at(1).at(2)};
+    const auto& ranges = dimensionRangeData(level);
+    return DimensionsRange{ranges.at(0), ranges.at(1), ranges.at(2), ranges.at(3), ranges.at(4), ranges.at(5)};
 }
 
 std::vector<std::string> const& ImageView::dimensionNames() const { return _view.dimensionNames(); }
@@ -179,7 +217,7 @@ std::vector<double> const& ImageView::scale() const { return _view.scale(); }
 std::vector<double> const& ImageView::origin() const { return _view.origin(); }
 
 rust::Vec<Rectangle> ImageView::envelopesAsRects(uint32_t level) const {
-    auto envelopes_range = _view.dataEnvelopes(level).asRectangles();
+    auto const& envelopes_range = envelopeRectData(level);
 
     auto res = rust::Vec<Rectangle>();
     res.reserve(envelopes_range.size());
@@ -206,14 +244,19 @@ uint32_t ImageView::numDerivedLevels() const { return _view.numDerivedLevels(); 
 
 std::vector<size_t> ImageView::pixelSize() const { return _view.pixelSize(); }
 
-void ImageView::read_region(const std::unique_ptr<PhilipsEngine>& engine, const RegionRequest& request,
-                            rust::Vec<uint8_t>& buffer, Size& image_size) const {
+size_t ImageView::read_region(const std::unique_ptr<PhilipsEngine>& engine, const RegionRequest& request,
+                              rust::Vec<uint8_t>& buffer, Size& image_size) const {
     const std::vector<std::vector<std::size_t>> view_range{
         {request.roi.start_x, request.roi.end_x, request.roi.start_y, request.roi.end_y, request.level}};
     auto const& envelopes = _view.dataEnvelopes(request.level);
-    auto regions = _view.requestRegions(view_range, envelopes, false, {254, 254, 254}, BufferType::RGB);
+    auto regions = _view.requestRegions(view_range, envelopes, false,
+                                        {_background_color[0], _background_color[1], _background_color[2]},
+                                        BufferType::RGB);
 
     auto regions_ready = engine.get()->inner()->waitAny(regions);
+    if (regions_ready.empty()) {
+        throw std::runtime_error("PixelEngine returned no regions for request");
+    }
     auto region = regions_ready.front();
 
     // compute image size
@@ -223,7 +266,10 @@ void ImageView::read_region(const std::unique_ptr<PhilipsEngine>& engine, const 
     image_size.h = 1 + ((range[3] - range[2]) / dimension_range.step_y);
     const size_t nb_sub_pixels = image_size.w * image_size.h * 3;
 
-    buffer.reserve(nb_sub_pixels); // RGB pixel
+    if (buffer.size() != nb_sub_pixels) {
+        throw std::runtime_error("read_region buffer size mismatch");
+    }
     region->get(buffer.data(), nb_sub_pixels);
+    return nb_sub_pixels;
 }
 // ------------------------------------

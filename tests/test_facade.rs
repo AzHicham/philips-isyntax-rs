@@ -1,3 +1,5 @@
+#![cfg(feature = "native-sdk")]
+
 mod fixture;
 
 use fixture::{missing_file, sample, sample_i2syntax, unsupported_file};

@@ -1,3 +1,5 @@
+#![cfg(feature = "native-sdk")]
+
 mod fixture;
 
 use fixture::{sample, sample_i2syntax};

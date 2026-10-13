@@ -1,3 +1,5 @@
+#![cfg(feature = "native-sdk")]
+
 use philips_isyntax_rs::PhilipsEngine;
 use rstest::rstest;
 
