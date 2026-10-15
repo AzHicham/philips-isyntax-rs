@@ -60,3 +60,46 @@ fn test_read_image_wsi(#[case] filename: &Path) {
     assert_eq!(image.height(), 200);
     assert_eq!(image.len(), 60000);
 }
+
+#[rstest]
+#[case(sample())]
+#[case(sample_i2syntax())]
+fn test_read_region_outside_envelopes_is_white(#[case] filename: &Path) {
+    let engine = PhilipsEngine::new();
+    let facade = engine
+        .facade(filename, &ContainerName::CachingFicom)
+        .unwrap();
+    let image = facade.image(&ImageType::WSI).unwrap();
+    let view = image.view().unwrap();
+
+    // A strip of the valid range just past the right or bottom edge of every
+    // data envelope, if the slide has one.
+    let range = view.dimension_ranges(0).unwrap();
+    let envelopes = view.envelopes_as_rectangles(0).unwrap();
+    let right = envelopes.iter().map(|e| e.end_x).max().unwrap();
+    let bottom = envelopes.iter().map(|e| e.end_y).max().unwrap();
+    let roi = if right + 10 <= range.end_x {
+        Rectangle {
+            start_x: right + 1,
+            end_x: right + 10,
+            start_y: range.start_y,
+            end_y: range.start_y + 9,
+        }
+    } else if bottom + 10 <= range.end_y {
+        Rectangle {
+            start_x: range.start_x,
+            end_x: range.start_x + 9,
+            start_y: bottom + 1,
+            end_y: bottom + 10,
+        }
+    } else {
+        eprintln!("{filename:?}: the data envelopes cover the whole valid range");
+        return;
+    };
+
+    let (buffer, size) = view
+        .read_region(&engine, &RegionRequest { roi, level: 0 })
+        .unwrap();
+    assert_eq!((size.w, size.h), (10, 10));
+    assert!(buffer.iter().all(|&v| v == 255));
+}
