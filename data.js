@@ -1,80 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1791888734898,
+  "lastUpdate": 1792140942812,
   "repoUrl": "https://github.com/AzHicham/philips-isyntax-rs",
   "entries": {
     "philips-isyntax-rs Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "29139614+renovate[bot]@users.noreply.github.com",
-            "name": "renovate[bot]",
-            "username": "renovate[bot]"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "f0d085d96970806f394d96b6836d66c538eb372a",
-          "message": "chore(deps): update pre-commit hook renovatebot/pre-commit-hooks to v41.82.10 (#211)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
-          "timestamp": "2025-08-25T09:13:43+02:00",
-          "tree_id": "53e89a19981d33b1843e91104708a5f141fbb201",
-          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/f0d085d96970806f394d96b6836d66c538eb372a"
-        },
-        "date": 1756106196271,
-        "tool": "cargo",
-        "benches": [
-          {
-            "name": "philips_i2syntax_read_region_256_lvl_0",
-            "value": 1515072,
-            "range": "± 182836",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_i2syntax_read_region_256_lvl_1",
-            "value": 1280965,
-            "range": "± 62884",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_i2syntax_read_region_512_lvl_0",
-            "value": 1723475,
-            "range": "± 211184",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_i2syntax_read_region_512_lvl_1",
-            "value": 8036491,
-            "range": "± 433408",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_0",
-            "value": 585517,
-            "range": "± 49148",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_256_lvl_1",
-            "value": 1417522,
-            "range": "± 133345",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_0",
-            "value": 3894496,
-            "range": "± 149337",
-            "unit": "ns/iter"
-          },
-          {
-            "name": "philips_read_region_512_lvl_1",
-            "value": 3465786,
-            "range": "± 196624",
-            "unit": "ns/iter"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -2159,6 +2087,78 @@ window.BENCHMARK_DATA = {
             "name": "philips_read_region_512_lvl_1",
             "value": 3187346,
             "range": "± 253691",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hicham.azimani1@gmail.com",
+            "name": "Hicham Azimani",
+            "username": "AzHicham"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a7b64f23f41903b1a5fd49ca5c34d359fa71e9b7",
+          "message": "fix: fill pixels outside the data envelopes with white (#243)\n\n* fix: fill pixels outside the data envelopes with white\n\nRegions are requested with a background of 254, so every pixel outside the\nvalid data envelopes of a slide read as (254, 254, 254) instead of white.\nReaders of the same slides (OpenSlide, fastslide) fill that background with\n255, and so does the slide itself where it is scanned glass, so the same\nregion read through the Philips SDK and another reader differed everywhere\noutside the tissue.\n\nThe background is now (255, 255, 255).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n\n* test: read white past the valid range, at every level\n\nThe test read a strip between the data envelopes and the edge of the valid\nrange, which only some slides have: on the i2syntax fixture the envelopes\ncover the whole range, so it returned early and checked nothing, and a slide\nwithout envelopes made it panic.\n\nIt now reads 10 x 10 pixels right of the valid range of the level, which no\nslide holds data for, on both fixtures at levels 0 and 2. The SDK fills them\nwith the same background as the pixels outside the envelopes. With the\nprevious 254 background every case fails.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n\n---------\n\nCo-authored-by: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-10-16T09:52:35+01:00",
+          "tree_id": "05cb0f11db12239fb6d0086ac8a7c2ca36a65056",
+          "url": "https://github.com/AzHicham/philips-isyntax-rs/commit/a7b64f23f41903b1a5fd49ca5c34d359fa71e9b7"
+        },
+        "date": 1792140941850,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "philips_i2syntax_read_region_256_lvl_0",
+            "value": 1563794,
+            "range": "± 335951",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_256_lvl_1",
+            "value": 1299240,
+            "range": "± 122636",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_512_lvl_0",
+            "value": 1844195,
+            "range": "± 420940",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_i2syntax_read_region_512_lvl_1",
+            "value": 8676386,
+            "range": "± 259697",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_0",
+            "value": 593952,
+            "range": "± 67823",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_256_lvl_1",
+            "value": 1463033,
+            "range": "± 73914",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_0",
+            "value": 4183252,
+            "range": "± 291921",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "philips_read_region_512_lvl_1",
+            "value": 3703111,
+            "range": "± 192745",
             "unit": "ns/iter"
           }
         ]
